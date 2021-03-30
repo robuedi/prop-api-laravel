@@ -32,7 +32,7 @@ export default {
         async submit () {
             await this.signIn(this.form)
 
-            await this.$router.replace({name: 'home'})
+            await this.$router.replace({name: 'account'})
         }
     }
 }

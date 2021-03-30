@@ -72,7 +72,7 @@
                 <AddressInputs title="Agency address" v-on:agencyAddressChange="agencyAddressChange" change-event="agencyAddressChange" v-if="checkIfFieldStatus('agency_address')"/>
                 <AddressInputs title="Address" v-on:addressChange="addressChange" change-event="addressChange"  v-if="checkIfFieldStatus('address')"/>
 
-                <button v-if="!checkIfLastStep()" type="button" @click="moveToNextStep()" class="btn btn-outline-dark">Next</button>
+                <button  v-if="!checkIfLastStep()" type="button" @click="moveToNextStep()" class="btn btn-outline-dark">Next</button>
                 <button v-else class="btn btn-success">Submit</button>
 
             </form>
@@ -195,6 +195,7 @@ export default {
         },
         moveToNextStep()
         {
+            console.log('bb')
             //check if we have any required fields uncompleted
             this.checkFieldsCompleted();
 

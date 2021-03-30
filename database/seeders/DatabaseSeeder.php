@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\City;
 use App\Models\Country;
+use App\Models\PropertyStatus;
 use App\Models\UserType;
 use Illuminate\Database\Seeder;
 
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         Country::factory(10)->create();
         City::factory(100)->create();
+
         UserType::create([
             'id' => 1,
             'label' => 'Tenant'
@@ -33,6 +35,20 @@ class DatabaseSeeder extends Seeder
         UserType::create([
             'id' => 4,
             'label' => 'Seller'
+        ]);
+
+        UserType::create([
+            'id' => 4,
+            'label' => 'Seller'
+        ]);
+
+        PropertyStatus::create([
+            'id' => 1,
+            'label' => 'Active'
+        ]);
+        PropertyStatus::create([
+            'id' => 2,
+            'label' => 'Inactive'
         ]);
         // \App\Models\User::factory(10)->create();
     }

@@ -6,9 +6,6 @@
 
 require('./bootstrap');
 
-
-
-
 window.Vue = require('vue').default;
 
 import store from './store/index'
@@ -33,6 +30,7 @@ import App from './components/App'
 import SignIn from './views/SignIn'
 import Home from './views/Home'
 import Register from './views/Register'
+import Account from './views/Account'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -57,6 +55,20 @@ const router = new VueRouter({
             path: '/register',
             name: 'register',
             component: Register
+        },
+        {
+            path: '/account',
+            name: 'account',
+            component: Account,
+            beforeEnter(to, from, next) {
+                if (store.getters["auth/authenticated"]) {
+                    next()
+                } else {
+                    next({
+                        name: "signin"
+                    });
+                }
+            }
         }
     ],
 });
