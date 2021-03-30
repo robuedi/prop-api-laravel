@@ -1884,16 +1884,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['title'],
+  props: ['title', 'changeEvent'],
   data: function data() {
     return {
+      countries: [],
+      cities: [],
+      selectedCountry: '',
       form: {
         city_id: '',
         address_line: '',
@@ -1901,7 +1898,34 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-  methods: {}
+  mounted: function mounted() {
+    this.fetchCountries();
+  },
+  methods: {
+    fetchCountries: function fetchCountries() {
+      var _this = this;
+
+      axios.get('/api/v1/countries?fields=id,name').then(function (res) {
+        _this.countries = res.data.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    fetchCities: function fetchCities(countryId) {
+      var _this2 = this;
+
+      axios.get("/api/v1/cities?where_country_id=".concat(countryId, "&fields=id,name")).then(function (res) {
+        _this2.cities = res.data.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    addressUpdated: function addressUpdated() {
+      if (this.form.city_id !== '' && this.form.address_line !== '' && this.form.postcode !== '') {
+        this.$emit(this.changeEvent, this.form);
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -2057,6 +2081,20 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2130,20 +2168,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_objectSpread(_objectSpread({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     AddressInputs: _components_AddressInputs__WEBPACK_IMPORTED_MODULE_1__.default
   },
   data: function data() {
     return {
       formStep: 0,
+      userTypes: [],
+      errors: [],
       form: {
         name: '',
         email: '',
-        userType: '',
+        type_id: '',
         password: '',
+        password_confirmation: '',
         dob: '',
         annual_salary: '',
         current_rent_amount: '',
@@ -2153,7 +2209,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         address: {}
       },
       requiredFields: {
-        tenant: {
+        1: {
+          1: {
+            'name': true,
+            'email': true,
+            'dob': true,
+            'password': true,
+            'password_confirmation': true
+          },
           2: {
             'address': true
           },
@@ -2162,7 +2225,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'current_rent_amount': true
           }
         },
-        buyer: {
+        2: {
+          1: {
+            'name': true,
+            'email': true,
+            'dob': true,
+            'password': true,
+            'password_confirmation': true
+          },
           2: {
             'address': true
           },
@@ -2172,36 +2242,76 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'total_deposit_savings': true
           }
         },
-        landlord: {
+        3: {
+          1: {
+            'name': true,
+            'email': true,
+            'dob': true,
+            'password': true,
+            'password_confirmation': true
+          },
           2: {
             'agency_name': true,
             'agency_address': true
           }
         },
-        seller: {
+        4: {
+          1: {
+            'name': true,
+            'email': true,
+            'dob': true,
+            'password': true,
+            'password_confirmation': true
+          },
           2: {
             'agency_name': true,
-            'agency_address:': true
+            'agency_address': true
           }
         }
       }
     };
-  }
-}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('auth', ['register'])), {}, {
-  methods: {
+  },
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('auth', ['register'])), {}, {
     setUserType: function setUserType(userType) {
-      this.form.userType = userType;
+      this.form.type_id = userType;
       this.formStep = 1;
     },
-    clearUserType: function clearUserType() {
-      this.form.userType = '';
+    undoSteps: function undoSteps() {
+      if (this.formStep > 0) {
+        this.formStep--;
+      } else {
+        this.form.type_id = '';
+      }
     },
     setRegistrationStep: function setRegistrationStep(stepNumber) {
       this.formStep = stepNumber;
     },
+    moveToNextStep: function moveToNextStep() {
+      //check if we have any required fields uncompleted
+      this.checkFieldsCompleted();
+
+      if (this.errors.length === 0) {
+        this.formStep++;
+      }
+    },
+    checkFieldsCompleted: function checkFieldsCompleted() {
+      //get current step fields
+      var fields = this.requiredFields[this.form.type_id][this.formStep];
+      this.errors = []; //check if fields left unchecked
+
+      for (var _i = 0, _Object$entries = Object.entries(fields); _i < _Object$entries.length; _i++) {
+        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+            key = _Object$entries$_i[0],
+            value = _Object$entries$_i[1];
+
+        if (value === true && (_typeof(this.form[key]) === 'object' && _.isEmpty(this.form[key]) || this.form[key] === '')) {
+          this.errors.push("".concat(key.replace(/_/g, " "), " field is required"));
+        }
+      }
+    },
     checkIfFieldStatus: function checkIfFieldStatus(fieldName) {
       var searchIn = this.requiredFields;
-      var searchFor = [this.form.userType, this.formStep, fieldName];
+      var searchFor = [this.form.type_id, this.formStep, fieldName];
       var i = 0;
 
       while (typeof searchIn !== 'undefined') {
@@ -2216,11 +2326,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return searchIn;
     },
     checkIfLastStep: function checkIfLastStep() {
-      if (this.requiredFields[this.form.userType] && typeof this.requiredFields[this.form.userType][this.formStep + 1] === 'undefined') {
+      if (this.requiredFields[this.form.type_id] && typeof this.requiredFields[this.form.type_id][this.formStep + 1] === 'undefined') {
         return true;
       } else {
         return false;
       }
+    },
+    addressChange: function addressChange(address) {
+      this.form.address = address;
+    },
+    agencyAddressChange: function agencyAddressChange(address) {
+      this.form.agency_address = address;
     },
     submit: function submit() {
       var _this = this;
@@ -2230,25 +2346,45 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                //check if we have any required fields uncompleted
+                _this.checkFieldsCompleted();
+
+                if (!(_this.errors.length === 0)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                _context.next = 4;
                 return _this.register(_this.form);
 
-              case 2:
-                _context.next = 4;
+              case 4:
+                _context.next = 6;
                 return _this.$router.replace({
-                  name: 'login'
+                  name: 'signin'
                 });
 
-              case 4:
+              case 6:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
       }))();
+    },
+    fetchUserTypes: function fetchUserTypes() {
+      var _this2 = this;
+
+      axios.get("/api/v1/user-types?&fields=id,label").then(function (res) {
+        _this2.userTypes = res.data.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
+  }),
+  mounted: function mounted() {
+    this.fetchUserTypes();
   }
-}));
+});
 
 /***/ }),
 
@@ -39183,10 +39319,8 @@ var render = function() {
   return _c("div", [
     _c("h5", { staticClass: "mb-2" }, [_vm._v(_vm._s(_vm.title))]),
     _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "cities" } }, [_vm._v("City")]),
+      _c("label", { attrs: { for: "countries" } }, [_vm._v("Country")]),
       _vm._v(" "),
       _c(
         "select",
@@ -39195,43 +39329,99 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.form.city_id,
-              expression: "form.city_id"
+              value: _vm.selectedCountry,
+              expression: "selectedCountry"
             }
           ],
           staticClass: "form-control",
-          attrs: { id: "cities" },
+          attrs: { id: "countries" },
           on: {
-            change: function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.$set(
-                _vm.form,
-                "city_id",
-                $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-              )
-            }
+            change: [
+              function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.selectedCountry = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+              function($event) {
+                return _vm.fetchCities(_vm.selectedCountry)
+              }
+            ]
           }
         },
         [
-          _c("option", [_vm._v("1")]),
+          _c("option"),
           _vm._v(" "),
-          _c("option", [_vm._v("2")]),
-          _vm._v(" "),
-          _c("option", [_vm._v("3")]),
-          _vm._v(" "),
-          _c("option", [_vm._v("4")]),
-          _vm._v(" "),
-          _c("option", [_vm._v("5")])
-        ]
+          _vm._l(_vm.countries, function(country) {
+            return _c("option", { domProps: { value: country.id } }, [
+              _vm._v(_vm._s(country.name))
+            ])
+          })
+        ],
+        2
       )
     ]),
+    _vm._v(" "),
+    _vm.selectedCountry
+      ? _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "cities" } }, [_vm._v("City")]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.city_id,
+                  expression: "form.city_id"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { id: "cities" },
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.form,
+                      "city_id",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  },
+                  function($event) {
+                    return _vm.addressUpdated()
+                  }
+                ]
+              }
+            },
+            [
+              _c("option"),
+              _vm._v(" "),
+              _vm._l(_vm.cities, function(city) {
+                return _c("option", { domProps: { value: city.id } }, [
+                  _vm._v(_vm._s(city.name))
+                ])
+              })
+            ],
+            2
+          )
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "mb-3" }, [
       _c(
@@ -39253,6 +39443,9 @@ var render = function() {
         attrs: { type: "text", id: "address_line" },
         domProps: { value: _vm.form.address_line },
         on: {
+          change: function($event) {
+            return _vm.addressUpdated()
+          },
           input: function($event) {
             if ($event.target.composing) {
               return
@@ -39281,6 +39474,9 @@ var render = function() {
         attrs: { type: "text", id: "postcode" },
         domProps: { value: _vm.form.postcode },
         on: {
+          change: function($event) {
+            return _vm.addressUpdated()
+          },
           input: function($event) {
             if ($event.target.composing) {
               return
@@ -39292,32 +39488,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "countries" } }, [_vm._v("Country")]),
-      _vm._v(" "),
-      _c(
-        "select",
-        { staticClass: "form-control", attrs: { id: "countries" } },
-        [
-          _c("option", [_vm._v("1")]),
-          _vm._v(" "),
-          _c("option", [_vm._v("2")]),
-          _vm._v(" "),
-          _c("option", [_vm._v("3")]),
-          _vm._v(" "),
-          _c("option", [_vm._v("4")]),
-          _vm._v(" "),
-          _c("option", [_vm._v("5")])
-        ]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -39556,64 +39727,22 @@ var render = function() {
     [
       _c("h1", { staticClass: "mb-4" }, [_vm._v("Register")]),
       _vm._v(" "),
-      !_vm.form.userType
-        ? [
-            _c(
+      !_vm.form.type_id
+        ? _vm._l(_vm.userTypes, function(userType) {
+            return _c(
               "button",
               {
                 staticClass: "btn btn-outline-dark btn-lg btn-block",
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
-                    return _vm.setUserType("tenant")
+                    return _vm.setUserType(userType.id)
                   }
                 }
               },
-              [_vm._v("Tenant")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-dark btn-lg btn-block",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    return _vm.setUserType("buyer")
-                  }
-                }
-              },
-              [_vm._v("Buyer")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-dark btn-lg btn-block",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    return _vm.setUserType("landlord")
-                  }
-                }
-              },
-              [_vm._v("Landlord")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-dark btn-lg btn-block",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    return _vm.setUserType("seller")
-                  }
-                }
-              },
-              [_vm._v("Seller")]
+              [_vm._v("\n            " + _vm._s(userType.label) + "\n        ")]
             )
-          ]
+          })
         : [
             _c(
               "button",
@@ -39622,7 +39751,7 @@ var render = function() {
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
-                    return _vm.clearUserType()
+                    return _vm.undoSteps()
                   }
                 }
               },
@@ -39630,7 +39759,7 @@ var render = function() {
             )
           ],
       _vm._v(" "),
-      _vm.form.userType
+      _vm.form.type_id
         ? [
             _c(
               "form",
@@ -39644,138 +39773,196 @@ var render = function() {
                 }
               },
               [
-                _vm.formStep === 1
-                  ? [
-                      _c("div", { staticClass: "mb-3" }, [
-                        _c(
-                          "label",
-                          { staticClass: "form-label", attrs: { for: "name" } },
-                          [_vm._v("Name")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.name,
-                              expression: "form.name"
-                            }
-                          ],
-                          staticClass: "form-control w-50",
-                          attrs: { type: "text", id: "name" },
-                          domProps: { value: _vm.form.name },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.form, "name", $event.target.value)
-                            }
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "mb-3" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-label",
-                            attrs: { for: "InputEmail" }
-                          },
-                          [_vm._v("Email address")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.email,
-                              expression: "form.email"
-                            }
-                          ],
-                          staticClass: "form-control w-50",
-                          attrs: { type: "email", id: "InputEmail" },
-                          domProps: { value: _vm.form.email },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.form, "email", $event.target.value)
-                            }
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "mb-3" }, [
-                        _c(
-                          "label",
-                          { staticClass: "form-label", attrs: { for: "dob" } },
-                          [_vm._v("Date of birth")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.dob,
-                              expression: "form.dob"
-                            }
-                          ],
-                          staticClass: "form-control w-50",
-                          attrs: { type: "date", id: "dob" },
-                          domProps: { value: _vm.form.dob },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.form, "dob", $event.target.value)
-                            }
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "mb-3" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-label",
-                            attrs: { for: "InputPassword" }
-                          },
-                          [_vm._v("Password")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.password,
-                              expression: "form.password"
-                            }
-                          ],
-                          staticClass: "form-control w-50",
-                          attrs: { type: "password", id: "InputPassword" },
-                          domProps: { value: _vm.form.password },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.form,
-                                "password",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ])
+                _vm._l(_vm.errors, function(error) {
+                  return _c(
+                    "div",
+                    {
+                      staticClass:
+                        "alert alert-warning alert-dismissible fade show",
+                      attrs: { role: "alert" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(error) +
+                          "\n                "
+                      ),
+                      _vm._m(0, true)
                     ]
+                  )
+                }),
+                _vm._v(" "),
+                _vm.checkIfFieldStatus("name")
+                  ? _c("div", { staticClass: "mb-3" }, [
+                      _c(
+                        "label",
+                        { staticClass: "form-label", attrs: { for: "name" } },
+                        [_vm._v("Name")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.name,
+                            expression: "form.name"
+                          }
+                        ],
+                        staticClass: "form-control w-50",
+                        attrs: { type: "text", id: "name" },
+                        domProps: { value: _vm.form.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "name", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.checkIfFieldStatus("email")
+                  ? _c("div", { staticClass: "mb-3" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-label",
+                          attrs: { for: "InputEmail" }
+                        },
+                        [_vm._v("Email address")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.email,
+                            expression: "form.email"
+                          }
+                        ],
+                        staticClass: "form-control w-50",
+                        attrs: { type: "email", id: "InputEmail" },
+                        domProps: { value: _vm.form.email },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "email", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.checkIfFieldStatus("dob")
+                  ? _c("div", { staticClass: "mb-3" }, [
+                      _c(
+                        "label",
+                        { staticClass: "form-label", attrs: { for: "dob" } },
+                        [_vm._v("Date of birth")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.dob,
+                            expression: "form.dob"
+                          }
+                        ],
+                        staticClass: "form-control w-50",
+                        attrs: { type: "date", id: "dob" },
+                        domProps: { value: _vm.form.dob },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "dob", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.checkIfFieldStatus("password")
+                  ? _c("div", { staticClass: "mb-3" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-label",
+                          attrs: { for: "InputPassword" }
+                        },
+                        [_vm._v("Password")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.password,
+                            expression: "form.password"
+                          }
+                        ],
+                        staticClass: "form-control w-50",
+                        attrs: { type: "password", id: "InputPassword" },
+                        domProps: { value: _vm.form.password },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "password", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.checkIfFieldStatus("password_confirmation")
+                  ? _c("div", { staticClass: "mb-3" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-label",
+                          attrs: { for: "InputPassword2" }
+                        },
+                        [_vm._v("Confirm Password")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.password_confirmation,
+                            expression: "form.password_confirmation"
+                          }
+                        ],
+                        staticClass: "form-control w-50",
+                        attrs: { type: "password", id: "InputPassword2" },
+                        domProps: { value: _vm.form.password_confirmation },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form,
+                              "password_confirmation",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.checkIfFieldStatus("annual_salary")
@@ -39935,11 +40122,23 @@ var render = function() {
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.checkIfFieldStatus("agency_address")
-                  ? _c("AddressInputs", { attrs: { title: "Agency address" } })
+                  ? _c("AddressInputs", {
+                      attrs: {
+                        title: "Agency address",
+                        "change-event": "agencyAddressChange"
+                      },
+                      on: { agencyAddressChange: _vm.agencyAddressChange }
+                    })
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.checkIfFieldStatus("address")
-                  ? _c("AddressInputs", { attrs: { title: "Address" } })
+                  ? _c("AddressInputs", {
+                      attrs: {
+                        title: "Address",
+                        "change-event": "addressChange"
+                      },
+                      on: { addressChange: _vm.addressChange }
+                    })
                   : _vm._e(),
                 _vm._v(" "),
                 !_vm.checkIfLastStep()
@@ -39950,20 +40149,15 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            return _vm.setRegistrationStep(++_vm.formStep)
+                            return _vm.moveToNextStep()
                           }
                         }
                       },
                       [_vm._v("Next")]
                     )
-                  : _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-success",
-                        attrs: { type: "button" }
-                      },
-                      [_vm._v("Submit")]
-                    )
+                  : _c("button", { staticClass: "btn btn-success" }, [
+                      _vm._v("Submit")
+                    ])
               ],
               2
             )
@@ -39973,7 +40167,25 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "alert",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
 render._withStripped = true
 
 

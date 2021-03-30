@@ -3,31 +3,25 @@
         <h5 class="mb-2">{{ title }}</h5>
         <div class="form-group">
             <label for="countries">Country</label>
-            <select class="form-control"  id="countries">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+            <select class="form-control"  v-model="selectedCountry" id="countries" v-on:change="fetchCities(selectedCountry)">
+                <option></option>
+                <option v-for="country in countries" :value="country.id">{{country.name}}</option>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group" v-if="selectedCountry" >
             <label for="cities">City</label>
-            <select class="form-control"  v-model="form.city_id" id="cities">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+            <select class="form-control"  v-model="form.city_id" id="cities" @change="addressUpdated()">
+                <option></option>
+                <option v-for="city in cities" :value="city.id">{{city.name}}</option>
             </select>
         </div>
         <div class="mb-3">
             <label for="address_line" class="form-label">Address Line</label>
-            <input type="text" v-model="form.address_line" class="form-control w-50" id="address_line" >
+            <input type="text" v-model="form.address_line" @change="addressUpdated()" class="form-control w-50" id="address_line" >
         </div>
         <div class="mb-3">
             <label for="postcode" class="form-label">Postcode</label>
-            <input type="text" v-model="form.postcode" class="form-control w-50" id="postcode" >
+            <input type="text" v-model="form.postcode" @change="addressUpdated()" class="form-control w-50" id="postcode" >
         </div>
     </div>
 </template>
@@ -35,10 +29,13 @@
 <script>
 export default {
     props: [
-      'title'
+      'title', 'changeEvent'
     ],
     data () {
         return {
+            countries: [],
+            cities: [],
+            selectedCountry: '',
             form: {
                 city_id: '',
                 address_line: '',
@@ -46,7 +43,32 @@ export default {
             }
         }
     },
+    mounted() {
+        this.fetchCountries();
+    },
     methods: {
+        fetchCountries(){
+            axios.get('/api/v1/countries?fields=id,name').then((res) => {
+                this.countries = res.data.data;
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        fetchCities(countryId)
+        {
+            axios.get(`/api/v1/cities?where_country_id=${countryId}&fields=id,name`).then((res) => {
+                this.cities = res.data.data;
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        addressUpdated()
+        {
+            if(this.form.city_id !== '' && this.form.address_line !== '' && this.form.postcode !== '')
+            {
+                this.$emit(this.changeEvent, this.form)
+            }
+        },
     }
 }
 </script>

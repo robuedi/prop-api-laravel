@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\v1\CitiesController;
+use App\Http\Controllers\Api\v1\CountriesController;
+use App\Http\Controllers\Api\v1\UserTypesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Auth::routes();
+
+Route::prefix('v1')->group(function (){
+    Route::get('/countries', [CountriesController::class, 'index']);
+    Route::get('/cities', [CitiesController::class, 'index']);
+    Route::get('/user-types', [UserTypesController::class, 'index']);
+});
