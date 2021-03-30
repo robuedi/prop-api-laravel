@@ -15,6 +15,10 @@ class CreatePropertyAddressesTable extends Migration
     {
         Schema::create('property_addresses', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('property_id')->unsigned();
+            $table->bigInteger('city_id')->unsigned();
+            $table->string('address_line');
+            $table->string('postcode');
             $table->timestamps();
         });
     }

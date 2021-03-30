@@ -15,6 +15,8 @@ class CreateUserSavingsTable extends Migration
     {
         Schema::create('user_savings', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->unsigned();
+            $table->float('amount', 8, 2);
             $table->timestamps();
         });
     }

@@ -13,9 +13,12 @@ class CreateUserAgencyAddressesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_agency_addresses', function (Blueprint $table) {
+        Schema::create('agency_addresses', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('agency_id')->unsigned();
             $table->bigInteger('city_id')->unsigned();
+            $table->string('address_line');
+            $table->string('postcode');
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ class CreateUserAgencyAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_agency_addresses');
+        Schema::dropIfExists('agency_addresses');
     }
 }

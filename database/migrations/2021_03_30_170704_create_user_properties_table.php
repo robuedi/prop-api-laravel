@@ -15,6 +15,9 @@ class CreateUserPropertiesTable extends Migration
     {
         Schema::create('user_properties', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('property_id')->unsigned();
+            $table->bigInteger('type_id')->unsigned();
             $table->timestamps();
         });
     }

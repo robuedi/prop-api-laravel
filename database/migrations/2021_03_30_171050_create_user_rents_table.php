@@ -15,6 +15,8 @@ class CreateUserRentsTable extends Migration
     {
         Schema::create('user_rents', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->unsigned();
+            $table->float('amount', 8, 2);
             $table->timestamps();
         });
     }

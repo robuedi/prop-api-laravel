@@ -15,6 +15,7 @@ class CreateUserPropertyTypesTable extends Migration
     {
         Schema::create('user_property_types', function (Blueprint $table) {
             $table->id();
+            $table->string('label');
             $table->timestamps();
         });
     }
