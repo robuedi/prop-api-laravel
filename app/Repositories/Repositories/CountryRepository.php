@@ -1,9 +1,10 @@
 <?php
 
 
-namespace App\Repositories;
+namespace App\Repositories\Repositories;
 
 use App\Models\Country;
+use App\Repositories\CountryRepositoryInterface;
 
 class CountryRepository implements CountryRepositoryInterface
 {

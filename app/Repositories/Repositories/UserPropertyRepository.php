@@ -1,10 +1,11 @@
 <?php
 
 
-namespace App\Repositories;
+namespace App\Repositories\Repositories;
 
 
 use App\Models\UserProperty;
+use App\Repositories\UserPropertyRepositoryInterface;
 
 class UserPropertyRepository implements UserPropertyRepositoryInterface
 {

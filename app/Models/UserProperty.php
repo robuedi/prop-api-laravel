@@ -16,4 +16,6 @@ class UserProperty extends Model
     ];
 
 
+
+
 }

@@ -5,7 +5,7 @@
         </button>
 
         <template v-if="activeSection === 'properties'">
-            <p>Sale - Rent - Bought - Renting</p>
+            <PropertyListingAccount />
         </template>
 
         <template v-if="activeSection === 'addProperty'">
@@ -23,16 +23,18 @@
 
 import AddProperty from "../components/AddProperty";
 import { mapGetters } from 'vuex'
+import PropertyListingAccount from "../components/PropertyListingAccount";
 
 export default {
     components: {
+        PropertyListingAccount,
         AddProperty
     },
     data () {
         return {
             activeSection: 'properties',
             btns: {
-                'properties': 'Properties',
+                'properties': 'My Properties',
                 'addProperty': '+Add property',
                 'profile': 'Profile'
             }

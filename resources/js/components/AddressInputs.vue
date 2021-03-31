@@ -28,9 +28,11 @@
 
 <script>
 export default {
-    props: [
-      'title', 'changeEvent', 'clearEvent'
-    ],
+    props: {
+        title: String,
+        changeEvent: String,
+        clearEvent: String
+    },
     data () {
         return {
             countries: [],
@@ -64,7 +66,7 @@ export default {
         },
         addressUpdated()
         {
-            if(this.form.city_id !== '' && this.form.address_line !== '' && this.form.postcode !== '')
+            if(this.form.city_id !== '' && this.form.address_line !== '' && this.form.postcode !== '' && this.changeEvent !== '')
             {
                 this.$emit(this.changeEvent, this.form)
             }
@@ -77,7 +79,10 @@ export default {
         }
     },
     created() {
-        this.$parent.$on(this.clearEvent, this.clearValues);
+        if(this.clearEvent!== '')
+        {
+            this.$parent.$on(this.clearEvent, this.clearValues);
+        }
     }
 }
 </script>

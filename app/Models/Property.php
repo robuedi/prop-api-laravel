@@ -13,5 +13,13 @@ class Property extends Model
         'status_id',
     ];
 
+    public function address()
+    {
+        return $this->hasOne(PropertyAddress::class, 'property_id', 'id');
+    }
 
+    public function userProperty()
+    {
+        return $this->hasMAny(UserProperty::class, 'property_id', 'id');
+    }
 }

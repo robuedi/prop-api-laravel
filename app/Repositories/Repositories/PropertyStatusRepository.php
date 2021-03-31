@@ -1,9 +1,10 @@
 <?php
 
 
-namespace App\Repositories;
+namespace App\Repositories\Repositories;
 
 use App\Models\PropertyStatus;
+use App\Repositories\PropertyStatusRepositoryInterface;
 
 class PropertyStatusRepository implements PropertyStatusRepositoryInterface
 {

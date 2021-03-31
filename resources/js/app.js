@@ -31,6 +31,7 @@ import SignIn from './views/SignIn'
 import Home from './views/Home'
 import Register from './views/Register'
 import Account from './views/Account'
+import Property from './views/Property'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -45,6 +46,11 @@ const router = new VueRouter({
             path: '/',
             name: 'home',
             component: Home
+        },
+        {
+            path: '/property/:property_id',
+            name: 'propertyItem',
+            component: Property
         },
         {
             path: '/signin',

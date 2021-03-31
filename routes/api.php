@@ -32,5 +32,6 @@ Route::prefix('v1')->group(function (){
     Route::get('/property-statuses', [PropertyStatusesController::class, 'index']);
     Route::get('/properties', [PropertiesController::class, 'index']);
     Route::post('/properties', [PropertiesController::class, 'store']);
+    Route::get('/properties/{property}', [PropertiesController::class, 'show']);
 });
 

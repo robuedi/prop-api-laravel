@@ -1,18 +1,17 @@
 <template>
     <div>
-        <h1>Properties</h1>
         <div class="card-columns" v-if="properties">
-            <PropertyItemCard v-for="property in properties" :key="property.id" :property="property"/>
+            <PropertyItemAccount v-for="property in properties" :key="property.id" :property="property"/>
         </div>
     </div>
 </template>
 
 <script>
-import PropertyItemCard from "../components/PropertyItemCard";
+import PropertyItemAccount from "../components/PropertyItemAccount";
 
 export default {
     components: {
-        PropertyItemCard
+        PropertyItemAccount
     },
     data () {
         return {
@@ -24,7 +23,7 @@ export default {
     },
     methods: {
         fetchProperties(){
-            axios.get('/api/v1/properties?fields=id,created_at&has_address=postcode,address_line&has_city=name&has_country=name').then((res) => {
+            axios.get('/api/v1/properties?has_current_user=true&fields=id,created_at&&has_address=postcode,address_line&has_city=name&has_country=name').then((res) => {
                 this.properties = res.data.data;
             }).catch((error) => {
                 console.log(error)

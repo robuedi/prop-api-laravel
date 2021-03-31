@@ -10,7 +10,7 @@
                 </select>
             </div>
 
-            <AddressInputs  clear-event="clearAddress" />
+            <AddressInputs  clear-event="clearAddress" change-event="addressChange" v-on:addressChange="addressChange" title="Property Address"/>
 
             <button class="btn btn-success">Submit</button>
         </form>
@@ -58,7 +58,11 @@ export default {
         },
         clearAddress: function() {
             this.$emit('clearAddress');
-        }
+        },
+        addressChange(address)
+        {
+            this.form.address = address;
+        },
     }
 }
 </script>

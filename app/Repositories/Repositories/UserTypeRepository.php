@@ -1,9 +1,10 @@
 <?php
 
 
-namespace App\Repositories;
+namespace App\Repositories\Repositories;
 
 use App\Models\UserType;
+use App\Repositories\UserTypeRepositoryInterface;
 
 class UserTypeRepository implements UserTypeRepositoryInterface
 {

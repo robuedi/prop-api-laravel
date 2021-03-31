@@ -2,21 +2,25 @@
 
 namespace App\Providers;
 
-use App\Http\Services\PropertyService;
-use App\Http\Services\PropertyServiceInterface;
+use App\Http\Services\PropertyFacadeService;
+use App\Http\Services\PropertyFacadeServiceInterface;
 use App\Http\Services\UserPropertyTypeService;
 use App\Http\Services\UserPropertyTypeServiceInterface;
-use App\Repositories\CityRepository;
 use App\Repositories\CityRepositoryInterface;
-use App\Repositories\CountryRepository;
 use App\Repositories\CountryRepositoryInterface;
-use App\Repositories\PropertyRepository;
+use App\Repositories\PropertyAddressRepositoryInterface;
 use App\Repositories\PropertyRepositoryInterface;
-use App\Repositories\PropertyStatusRepository;
 use App\Repositories\PropertyStatusRepositoryInterface;
-use App\Repositories\UserPropertyRepository;
+use App\Repositories\Repositories\CityRepository;
+use App\Repositories\Repositories\CountryRepository;
+use App\Repositories\Repositories\Params\PropertyRepositoryIndexParam;
+use App\Repositories\Repositories\Params\PropertyRepositoryIndexParamInterface;
+use App\Repositories\Repositories\PropertyAddressRepository;
+use App\Repositories\Repositories\PropertyRepository;
+use App\Repositories\Repositories\PropertyStatusRepository;
+use App\Repositories\Repositories\UserPropertyRepository;
+use App\Repositories\Repositories\UserTypeRepository;
 use App\Repositories\UserPropertyRepositoryInterface;
-use App\Repositories\UserTypeRepository;
 use App\Repositories\UserTypeRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,7 +40,9 @@ class AppServiceProvider extends ServiceProvider
         app()->bind(PropertyRepositoryInterface::class, PropertyRepository::class);
         app()->bind(UserPropertyRepositoryInterface::class, UserPropertyRepository::class);
         app()->bind(UserPropertyTypeServiceInterface::class, UserPropertyTypeService::class);
-        app()->bind(PropertyServiceInterface::class, PropertyService::class);
+        app()->bind(PropertyFacadeServiceInterface::class, PropertyFacadeService::class);
+        app()->bind(PropertyAddressRepositoryInterface::class, PropertyAddressRepository::class);
+        app()->bind(PropertyRepositoryIndexParamInterface::class, PropertyRepositoryIndexParam::class);
 
 
     }
