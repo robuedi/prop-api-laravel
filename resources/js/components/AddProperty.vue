@@ -1,14 +1,19 @@
 <template>
     <div>
-        <div class="form-group">
-            <label for="status">Status</label>
-            <select class="form-control"  v-model="form.status" id="status" >
-                <option></option>
-                <option v-for="status in statuses" :value="status.id">{{status.label}}</option>
-            </select>
-        </div>
+        <form action="#" @submit.prevent="submit">
 
-        <AddressInputs />
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select class="form-control"  v-model="form.status_id" id="status" >
+                    <option></option>
+                    <option v-for="status in statuses" :value="status.id">{{status.label}}</option>
+                </select>
+            </div>
+
+            <AddressInputs  clear-event="clearAddress" />
+
+            <button class="btn btn-success">Submit</button>
+        </form>
     </div>
 </template>
 
@@ -23,7 +28,7 @@ export default {
         return {
             statuses: [],
             form: {
-                status: '',
+                status_id: '',
                 address: {},
             }
         }
@@ -39,6 +44,21 @@ export default {
                 console.log(error)
             })
         },
+        submit(){
+            axios.post('/api/v1/properties', this.form).then((res) => {
+                this.clearData();
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        clearData()
+        {
+            this.form.status_id = '';
+            this.clearAddress();
+        },
+        clearAddress: function() {
+            this.$emit('clearAddress');
+        }
     }
 }
 </script>

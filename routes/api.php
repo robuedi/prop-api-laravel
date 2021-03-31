@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\v1\CitiesController;
 use App\Http\Controllers\Api\v1\CountriesController;
+use App\Http\Controllers\Api\v1\PropertiesController;
 use App\Http\Controllers\Api\v1\PropertyStatusesController;
 use App\Http\Controllers\Api\v1\UserTypesController;
 use Illuminate\Http\Request;
@@ -29,4 +30,7 @@ Route::prefix('v1')->group(function (){
     Route::get('/cities', [CitiesController::class, 'index']);
     Route::get('/user-types', [UserTypesController::class, 'index']);
     Route::get('/property-statuses', [PropertyStatusesController::class, 'index']);
+    Route::get('/properties', [PropertiesController::class, 'index']);
+    Route::post('/properties', [PropertiesController::class, 'store']);
 });
+

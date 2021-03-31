@@ -29,7 +29,7 @@
 <script>
 export default {
     props: [
-      'title', 'changeEvent'
+      'title', 'changeEvent', 'clearEvent'
     ],
     data () {
         return {
@@ -69,6 +69,15 @@ export default {
                 this.$emit(this.changeEvent, this.form)
             }
         },
+        clearValues(){
+            this.form.city_id = '';
+            this.form.address_line = '';
+            this.form.postcode = '';
+            this.selectedCountry = '';
+        }
+    },
+    created() {
+        this.$parent.$on(this.clearEvent, this.clearValues);
     }
 }
 </script>
