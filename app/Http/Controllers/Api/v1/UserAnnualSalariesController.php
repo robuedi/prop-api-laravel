@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\v1\AnnualSalaryStoreRequest;
 use App\Http\Resources\v1\UserAnnualSalaryResource;
 use App\Repositories\UserAnnualSalaryRepositoryInterface;
 use Illuminate\Http\Response;
@@ -19,7 +20,7 @@ class UserAnnualSalariesController extends Controller
         $this->user_annual_salary_repository = $user_annual_salary_repository;
     }
 
-    public function store(Request $request)
+    public function store(AnnualSalaryStoreRequest $request)
     {
         //make property for user
         return UserAnnualSalaryResource::make(

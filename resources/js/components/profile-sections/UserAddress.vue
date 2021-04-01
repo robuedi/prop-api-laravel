@@ -1,17 +1,17 @@
 <template>
-<div>
-    <div class="alert alert-warning alert-dismissible fade show" role="alert" v-for="error in errors">
-        {{ error }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <form action="#" @submit.prevent="submit">
-        <AddressInputs title="Address" v-on:addressCompleted="addressCompleted" change-event="addressCompleted"/>
+    <div v-if="show === true">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert" v-for="error in errors">
+            {{ error }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form action="#" @submit.prevent="submit">
+            <AddressInputs title="Address" v-on:addressCompleted="addressCompleted" change-event="addressCompleted"/>
 
-        <button class="btn btn-success">Submit</button>
-    </form>
-</div>
+            <button class="btn btn-success">Submit</button>
+        </form>
+    </div>
 </template>
 
 <script>
@@ -25,6 +25,7 @@ export default {
     },
     data(){
         return {
+            show: false,
             errors: [],
             currentAddress: ''
         }
@@ -55,6 +56,10 @@ export default {
             if(this.userAddress.length !== 0)
             {
                 this.$emit('hasAddress');
+            }
+            else
+            {
+                this.show = true
             }
         });
     }

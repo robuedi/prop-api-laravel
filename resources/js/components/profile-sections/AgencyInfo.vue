@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="show === true">
         <div class="alert alert-warning alert-dismissible fade show" role="alert" v-for="error in errors">
             {{ error }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -26,6 +26,7 @@ import {mapActions, mapGetters} from "vuex";
 export default {
     data () {
         return {
+            show: false,
             errors: [],
             form: {
                 name: null,
@@ -57,6 +58,10 @@ export default {
             if(this.agency.length !== 0)
             {
                 this.$emit('hasAgencyInfo');
+            }
+            else
+            {
+                this.show = true
             }
         });
     }

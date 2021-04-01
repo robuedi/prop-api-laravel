@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="show === true">
         <div class="alert alert-warning alert-dismissible fade show" role="alert" v-for="error in errors">
             {{ error }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -31,6 +31,7 @@ import {mapActions, mapGetters} from "vuex";
 export default {
     data () {
         return {
+            show: false,
             errors: [],
             form: {
                 job_title: null,
@@ -63,6 +64,10 @@ export default {
             if(this.employment.length !== 0)
             {
                 this.$emit('hasEmployment');
+            }
+            else
+            {
+                this.show = true
             }
 
         });

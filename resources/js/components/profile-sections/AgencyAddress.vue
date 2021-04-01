@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="show === true">
         <div class="alert alert-warning alert-dismissible fade show" role="alert" v-for="error in errors">
             {{ error }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -25,6 +25,7 @@ export default {
     },
     data(){
         return {
+            show: false,
             errors: [],
             currentAddress: ''
         }
@@ -59,6 +60,10 @@ export default {
             if(this.address.length !== 0)
             {
                 this.$emit('hasAgencyAddress');
+            }
+            else
+            {
+                this.show = true
             }
         });
     }

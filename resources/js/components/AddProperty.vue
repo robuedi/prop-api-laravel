@@ -19,6 +19,7 @@
 
 <script>
 import AddressInputs from '../components/AddressInputs'
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     components: {
@@ -26,30 +27,32 @@ export default {
     },
     data () {
         return {
-            statuses: [],
             form: {
                 status_id: '',
                 address: {},
             }
         }
     },
+    computed: {
+        ...mapGetters('propertiesStatuses',{
+            statuses: 'statuses',
+        })
+    },
     mounted() {
-        this.fetchPropertiesStatus();
+        this.getStatuses();
     },
     methods: {
-        fetchPropertiesStatus(){
-            axios.get('/api/v1/property-statuses?fields=id,label').then((res) => {
-                this.statuses = res.data.data;
+        ...mapActions('propertiesStatuses', ['getStatuses']),
+        ...mapActions('properties', ['setProperty']),
+        async submit()
+        {
+            this.setProperty(this.form).then((res) => {
+                this.clearData()
             }).catch((error) => {
-                console.log(error)
-            })
-        },
-        submit(){
-            axios.post('/api/v1/properties', this.form).then((res) => {
-                this.clearData();
-            }).catch((error) => {
-                console.log(error)
-            })
+                for (const [key, msg] of Object.entries(error.response.data.errors)) {
+                    this.errors.push(msg[0]);
+                }
+            });
         },
         clearData()
         {

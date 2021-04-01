@@ -21,15 +21,19 @@ export default {
         async setAnnualSalary ({ dispatch, commit }, amount) {
             return axios.post('/api/v1/annual-salaries', amount).then((response) => {
                 commit('SET_ANNUAL_SALARY', response.data.data)
-            }).catch(() => {
+                return response
+            }).catch((err) => {
                 commit('SET_ANNUAL_SALARY', [])
+                throw err
             })
         },
         async getCurrentUserAnnualSalary ({ dispatch, commit }) {
             return axios.get('/api/v1/annual-salaries/current-user').then((response) => {
                 commit('SET_ANNUAL_SALARY', response.data.data)
+                return response
             }).catch(() => {
                 commit('SET_ANNUAL_SALARY', [])
+                throw err
             })
         }
     }

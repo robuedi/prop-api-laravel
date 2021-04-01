@@ -51,7 +51,7 @@ export default {
         async signOut () {
             await this.signOutAction()
 
-            this.$router.replace({ name: 'home' })
+            this.$router.replace({ name: 'home' }).catch(err => {})
         }
     }
 }

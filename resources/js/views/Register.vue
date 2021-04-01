@@ -15,12 +15,7 @@
         <template v-if="form.type_id">
             <form action="#" @submit.prevent="submit">
 
-                <div class="alert alert-warning alert-dismissible fade show" role="alert" v-for="error in errors">
-                    {{ error }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <NotificationLabels :errors="errors"/>
 
                 <div class="mb-3" >
                     <label for="name" class="form-label">Name</label>
@@ -56,12 +51,14 @@
 
 <script>
 import AddressInputs from '../components/AddressInputs'
+import NotificationLabels from "../components/partials/NotificationLabels";
 
 import { mapActions } from 'vuex'
 
 export default {
     components: {
-        AddressInputs
+        AddressInputs,
+        NotificationLabels
     },
     data () {
         return {

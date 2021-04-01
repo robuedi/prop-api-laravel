@@ -36,6 +36,15 @@ export default {
     },
 
     actions: {
+        async setProperty ({ dispatch, commit }, property) {
+            return axios.post('/api/v1/properties', property).then((response) => {
+                commit('SET_PROPERTY', response.data.data)
+                return response.data.data
+            }).catch(() => {
+                commit('SET_PROPERTY', null)
+            })
+        },
+
         async showProperty ({ dispatch, commit }, propertyId) {
             await axios.get('/api/v1/properties/'+propertyId).then((response) => {
                 commit('SET_PROPERTY', response.data.data)

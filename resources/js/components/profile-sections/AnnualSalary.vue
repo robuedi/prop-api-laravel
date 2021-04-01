@@ -1,11 +1,6 @@
 <template>
-    <div>
-        <div class="alert alert-warning alert-dismissible fade show" role="alert" v-for="error in errors">
-            {{ error }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+    <div v-if="show === true">
+        <NotificationLabels :errors="errors"/>
         <form action="#" @submit.prevent="submit">
             <div class="mb-3" >
                 <label for="annual_salary" class="form-label">Annual salary</label>
@@ -18,11 +13,16 @@
 </template>
 
 <script>
+import NotificationLabels from '../partials/NotificationLabels'
 import {mapActions, mapGetters} from "vuex";
 
 export default {
+    components: {
+        NotificationLabels
+    },
     data () {
         return {
+            show: false,
             errors: [],
             form: {
                 amount: null,
@@ -53,6 +53,10 @@ export default {
             if(this.annualSalary.length !== 0)
             {
                 this.$emit('hasAnnualSalary');
+            }
+            else
+            {
+                this.show = true
             }
         });
     }
