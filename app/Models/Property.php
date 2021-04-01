@@ -11,6 +11,7 @@ class Property extends Model
 
     protected $fillable = [
         'status_id',
+        'owner_id'
     ];
 
     public function address()
@@ -21,5 +22,10 @@ class Property extends Model
     public function userProperty()
     {
         return $this->hasMAny(UserProperty::class, 'property_id', 'id');
+    }
+
+    public function owner()
+    {
+        return $this->hasOne(User::class, 'id', 'owner_id');
     }
 }

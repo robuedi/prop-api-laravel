@@ -51,14 +51,6 @@ class DatabaseSeeder extends Seeder
         ]);
         UserPropertyType::insert([
             [
-                'id' => 1,
-                'label' => 'own'
-            ],
-            [
-                'id' => 2,
-                'label' => 'sell'
-            ],
-            [
                 'id' => 3,
                 'label' => 'buy'
             ],

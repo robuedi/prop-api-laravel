@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 
 
 use App\Http\Requests\v1\PropertyStoreRequest;
+use App\Http\Resources\v1\PropertyAddressResource;
 use App\Http\Resources\v1\PropertyResource;
 use App\Http\Services\PropertyFacadeServiceInterface;
 use App\Models\Property;
@@ -46,13 +47,17 @@ class PropertiesController
             $this->property_facade_service->makeUserPropertyWithAddress(
                 $request->all(),
                 $request->get('address'),
-                auth()->user()->id,
-                auth()->user()->type_id
+                auth()->user()->id
             ))->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
     public function show(Property $property)
     {
         return PropertyResource::make($property)->response()->setStatusCode(Response::HTTP_OK);
+    }
+
+    public function showPropertyAddress(Property $property)
+    {
+        return PropertyAddressResource::make($property->address()->first())->response()->setStatusCode(Response::HTTP_OK);
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <div class="card " @click="redirectToProperty">
-        <img class="card-img-top" src="https://loremflickr.com/320/240/house" alt="Card image cap">
+        <img class="card-img-top" src="https://i.stack.imgur.com/y9DpT.jpg" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">{{property.address.city.country.name+', '+property.address.city.name}}</h5>
             <p class="card-text">

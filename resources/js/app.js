@@ -32,6 +32,7 @@ import Home from './views/Home'
 import Register from './views/Register'
 import Account from './views/Account'
 import Property from './views/Property'
+import CompleteRegisterGateway from './views/CompleteRegisterGateway'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -62,6 +63,12 @@ const router = new VueRouter({
             name: 'register',
             component: Register
         },
+        {
+            path: '/complete-register',
+            name: 'completeRegister',
+            component: CompleteRegisterGateway
+        },
+
         {
             path: '/account',
             name: 'account',

@@ -36,13 +36,25 @@ export default {
 
         async register ({ dispatch }, user) {
             await axios.get('/sanctum/csrf-cookie')
-            await axios.post('/api/register', user)
+            return axios.post('/api/register', user)
         },
 
         async signOut ({ dispatch }) {
             await axios.post('/api/logout')
 
             return dispatch('me')
+        },
+
+        async checkUserProfileComplete({dispatch})
+        {
+            return await axios.get('/api/v1/users/check-profile-completed').then((res) => {
+                if(res.data.data.status)
+                {
+                    dispatch('me')
+                }
+
+                return res;
+            });
         },
 
         me ({ commit }) {

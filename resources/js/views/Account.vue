@@ -41,6 +41,12 @@ export default {
 
         }
     },
+    mounted() {
+        if(this.user.is_completed == 0)
+        {
+            this.$router.replace({name: 'completeRegister'})
+        }
+    },
     computed: {
         ...mapGetters('auth', ['user'])
     },

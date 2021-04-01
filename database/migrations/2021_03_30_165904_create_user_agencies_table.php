@@ -17,7 +17,7 @@ class CreateUserAgenciesTable extends Migration
             $table->id();
             $table->string('name');
             $table->bigInteger('user_id')->unsigned();
-            $table->tinyInteger('is_public')->default(0)->index();
+            $table->tinyInteger('is_public')->default(0);
             $table->timestamps();
         });
     }

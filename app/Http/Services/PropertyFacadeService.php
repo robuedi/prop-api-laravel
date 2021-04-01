@@ -24,16 +24,13 @@ class PropertyFacadeService implements PropertyFacadeServiceInterface
         $this->property_address_repository = $property_address_repository;
     }
 
-    public function makeUserPropertyWithAddress(array $property_data, array $address_data, int $user_id, int $user_type_id) : Property
+    public function makeUserPropertyWithAddress(array $property_data, array $address_data, int $user_id) : Property
     {
         //make property
-        $property = $this->property_repository->create($property_data);
-Log::info($address_data);
+        $property = $this->property_repository->create(array_merge(['owner_id' => $user_id], $property_data));
+
         //add property address
         $this->property_address_repository->create(array_merge(['property_id' => $property->id], $address_data));
-
-        //link property to user
-        $this->user_property_repository->linkUserToProperty($user_id, $property->id, $user_type_id);
 
         return $property;
     }
