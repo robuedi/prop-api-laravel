@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\v1\AgencyAddressesController;
 use App\Http\Controllers\Api\v1\CitiesController;
 use App\Http\Controllers\Api\v1\CountriesController;
 use App\Http\Controllers\Api\v1\PropertiesController;
 use App\Http\Controllers\Api\v1\PropertyStatusesController;
 use App\Http\Controllers\Api\v1\UserAddressController;
+use App\Http\Controllers\Api\v1\AgenciesController;
 use App\Http\Controllers\Api\v1\UserAnnualSalariesController;
 use App\Http\Controllers\Api\v1\UserEmploymentController;
 use App\Http\Controllers\Api\v1\UserRentsController;
@@ -59,6 +61,11 @@ Route::prefix('v1')->group(function (){
 
     Route::post('/user-address', [UserAddressController::class, 'store']);
     Route::get('/user-address/current-user', [UserAddressController::class, 'showCurrentUser']);
+
+    Route::post('/agencies', [AgenciesController::class, 'store']);
+    Route::get('/agencies/current-user', [AgenciesController::class, 'showCurrentUser']);
+    Route::get('/agencies/{agency}/address', [AgencyAddressesController::class, 'showForAgency']);
+    Route::post('/agencies/{agency}/address', [AgencyAddressesController::class, 'storeForAgency']);
 
     Route::get('/users/check-profile-completed', [UsersController::class, 'checkUserProfileComplete']);
 

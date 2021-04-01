@@ -10,6 +10,8 @@ import rent from './rent.module'
 import userEmployment from './userEmployment.module'
 import userAddress from './userAddress.module'
 import savings from './savings.module'
+import agencyAddress from './agencyAddress.module'
+import agencyInfo from './agencyInfo.module'
 
 Vue.use(Vuex)
 
@@ -24,6 +26,8 @@ export default new Vuex.Store({
         rent,
         userEmployment,
         userAddress,
-        savings
+        savings,
+        agencyAddress,
+        agencyInfo
     }
 })

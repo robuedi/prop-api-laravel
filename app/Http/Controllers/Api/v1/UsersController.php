@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api\v1;
 
 
 use App\Http\Controllers\Api\ApiResponse;
+use App\Http\Controllers\Controller;
 use App\Http\Services\UserProfileStatus\UserProfileStatusServiceInterface;
 use Illuminate\Http\Response;
 
-class UsersController
+class UsersController extends Controller
 {
     use ApiResponse;
 

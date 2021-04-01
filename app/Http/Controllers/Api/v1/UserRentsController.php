@@ -4,12 +4,13 @@
 namespace App\Http\Controllers\Api\v1;
 
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\UserRentResource;
 use App\Repositories\UserRentRepositoryInterface;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 
-class UserRentsController
+class UserRentsController extends Controller
 {
     private UserRentRepositoryInterface $user_rent_repository;
 

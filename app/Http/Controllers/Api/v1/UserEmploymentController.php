@@ -4,12 +4,13 @@
 namespace App\Http\Controllers\Api\v1;
 
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\UserEmploymentResource;
 use App\Repositories\UserEmploymentRepositoryInterface;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 
-class UserEmploymentController
+class UserEmploymentController extends Controller
 {
     private UserEmploymentRepositoryInterface $user_employment_repository;
 

@@ -3,12 +3,13 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\UserSavingResource;
 use App\Repositories\UserSavingRepositoryInterface;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 
-class UserSavingsController
+class UserSavingsController extends Controller
 {
     private UserSavingRepositoryInterface $user_saving_repository;
 

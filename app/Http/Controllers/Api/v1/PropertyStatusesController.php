@@ -3,11 +3,12 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\PropertyStatusResource;
 use App\Repositories\PropertyStatusRepositoryInterface;
 use Illuminate\Http\Response;
 
-class PropertyStatusesController
+class PropertyStatusesController extends Controller
 {
     private PropertyStatusRepositoryInterface $property_status_repository;
 

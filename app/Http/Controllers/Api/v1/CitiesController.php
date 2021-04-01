@@ -3,11 +3,12 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\CityResource;
 use App\Repositories\CityRepositoryInterface;
 use Illuminate\Http\Response;
 
-class CitiesController
+class CitiesController extends Controller
 {
     private CityRepositoryInterface $city_repository;
 

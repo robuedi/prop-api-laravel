@@ -3,11 +3,12 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\UserTypeResource;
 use App\Repositories\UserTypeRepositoryInterface;
 use Illuminate\Http\Response;
 
-class UserTypesController
+class UserTypesController extends Controller
 {
     private UserTypeRepositoryInterface $user_type_repository;
 

@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\PropertyStoreRequest;
 use App\Http\Resources\v1\PropertyAddressResource;
 use App\Http\Resources\v1\PropertyResource;
@@ -14,7 +15,7 @@ use App\Repositories\Repositories\Params\PropertyRepositoryIndexParamInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class PropertiesController
+class PropertiesController extends Controller
 {
     private PropertyRepositoryInterface $property_repository;
     private PropertyFacadeServiceInterface  $property_facade_service;

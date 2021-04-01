@@ -13,7 +13,7 @@ class CreateUserAgenciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_agencies', function (Blueprint $table) {
+        Schema::create('agencies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->bigInteger('user_id')->unsigned();

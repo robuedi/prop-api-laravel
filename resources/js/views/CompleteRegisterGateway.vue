@@ -4,8 +4,8 @@
 
         <Tenant v-on:checkIfProfileCompleted="checkIfProfileCompleted" v-if="checkIfType(1)" />
         <Buyer v-on:checkIfProfileCompleted="checkIfProfileCompleted" v-else-if="checkIfType(2)" />
-        <Landlord v-else-if="checkIfType(3)" />
-        <Seller v-else-if="checkIfType(4)" />
+        <Landlord v-on:checkIfProfileCompleted="checkIfProfileCompleted"  v-else-if="checkIfType(3)" />
+        <Seller v-on:checkIfProfileCompleted="checkIfProfileCompleted"  v-else-if="checkIfType(4)" />
     </div>
 </template>
 

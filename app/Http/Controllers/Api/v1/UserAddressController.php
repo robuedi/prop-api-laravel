@@ -3,12 +3,13 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\UserAddressResource;
 use App\Repositories\UserAddressRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class UserAddressController
+class UserAddressController extends Controller
 {
     private UserAddressRepositoryInterface $user_address_repository;
 

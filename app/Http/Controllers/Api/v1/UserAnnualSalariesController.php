@@ -4,12 +4,13 @@
 namespace App\Http\Controllers\Api\v1;
 
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\UserAnnualSalaryResource;
 use App\Repositories\UserAnnualSalaryRepositoryInterface;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 
-class UserAnnualSalariesController
+class UserAnnualSalariesController extends Controller
 {
     private UserAnnualSalaryRepositoryInterface $user_annual_salary_repository;
 
