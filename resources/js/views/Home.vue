@@ -1,9 +1,10 @@
 <template>
     <div>
         <h1>Properties</h1>
-        <div class="card-columns" v-if="properties">
+        <div class="card-columns" v-if="properties.length > 0">
             <PropertyItemCard v-for="property in properties" :key="property.id" :property="property"/>
         </div>
+        <p v-else >No properties yet.</p>
     </div>
 </template>
 

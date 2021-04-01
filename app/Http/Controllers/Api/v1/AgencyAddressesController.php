@@ -9,6 +9,7 @@ use App\Models\Agency;
 use App\Repositories\AgencyAddressRepositoryInterface;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AgencyAddressesController extends Controller
 {
@@ -24,7 +25,7 @@ class AgencyAddressesController extends Controller
         //make property for user
         return AgencyAddressResource::make(
             $this->agency_address_repository->create(
-                $request->get($agency->id),
+                $agency->id,
                 $request->get('city_id'),
                 $request->get('address_line'),
                 $request->get('postcode')

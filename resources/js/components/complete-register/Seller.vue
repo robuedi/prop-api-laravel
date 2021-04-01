@@ -2,7 +2,7 @@
     <div>
         <template >
             <AgencyInfo v-if="activeStep === 0" v-on:hasAgencyInfo="hasAgencyInfo()"/>
-            <AgencyAddress v-if="activeStep === 1" v-on:hasAddress="addressCompleted()"/>
+            <AgencyAddress v-if="activeStep === 1" v-on:hasAgencyAddress="addressCompleted()"/>
         </template>
     </div>
 </template>

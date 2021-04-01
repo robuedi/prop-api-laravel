@@ -46,6 +46,21 @@ class UserProfileStatusService implements UserProfileStatusServiceInterface
 
                 $this->user_repository->makeUserProfileCompleted($user_id);
                 return true;
+
+            case 3:
+            case 4:
+                $agency = $this->user_profile_checks->checkAgency($user_id);
+                if(!$agency
+                    || !$this->user_profile_checks->checkAgencyAddress($agency->id))
+                {
+                    return false;
+                }
+
+                $this->user_repository->makeUserProfileCompleted($user_id);
+                return true;
+
+            default:
+                return false;
         }
     }
 
