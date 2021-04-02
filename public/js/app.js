@@ -4250,7 +4250,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 dispatch = _ref.dispatch, commit = _ref.commit;
-                userId = _this.context.rootState.auth.user.id;
+                userId = _this.state.auth.user.id;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(userId, "/agencies/").concat(data.agencyId, "/address"), data.address).then(function (response) {
                   commit('SET_AGENCY_ADDRESS', response.data.data);
                 })["catch"](function () {
@@ -4275,7 +4275,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 dispatch = _ref2.dispatch, commit = _ref2.commit;
-                userId = _this2.context.rootState.auth.user.id;
+                userId = _this2.state.auth.user.id;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(userId, "/agencies/").concat(agencyId, "/address")).then(function (response) {
                   commit('SET_AGENCY_ADDRESS', response.data.data);
                 })["catch"](function () {
@@ -4340,7 +4340,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 dispatch = _ref.dispatch, commit = _ref.commit;
-                userId = _this.context.rootState.auth.user.id;
+                userId = _this.state.auth.user.id;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(userId, "/agencies"), data).then(function (response) {
                   commit('SET_AGENCY', response.data.data);
                 })["catch"](function () {
@@ -4365,7 +4365,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 dispatch = _ref2.dispatch, commit = _ref2.commit;
-                userId = _this2.context.rootState.auth.user.id;
+                userId = _this2.state.auth.user.id;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(userId, "/agencies")).then(function (response) {
                   commit('SET_AGENCY', response.data.data);
                 })["catch"](function () {
@@ -5164,7 +5164,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 dispatch = _ref.dispatch, commit = _ref.commit;
-                userId = _this.context.rootState.auth.user.id;
+                userId = _this.state.auth.user.id;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(userId, "/rents"), amount).then(function (response) {
                   commit('SET_RENT', response.data.data);
                 })["catch"](function () {
@@ -5189,7 +5189,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 dispatch = _ref2.dispatch, commit = _ref2.commit;
-                userId = _this2.context.rootState.auth.user.id;
+                userId = _this2.state.auth.user.id;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(userId, "/rents")).then(function (response) {
                   commit('SET_RENT', response.data.data);
                 })["catch"](function () {
@@ -5254,7 +5254,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 dispatch = _ref.dispatch, commit = _ref.commit;
-                userId = _this.context.rootState.auth.user.id;
+                userId = _this.state.auth.user.id;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(userId, "/savings"), amount).then(function (response) {
                   commit('SET_SAVINGS', response.data.data);
                 })["catch"](function () {
@@ -5279,7 +5279,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 dispatch = _ref2.dispatch, commit = _ref2.commit;
-                userId = _this2.context.rootState.auth.user.id;
+                userId = _this2.state.auth.user.id;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(userId, "/savings")).then(function (response) {
                   commit('SET_SAVINGS', response.data.data);
                 })["catch"](function () {
@@ -5344,7 +5344,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 dispatch = _ref.dispatch, commit = _ref.commit;
-                userId = _this.context.rootState.auth.user.id;
+                userId = _this.state.auth.user.id;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(userId, "/addresses"), data).then(function (response) {
                   commit('SET_USER_ADDRESS', response.data.data);
                 })["catch"](function () {
@@ -5369,7 +5369,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 dispatch = _ref2.dispatch, commit = _ref2.commit;
-                userId = _this2.context.rootState.auth.user.id;
+                userId = _this2.state.auth.user.id;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(userId, "/addresses")).then(function (response) {
                   commit('SET_USER_ADDRESS', response.data.data);
                 })["catch"](function () {
@@ -5434,7 +5434,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 dispatch = _ref.dispatch, commit = _ref.commit;
-                userId = _this.context.rootState.auth.user.id;
+                userId = _this.state.auth.user.id;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(userId, "/employments"), data).then(function (response) {
                   commit('SET_EMPLOYMENT', response.data.data);
                 })["catch"](function () {
@@ -5459,7 +5459,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 dispatch = _ref2.dispatch, commit = _ref2.commit;
-                userId = _this2.context.rootState.auth.user.id;
+                userId = _this2.state.auth.user.id;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(userId, "/employments")).then(function (response) {
                   commit('SET_EMPLOYMENT', response.data.data);
                 })["catch"](function () {
