@@ -24,7 +24,9 @@ class UserEmploymentStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount' => 'numeric|required'
+            'job_title' => 'string|required',
+            'start_date' => 'date|required',
+            'end_date' => 'date|nullable'
         ];
     }
 }

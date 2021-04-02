@@ -24,7 +24,16 @@ class UserAddressStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount' => 'numeric|required'
+            'city_id' => 'numeric|required',
+            'address_line' => 'string|required',
+            'postcode' => 'string|required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'city_id.required' => 'the city field is required',
         ];
     }
 }
