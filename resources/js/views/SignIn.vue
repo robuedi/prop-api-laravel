@@ -40,24 +40,22 @@ export default {
         ...mapActions('auth', ['signIn']),
         async submit () {
             await this.signIn(this.form).then((res)=>{
-                setTimeout(()=> {
-                    this.checkUserStatus();
-                }, 1000)
+                this.redirectCheckProfileCompleted()
             }).catch((err) => {
                 for (const [key, msg] of Object.entries(err.response.data.errors)) {
                     this.errors.push(msg[0]);
                 }
             })
         },
-        checkUserStatus()
+        redirectCheckProfileCompleted()
         {
-            if(this.user.is_completed === 0)
+            if(this.user.is_completed)
             {
-                this.$router.replace({name: 'completeRegister'})
+                this.$router.push({name: 'account'})
             }
             else
             {
-                this.$router.replace({name: 'account'})
+                this.$router.push({name: 'completeRegister'})
             }
         }
     }

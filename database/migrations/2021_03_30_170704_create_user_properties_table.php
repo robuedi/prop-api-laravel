@@ -13,7 +13,7 @@ class CreateUserPropertiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_properties', function (Blueprint $table) {
+        Schema::create('property_user', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('property_id')->unsigned();
@@ -28,6 +28,6 @@ class CreateUserPropertiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_properties');
+        Schema::dropIfExists('property_user');
     }
 }

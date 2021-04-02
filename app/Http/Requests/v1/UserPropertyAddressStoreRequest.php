@@ -4,7 +4,7 @@ namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PropertyStoreRequest extends FormRequest
+class UserPropertyAddressStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class PropertyStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return $this->route('property')->owner_id === auth()->user()->id;
     }
 
     /**
@@ -24,7 +24,15 @@ class PropertyStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'city_id' => 'numeric|required',
+            'address_line' => 'string|required',
+            'postcode' => 'string|required'
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'city_id.required' => 'The city field is required'
         ];
     }
 }

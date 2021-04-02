@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Property::class, 'owner_id', 'id');
     }
+
+    public function propertyApplications()
+    {
+        return $this->belongsToMany(Property::class);
+    }
 }

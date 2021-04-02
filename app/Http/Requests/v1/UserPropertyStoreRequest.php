@@ -4,7 +4,7 @@ namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserAgencyAddressStoreRequest extends FormRequest
+class UserPropertyStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UserAgencyAddressStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('agency')->user_id === auth()->user()->id;
+        return $this->route('user')->id === auth()->user()->id;
     }
 
     /**
@@ -24,16 +24,15 @@ class UserAgencyAddressStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'city_id' => 'numeric|required',
-            'address_line' => 'string|required',
-            'postcode' => 'string|required'
+            'status_id' => 'required',
+            'name' => 'string|required'
         ];
     }
 
     public function messages()
     {
         return [
-            'city_id.required' => 'The city field is required',
+            'status_id.required' => 'The status field is required.'
         ];
     }
 }

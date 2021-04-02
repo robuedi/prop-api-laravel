@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="card-columns" v-if="userProperties">
-            <PropertyItemAccount v-for="property in userProperties" :key="property.id" :property="property"/>
+        <div class="card-columns" v-if="userApplications">
+            <PropertyItemAccount v-for="property in userApplications" :key="property.id" :property="property"/>
         </div>
     </div>
 </template>
@@ -14,24 +14,19 @@ export default {
     components: {
         PropertyItemAccount
     },
-    data () {
-        return {
-            properties: [],
-        }
-    },
     computed: {
         ...mapGetters('properties',{
-            userProperties: 'userProperties',
+            userApplications: 'userApplications',
         })
     },
     mounted() {
+        console.log('a')
         this.fetchProperties();
     },
     methods: {
-        ...mapActions('properties', ['getUserProperties']),
+        ...mapActions('properties', ['getUserApplications']),
         fetchProperties(){
-            this.getUserProperties().then((res) => {
-                console.log('vv')
+            this.getUserApplications().then((res) => {
             }).catch((error) => {
                 console.log(error)
             })

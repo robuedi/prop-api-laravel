@@ -3,13 +3,13 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-
+use App\Http\Controllers\Api\ApiResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\PropertyStoreRequest;
-use App\Http\Resources\v1\PropertyAddressResource;
+use App\Http\Requests\v1\UserPropertyStoreRequest;
 use App\Http\Resources\v1\PropertyResource;
-use App\Http\Services\PropertyFacadeServiceInterface;
+use App\Http\Resources\GeneralResource;
 use App\Models\Property;
+use App\Models\User;
 use App\Repositories\PropertyRepositoryInterface;
 use App\Repositories\Repositories\Params\PropertyRepositoryIndexParamInterface;
 use Illuminate\Http\Request;
@@ -18,12 +18,10 @@ use Illuminate\Http\Response;
 class PropertiesController extends Controller
 {
     private PropertyRepositoryInterface $property_repository;
-    private PropertyFacadeServiceInterface  $property_facade_service;
 
-    public function __construct(PropertyRepositoryInterface $property_repository, PropertyFacadeServiceInterface $property_facade_service)
+    public function __construct(PropertyRepositoryInterface $property_repository)
     {
         $this->property_repository = $property_repository;
-        $this->property_facade_service = $property_facade_service;
     }
 
     public function index(PropertyRepositoryIndexParamInterface $index_param, Request $request)
@@ -41,24 +39,24 @@ class PropertiesController extends Controller
         )->response()->setStatusCode(Response::HTTP_OK);
     }
 
-    public function store(PropertyStoreRequest $request)
+    public function indexForUser(User $user, Request $request)
+    {
+        return GeneralResource::collection($user->ownedProperties)->response()->setStatusCode(Response::HTTP_OK);
+    }
+
+    public function indexForUserApplications(User $user, Request $request)
+    {
+        return GeneralResource::collection($user->propertyApplications)->response()->setStatusCode(Response::HTTP_OK);
+    }
+
+    public function storeForUser(User $user, UserPropertyStoreRequest $request)
     {
         //make property for user
-        return PropertyResource::make(
-            $this->property_facade_service->makeUserPropertyWithAddress(
-                $request->all(),
-                $request->get('address'),
-                auth()->user()->id
-            ))->response()->setStatusCode(Response::HTTP_CREATED);
+        return PropertyResource::make($this->property_repository->create(array_merge(['owner_id'=>$user->id],$request->all())))->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
     public function show(Property $property)
     {
         return PropertyResource::make($property)->response()->setStatusCode(Response::HTTP_OK);
-    }
-
-    public function showPropertyAddress(Property $property)
-    {
-        return PropertyAddressResource::make($property->address()->first())->response()->setStatusCode(Response::HTTP_OK);
     }
 }

@@ -25,9 +25,6 @@
                         <router-link class="nav-link" to="/account"  >{{ user.name }}</router-link>
                         <a href="#" class="nav-link" @click.prevent="signOut" >Sign out</a>
                     </template>
-<!--                    <li class="nav-item dropdown">-->
-<!--                        <router-link :to="/account">Alex Garrett-Smith</router-link>-->
-<!--                    </li>-->
                 </ul>
             </div>
         </div>
@@ -49,9 +46,9 @@ export default {
             signOutAction: 'signOut'
         }),
         async signOut () {
-            await this.signOutAction()
-
-            this.$router.replace({ name: 'home' }).catch(err => {})
+            await this.signOutAction().then(()=>{
+                this.$router.replace({ name: 'signIn' }).catch(err => {})
+            })
         }
     }
 }

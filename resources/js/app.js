@@ -56,7 +56,17 @@ const router = new VueRouter({
         {
             path: '/signin',
             name: 'signIn',
-            component: SignIn
+            component: SignIn,
+            beforeEnter(to, from, next) {
+                if (store.getters["auth/authenticated"]) {
+                    next({
+                        name: "account"
+                    });
+                }
+                else {
+                    next()
+                }
+            }
         },
         {
             path: '/register',
@@ -74,13 +84,19 @@ const router = new VueRouter({
             name: 'account',
             component: Account,
             beforeEnter(to, from, next) {
-                if (store.getters["auth/authenticated"]) {
-                    next()
-                } else {
-                    next({
-                        name: "signin"
-                    });
-                }
+                setTimeout(() => {
+                    if (!store.getters["auth/authenticated"]) {
+                        next({
+                            name: "signIn"
+                        });
+                    } if (!store.getters["auth/profileCompleted"]) {
+                        next({
+                            name: "completeRegister"
+                        });
+                    } else {
+                        next()
+                    }
+                }, 1000)
             }
         }
     ],
@@ -89,6 +105,6 @@ const router = new VueRouter({
 const app = new Vue({
     el: '#app',
     components: { App },
-    router,
-    store
+    store,
+    router
 });

@@ -45,7 +45,6 @@ export default {
         ...mapActions('agencyAddress', ['setAgencyAddress', 'getAgencyAddress']),
         async submit()
         {
-            console.log(this.currentAddress);
             this.setAgencyAddress({'agencyId':this.agency.id, 'address':this.currentAddress}).then((res) => {
                 this.$emit('hasAgencyAddress')
             }).catch((error) => {

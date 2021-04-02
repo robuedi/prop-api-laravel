@@ -1,10 +1,16 @@
 <template>
     <div>
+        <NotificationLabels :errors="errors" :success="success"/>
+
         <form action="#" @submit.prevent="submit">
 
-            <div class="form-group">
+            <div class="mb-3">
+                <label for="property_name" class="form-label">Property Name</label>
+                <input type="text" v-model="form.property.name"  class="form-control w-50" id="property_name" >
+            </div>
+            <div class="form-group" >
                 <label for="status">Status</label>
-                <select class="form-control"  v-model="form.status_id" id="status" >
+                <select class="form-control"  v-model="form.property.status_id" id="status" >
                     <option></option>
                     <option v-for="status in statuses" :value="status.id">{{status.label}}</option>
                 </select>
@@ -19,16 +25,23 @@
 
 <script>
 import AddressInputs from './AddressInputs'
+import NotificationLabels from './NotificationLabels'
 import {mapActions, mapGetters} from "vuex";
 
 export default {
     components: {
-        AddressInputs
+        AddressInputs,
+        NotificationLabels
     },
     data () {
         return {
+            success: [],
+            errors: [],
             form: {
-                status_id: '',
+                property: {
+                    name: '',
+                    status_id: '',
+                },
                 address: {},
             }
         }
@@ -36,6 +49,9 @@ export default {
     computed: {
         ...mapGetters('propertiesStatuses',{
             statuses: 'statuses',
+        }),
+        ...mapGetters('properties',{
+            userProperty: 'userProperty',
         })
     },
     mounted() {
@@ -43,11 +59,33 @@ export default {
     },
     methods: {
         ...mapActions('propertiesStatuses', ['getStatuses']),
-        ...mapActions('properties', ['setProperty']),
+        ...mapActions('properties', ['storeUserProperty', 'clearProperty']),
+        ...mapActions('propertyAddress', ['storePropertyAddress']),
         async submit()
         {
-            this.setProperty(this.form).then((res) => {
+            if(this.userProperty === null)
+            {
+                this.storeUserProperty(this.form.property).then((res) => {
+                    this.createPropertyAddress(res.id)
+                }).catch((error) => {
+                    for (const [key, msg] of Object.entries(error.response.data.errors)) {
+                        this.errors.push(msg[0]);
+                    }
+                });
+            }
+            else
+            {
+                //make property address
+                this.createPropertyAddress(this.property.id)
+            }
+
+        },
+        createPropertyAddress(propertyId)
+        {
+            this.storePropertyAddress({'propertyId': propertyId, 'address': this.form.address}).then((res) => {
+                this.clearProperty()
                 this.clearData()
+                this.success.push('Property created');
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
                     this.errors.push(msg[0]);
@@ -56,7 +94,9 @@ export default {
         },
         clearData()
         {
-            this.form.status_id = '';
+            this.error = [];
+            this.form.property.status_id = '';
+            this.form.property.name = '';
             this.clearAddress();
         },
         clearAddress: function() {

@@ -11,12 +11,30 @@ export default {
             return state.authenticated
         },
 
+        profileCompleted (state) {
+            if(state.user)
+            {
+                return state.user.is_completed
+            }
+            else
+            {
+                return 0;
+            }
+        },
+
         user (state) {
             return state.user
         },
 
         userId (state) {
-            return state.user.id
+            if(state.user)
+            {
+                return state.user.id
+            }
+            else
+            {
+                return null;
+            }
         },
     },
 
@@ -34,11 +52,13 @@ export default {
         async signIn ({ dispatch }, credentials) {
             await axios.get('/sanctum/csrf-cookie')
             return axios.post('/api/login', credentials).then((res) =>{
-                dispatch('me')
-                return res
+                return dispatch('me').then(() => {
+                    return res
+                })
             }).catch((error) => {
-                dispatch('me')
-                throw error
+                return dispatch('me').then(() => {
+                    throw error
+                })
             })
         },
 
@@ -48,25 +68,22 @@ export default {
         },
 
         async signOut ({ dispatch }) {
-            await axios.post('/api/logout')
-
-            return dispatch('me')
+            await axios.post('/api/logout').then(() => {
+                return dispatch('me')
+            })
         },
 
         async checkUserProfileComplete({dispatch})
         {
             return await axios.get('/api/v1/users/check-profile-completed').then((res) => {
-                if(res.data.data.status)
-                {
-                    dispatch('me')
-                }
-
-                return res;
+                return dispatch('me').then(() => {
+                    return res;
+                })
             });
         },
 
-        me ({ commit }) {
-            return axios.get('/api/user').then((response) => {
+        async me ({ commit }) {
+            return await axios.get('/api/user').then((response) => {
                 commit('SET_AUTHENTICATED', true)
                 commit('SET_USER', response.data)
             }).catch(() => {

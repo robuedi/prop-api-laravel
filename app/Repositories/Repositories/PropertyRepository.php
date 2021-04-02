@@ -49,10 +49,10 @@ class PropertyRepository implements PropertyRepositoryInterface
 
         if($index_param->getUserId())
         {
-            $query->wherehas('userProperty', function($query) use ($index_param){
+            $query->wherehas('applications', function($query) use ($index_param){
                 $query->where('user_id', $index_param->getUserId());
             })
-            ->with(['userProperty']);
+            ->with(['applications']);
         }
 
         if($index_param->getFields())

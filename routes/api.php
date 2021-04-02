@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\v1\AgencyAddressesController;
 use App\Http\Controllers\Api\v1\CitiesController;
 use App\Http\Controllers\Api\v1\CountriesController;
 use App\Http\Controllers\Api\v1\PropertiesController;
+use App\Http\Controllers\Api\v1\PropertyAddressesController;
 use App\Http\Controllers\Api\v1\PropertyStatusesController;
 use App\Http\Controllers\Api\v1\RentsController;
 use App\Http\Controllers\Api\v1\UserAddressController;
@@ -49,7 +50,13 @@ Route::prefix('v1')->group(function (){
     Route::get('/agencies/{agency}/address', [AgencyAddressesController::class, 'showForAgency']);
 
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::post('/properties', [PropertiesController::class, 'store']);
+        Route::get('/users/{user}/properties', [PropertiesController::class, 'indexForUser']);
+        Route::get('/users/{user}/property-applications', [PropertiesController::class, 'indexForUserApplications']);
+
+
+        Route::post('/users/{user}/properties', [PropertiesController::class, 'storeForUser']);
+        Route::post('/users/{user}/properties/{property}/addresses', [PropertyAddressesController::class, 'storeForUserProperty']);
+        Route::get('/users/{user}/properties/{property}/addresses', [PropertyAddressesController::class, 'showForUserProperty']);
 
         Route::post('/users/{user}/annual-salaries', [AnnualSalariesController::class, 'storeForUser']);
         Route::get('/users/{user}/annual-salaries', [AnnualSalariesController::class, 'showForUser']);

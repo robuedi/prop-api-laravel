@@ -13,7 +13,7 @@ class UserAgencyAddressShowRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('user')->id === auth()->user()->id && $this->route('agency')->user_id === $this->route('user')->id;
+        return $this->route('agency')->user_id === auth()->user()->id;
     }
 
     /**

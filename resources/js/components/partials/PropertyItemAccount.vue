@@ -2,10 +2,8 @@
     <div class="card " >
         <img class="card-img-top" src="https://loremflickr.com/320/240/house" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title">{{property.address.city.country.name+', '+property.address.city.name}}</h5>
+            <h5 class="card-title">{{property.name}}</h5>
             <p class="card-text">
-                {{property.address.address_line}}
-                <br/>
                 <span class="float-right">Added on: {{formatDate(property.created_at)}}</span>
             </p>
         </div>

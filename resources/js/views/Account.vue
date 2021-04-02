@@ -10,6 +10,10 @@
             <PropertyListingAccount />
         </template>
 
+        <template v-if="activeSection === 'applications'">
+            <ApplicationsListingAccount />
+        </template>
+
         <template v-if="activeSection === 'addProperty'">
             <AddProperty/>
         </template>
@@ -26,17 +30,20 @@
 import AddProperty from "../components/partials/AddProperty";
 import { mapGetters } from 'vuex'
 import PropertyListingAccount from "../components/partials/PropertyListingAccount";
+import ApplicationsListingAccount from "../components/partials/ApplicationsListingAccount";
 
 export default {
     components: {
         PropertyListingAccount,
-        AddProperty
+        AddProperty,
+        ApplicationsListingAccount
     },
     data () {
         return {
-            activeSection: 'properties',
+            activeSection: 'applications',
             btns: {
                 'properties': 'My Properties',
+                'applications': 'Applications',
                 'addProperty': '+Add property',
                 'profile': 'Profile'
             }
@@ -53,7 +60,7 @@ export default {
         },
         checkIfAvailable(btnId)
         {
-            if(btnId === 'addProperty' && ![3,4].includes(this.user.type_id))
+            if(['addProperty', 'properties'].includes(btnId) && ![3,4].includes(this.user.type_id))
             {
                 return false;
             }
