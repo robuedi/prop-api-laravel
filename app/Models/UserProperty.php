@@ -11,8 +11,7 @@ class UserProperty extends Model
 
     protected $fillable = [
         'user_id',
-        'property_id',
-        'type_id',
+        'property_id'
     ];
 
 

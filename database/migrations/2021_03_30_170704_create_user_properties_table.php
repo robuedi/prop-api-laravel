@@ -17,7 +17,6 @@ class CreateUserPropertiesTable extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('property_id')->unsigned();
-            $table->bigInteger('type_id')->unsigned();
             $table->timestamps();
         });
     }

@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import AddressInputs from '../components/AddressInputs'
+import AddressInputs from '../components/partials/AddressInputs'
 import NotificationLabels from "../components/partials/NotificationLabels";
 
 import { mapActions } from 'vuex'

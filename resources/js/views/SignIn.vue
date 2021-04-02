@@ -42,7 +42,7 @@ export default {
             await this.signIn(this.form).then((res)=>{
                 setTimeout(()=> {
                     this.checkUserStatus();
-                }, 500)
+                }, 1000)
             }).catch((err) => {
                 for (const [key, msg] of Object.entries(err.response.data.errors)) {
                     this.errors.push(msg[0]);

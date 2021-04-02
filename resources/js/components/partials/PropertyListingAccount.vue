@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import PropertyItemAccount from "../components/PropertyItemAccount";
+import PropertyItemAccount from "./PropertyItemAccount";
 
 export default {
     components: {

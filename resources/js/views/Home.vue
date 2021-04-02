@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import PropertyItemCard from "../components/PropertyItemCard";
+import PropertyItemCard from "../components/partials/PropertyItemCard";
 
 export default {
     components: {

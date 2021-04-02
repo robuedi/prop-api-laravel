@@ -1,8 +1,10 @@
 <template>
     <div>
-        <button v-for="(btnName, btnId) in btns" type="button" :class="{ 'active' : activeSection === btnId}" @click="setActiveSection(btnId)" class="mb-5 mr-4 btn btn-outline-dark">
-            {{btnName}}
-        </button>
+        <template v-for="(btnName, btnId) in btns" v-if="checkIfAvailable(btnId)">
+            <button type="button" :class="{ 'active' : activeSection === btnId}" @click="setActiveSection(btnId)" class="mb-5 mr-4 btn btn-outline-dark">
+                {{btnName}}
+            </button>
+        </template>
 
         <template v-if="activeSection === 'properties'">
             <PropertyListingAccount />
@@ -21,9 +23,9 @@
 
 <script>
 
-import AddProperty from "../components/AddProperty";
+import AddProperty from "../components/partials/AddProperty";
 import { mapGetters } from 'vuex'
-import PropertyListingAccount from "../components/PropertyListingAccount";
+import PropertyListingAccount from "../components/partials/PropertyListingAccount";
 
 export default {
     components: {
@@ -49,6 +51,15 @@ export default {
         {
             this.activeSection = sectionName
         },
+        checkIfAvailable(btnId)
+        {
+            if(btnId === 'addProperty' && ![3,4].includes(this.user.type_id))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
 </script>

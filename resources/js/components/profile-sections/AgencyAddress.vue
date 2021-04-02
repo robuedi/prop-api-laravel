@@ -16,7 +16,7 @@
 
 <script>
 
-import AddressInputs from '../AddressInputs'
+import AddressInputs from '../partials/AddressInputs'
 import {mapActions, mapGetters} from "vuex";
 
 export default {

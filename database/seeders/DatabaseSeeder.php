@@ -49,14 +49,14 @@ class DatabaseSeeder extends Seeder
             'label' => 'Inactive'
             ]
         ]);
-        UserPropertyType::insert([
+        PropertyType::insert([
             [
-                'id' => 3,
-                'label' => 'buy'
+                'id' => 1,
+                'label' => 'rent'
             ],
             [
-                'id' => 4,
-                'label' => 'rent'
+                'id' => 2,
+                'label' => 'sell'
             ]
         ]);
         // \App\Models\User::factory(10)->create();

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import AddressInputs from '../components/AddressInputs'
+import AddressInputs from './AddressInputs'
 import {mapActions, mapGetters} from "vuex";
 
 export default {
