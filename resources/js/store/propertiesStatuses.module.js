@@ -26,8 +26,10 @@ export default {
 
             await axios.get('/api/v1/property-statuses?fields=id,label').then((response) => {
                 commit('SET_STATUSES', response.data.data)
-            }).catch(() => {
+                return response
+            }).catch((err) => {
                 commit('SET_STATUSES', [])
+                throw err
             })
         },
     }

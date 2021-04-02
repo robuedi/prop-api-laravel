@@ -4253,8 +4253,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 userId = _this.state.auth.user.id;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(userId, "/agencies/").concat(data.agencyId, "/address"), data.address).then(function (response) {
                   commit('SET_AGENCY_ADDRESS', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_AGENCY_ADDRESS', []);
+                  throw err;
                 }));
 
               case 3:
@@ -4278,8 +4280,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 userId = _this2.state.auth.user.id;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(userId, "/agencies/").concat(agencyId, "/address")).then(function (response) {
                   commit('SET_AGENCY_ADDRESS', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_AGENCY_ADDRESS', []);
+                  throw err;
                 }));
 
               case 3:
@@ -4343,8 +4347,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 userId = _this.state.auth.user.id;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(userId, "/agencies"), data).then(function (response) {
                   commit('SET_AGENCY', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_AGENCY', []);
+                  throw err;
                 }));
 
               case 3:
@@ -4368,8 +4374,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 userId = _this2.state.auth.user.id;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(userId, "/agencies")).then(function (response) {
                   commit('SET_AGENCY', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_AGENCY', []);
+                  throw err;
                 }));
 
               case 3:
@@ -4693,8 +4701,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.next = 5;
                 return axios.get('/api/v1/cities?fields=id,country_id,name').then(function (response) {
                   commit('SET_CITIES', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_CITIES', []);
+                  throw err;
                 });
 
               case 5:
@@ -4767,8 +4777,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.next = 5;
                 return axios.get('/api/v1/countries?fields=id,name').then(function (response) {
                   commit('SET_COUNTRIES', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_COUNTRIES', []);
+                  throw err;
                 });
 
               case 5:
@@ -4929,8 +4941,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.next = 3;
                 return axios.get('/api/v1/properties/' + propertyId).then(function (response) {
                   commit('SET_PROPERTY', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_PROPERTY', null);
+                  throw err;
                 });
 
               case 3:
@@ -4952,8 +4966,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.next = 3;
                 return axios.get('/api/v1/properties/' + propertyId + '/address').then(function (response) {
                   commit('SET_PROPERTY_ADDRESS', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_PROPERTY_ADDRESS', null);
+                  throw err;
                 });
 
               case 3:
@@ -5026,8 +5042,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.next = 5;
                 return axios.get('/api/v1/property-statuses?fields=id,label').then(function (response) {
                   commit('SET_STATUSES', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_STATUSES', []);
+                  throw err;
                 });
 
               case 5:
@@ -5167,8 +5185,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 userId = _this.state.auth.user.id;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(userId, "/rents"), amount).then(function (response) {
                   commit('SET_RENT', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_RENT', []);
+                  throw err;
                 }));
 
               case 3:
@@ -5192,8 +5212,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 userId = _this2.state.auth.user.id;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(userId, "/rents")).then(function (response) {
                   commit('SET_RENT', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_RENT', []);
+                  throw err;
                 }));
 
               case 3:
@@ -5257,8 +5279,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 userId = _this.state.auth.user.id;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(userId, "/savings"), amount).then(function (response) {
                   commit('SET_SAVINGS', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_SAVINGS', []);
+                  throw err;
                 }));
 
               case 3:
@@ -5282,8 +5306,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 userId = _this2.state.auth.user.id;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(userId, "/savings")).then(function (response) {
                   commit('SET_SAVINGS', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_SAVINGS', []);
+                  throw err;
                 }));
 
               case 3:
@@ -5347,8 +5373,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 userId = _this.state.auth.user.id;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(userId, "/addresses"), data).then(function (response) {
                   commit('SET_USER_ADDRESS', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_USER_ADDRESS', []);
+                  throw err;
                 }));
 
               case 3:
@@ -5372,8 +5400,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 userId = _this2.state.auth.user.id;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(userId, "/addresses")).then(function (response) {
                   commit('SET_USER_ADDRESS', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_USER_ADDRESS', []);
+                  throw err;
                 }));
 
               case 3:
@@ -5437,8 +5467,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 userId = _this.state.auth.user.id;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(userId, "/employments"), data).then(function (response) {
                   commit('SET_EMPLOYMENT', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_EMPLOYMENT', []);
+                  throw err;
                 }));
 
               case 3:
@@ -5462,8 +5494,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 userId = _this2.state.auth.user.id;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(userId, "/employments")).then(function (response) {
                   commit('SET_EMPLOYMENT', response.data.data);
-                })["catch"](function () {
+                  return response;
+                })["catch"](function (err) {
                   commit('SET_EMPLOYMENT', []);
+                  throw err;
                 }));
 
               case 3:

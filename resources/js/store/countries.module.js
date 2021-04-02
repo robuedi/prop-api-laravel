@@ -26,8 +26,10 @@ export default {
 
             await axios.get('/api/v1/countries?fields=id,name').then((response) => {
                 commit('SET_COUNTRIES', response.data.data)
-            }).catch(() => {
+                return response
+            }).catch((err) => {
                 commit('SET_COUNTRIES', [])
+                throw err
             })
         }
     }

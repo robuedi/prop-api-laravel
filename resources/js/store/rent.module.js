@@ -22,16 +22,20 @@ export default {
             let userId = this.state.auth.user.id
             return axios.post(`/api/v1/users/${userId}/rents`, amount).then((response) => {
                 commit('SET_RENT', response.data.data)
-            }).catch(() => {
+                return response
+            }).catch((err) => {
                 commit('SET_RENT', [])
+                throw err
             })
         },
         async getCurrentUserRent ({ dispatch, commit }) {
             let userId = this.state.auth.user.id
             return axios.get(`/api/v1/users/${userId}/rents`).then((response) => {
                 commit('SET_RENT', response.data.data)
-            }).catch(() => {
+                return response
+            }).catch((err) => {
                 commit('SET_RENT', [])
+                throw err
             })
         }
     }

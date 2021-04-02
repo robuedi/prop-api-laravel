@@ -48,15 +48,19 @@ export default {
         async showProperty ({ dispatch, commit }, propertyId) {
             await axios.get('/api/v1/properties/'+propertyId).then((response) => {
                 commit('SET_PROPERTY', response.data.data)
-            }).catch(() => {
+                return response
+            }).catch((err) => {
                 commit('SET_PROPERTY', null)
+                throw err
             })
         },
         async showPropertyAddress ({ dispatch, commit }, propertyId) {
             await axios.get('/api/v1/properties/'+propertyId+'/address').then((response) => {
                 commit('SET_PROPERTY_ADDRESS', response.data.data)
-            }).catch(() => {
+                return response
+            }).catch((err) => {
                 commit('SET_PROPERTY_ADDRESS', null)
+                throw err
             })
         }
     }
