@@ -22,7 +22,7 @@ class EmploymentController extends Controller
         $this->user_employment_repository = $user_employment_repository;
     }
 
-    public function store(User $user,UserEmploymentStoreRequest $request)
+    public function storeForUser(User $user,UserEmploymentStoreRequest $request)
     {
         //make property for user
         return UserEmploymentResource::make(
@@ -35,7 +35,7 @@ class EmploymentController extends Controller
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function showCurrentUser(User $user, UserEmploymentShowRequest $request)
+    public function showForUser(User $user, UserEmploymentShowRequest $request)
     {
         //make property for user
         return UserEmploymentResource::make(

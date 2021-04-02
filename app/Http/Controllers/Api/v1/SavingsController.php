@@ -4,7 +4,9 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\v1\UserSavingsStoreRequest;
 use App\Http\Resources\v1\UserSavingResource;
+use App\Models\User;
 use App\Repositories\UserSavingRepositoryInterface;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
@@ -18,19 +20,19 @@ class SavingsController extends Controller
         $this->user_saving_repository = $user_saving_repository;
     }
 
-    public function store(Request $request)
+    public function storeForUser(User $user, UserSavingsStoreRequest $request)
     {
         //make property for user
         return UserSavingResource::make(
-            $this->user_saving_repository->create(auth()->user()->id, $request->get('amount'))
+            $this->user_saving_repository->create($user->id, $request->get('amount'))
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function showCurrentUser()
+    public function showForUser(User $user, UserSavingsShowRequest $request)
     {
         //make property for user
         return UserSavingResource::make(
-            $this->user_saving_repository->getFirstByUserId(auth()->user()->id)
+            $this->user_saving_repository->getFirstByUserId($user->id)
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 

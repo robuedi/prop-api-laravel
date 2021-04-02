@@ -18,7 +18,7 @@ class UserAddressController extends Controller
         $this->user_address_repository = $user_address_repository;
     }
 
-    public function store(Request $request)
+    public function storeForUser(Request $request)
     {
         //make property for user
         return UserAddressResource::make(
@@ -31,7 +31,7 @@ class UserAddressController extends Controller
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function showCurrentUser()
+    public function showForUser()
     {
         //make property for user
         return UserAddressResource::make(

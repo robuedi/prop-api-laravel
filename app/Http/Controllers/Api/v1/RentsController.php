@@ -22,7 +22,7 @@ class RentsController extends Controller
         $this->user_rent_repository = $user_rent_repository;
     }
 
-    public function store(User $user, UserRentStoreRequest $request)
+    public function storeForUser(User $user, UserRentStoreRequest $request)
     {
         //make property for user
         return UserRentResource::make(
@@ -30,7 +30,7 @@ class RentsController extends Controller
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function showCurrentUser(User $user, UserRentShowRequest $request)
+    public function showForUser(User $user, UserRentShowRequest $request)
     {
         //make property for user
         return UserRentResource::make(
