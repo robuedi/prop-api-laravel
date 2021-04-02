@@ -18,9 +18,8 @@ export default {
     },
 
     actions: {
-        async setAnnualSalary ({ dispatch, commit }, amount) {
-            let userId = this.state.auth.user.id
-            return axios.post(`/api/v1/users/${userId}/annual-salaries`, amount).then((response) => {
+        async setAnnualSalary ({ dispatch, commit, rootGetters }, amount) {
+            return axios.post(`/api/v1/users/${rootGetters['auth/userId']}/annual-salaries`, amount).then((response) => {
                 commit('SET_ANNUAL_SALARY', response.data.data)
                 return response
             }).catch((err) => {
@@ -28,9 +27,8 @@ export default {
                 throw err
             })
         },
-        async getCurrentUserAnnualSalary ({ dispatch, commit }) {
-            let userId = this.state.auth.user.id
-            return axios.get(`/api/v1/users/${userId}/annual-salaries`).then((response) => {
+        async getCurrentUserAnnualSalary ({ dispatch, commit, rootGetters }) {
+            return axios.get(`/api/v1/users/${rootGetters['auth/userId']}/annual-salaries`).then((response) => {
                 commit('SET_ANNUAL_SALARY', response.data.data)
                 return response
             }).catch((err) => {

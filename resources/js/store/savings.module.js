@@ -19,8 +19,7 @@ export default {
 
     actions: {
         async setSavings ({ dispatch, commit }, amount) {
-            let userId = this.state.auth.user.id
-            return axios.post(`/api/v1/users/${userId}/savings`, amount).then((response) => {
+            return axios.post(`/api/v1/users/${rootGetters['auth/userId']}/savings`, amount).then((response) => {
                 commit('SET_SAVINGS', response.data.data)
                 return response
             }).catch((err) => {
@@ -29,8 +28,7 @@ export default {
             })
         },
         async getCurrentUserSavings ({ dispatch, commit }) {
-            let userId = this.state.auth.user.id
-            return axios.get(`/api/v1/users/${userId}/savings`).then((response) => {
+            return axios.get(`/api/v1/users/${rootGetters['auth/userId']}/savings`).then((response) => {
                 commit('SET_SAVINGS', response.data.data)
                 return response
             }).catch((err) => {

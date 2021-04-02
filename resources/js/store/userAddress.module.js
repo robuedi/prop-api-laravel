@@ -19,8 +19,7 @@ export default {
 
     actions: {
         async setUserAddress ({ dispatch, commit }, data) {
-            let userId = this.state.auth.user.id
-            return axios.post(`/api/v1/users/${userId}/addresses`, data).then((response) => {
+            return axios.post(`/api/v1/users/${rootGetters['auth/userId']}/addresses`, data).then((response) => {
                 commit('SET_USER_ADDRESS', response.data.data)
                 return response
             }).catch((err) => {
@@ -29,8 +28,7 @@ export default {
             })
         },
         async getCurrentUserAddress ({ dispatch, commit }) {
-            let userId = this.state.auth.user.id
-            return axios.get(`/api/v1/users/${userId}/addresses`).then((response) => {
+            return axios.get(`/api/v1/users/${rootGetters['auth/userId']}/addresses`).then((response) => {
                 commit('SET_USER_ADDRESS', response.data.data)
                 return response
             }).catch((err) => {
