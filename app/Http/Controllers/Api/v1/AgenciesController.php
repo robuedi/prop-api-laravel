@@ -19,7 +19,7 @@ class AgenciesController extends Controller
         $this->agency_repository = $agency_repository;
     }
 
-    public function store(Request $request)
+    public function storeForUser(Request $request)
     {
         //make property for user
         return AgencyResource::make(
@@ -27,7 +27,7 @@ class AgenciesController extends Controller
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function showCurrentUser()
+    public function showForUser()
     {
         //make property for user
         return AgencyResource::make(

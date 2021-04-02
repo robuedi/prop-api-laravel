@@ -4,8 +4,11 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\v1\UserAgencyAddressShowRequest;
+use App\Http\Requests\v1\UserAgencyAddressStoreRequest;
 use App\Http\Resources\v1\AgencyAddressResource;
 use App\Models\Agency;
+use App\Models\User;
 use App\Repositories\AgencyAddressRepositoryInterface;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
@@ -20,7 +23,7 @@ class AgencyAddressesController extends Controller
         $this->agency_address_repository = $agency_address_repository;
     }
 
-    public function storeForAgency(Agency $agency,Request $request)
+    public function storeForUserAgency(User $user, Agency $agency, UserAgencyAddressStoreRequest $request)
     {
         //make property for user
         return AgencyAddressResource::make(
@@ -33,7 +36,7 @@ class AgencyAddressesController extends Controller
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function showForAgency(Agency $agency, Request $request)
+    public function showForUserAgency(User $user, Agency $agency, UserAgencyAddressShowRequest $request)
     {
         //make property for user
         return AgencyAddressResource::make(

@@ -4248,7 +4248,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 dispatch = _ref.dispatch, commit = _ref.commit, rootGetters = _ref.rootGetters;
-                return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/agencies/").concat(data.agencyId, "/address"), data.address).then(function (response) {
+                return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/agencies/").concat(data.agencyId, "/addresses"), data.address).then(function (response) {
                   commit('SET_AGENCY_ADDRESS', response.data.data);
                   return response;
                 })["catch"](function (err) {
@@ -4272,7 +4272,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 dispatch = _ref2.dispatch, commit = _ref2.commit, rootGetters = _ref2.rootGetters;
-                return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/agencies/").concat(agencyId, "/address")).then(function (response) {
+                return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/agencies/").concat(agencyId, "/addresses")).then(function (response) {
                   commit('SET_AGENCY_ADDRESS', response.data.data);
                   return response;
                 })["catch"](function (err) {

@@ -68,7 +68,8 @@ Route::prefix('v1')->group(function (){
 
         Route::post('/users/{user}/agencies', [AgenciesController::class, 'storeForUser']);
         Route::get('/users/{user}/agencies', [AgenciesController::class, 'showForUser']);
-        Route::post('/users/{user}/agencies/{agency}/address', [AgencyAddressesController::class, 'storeForUserAgency']);
+        Route::post('/users/{user}/agencies/{agency}/addresses', [AgencyAddressesController::class, 'storeForUserAgency']);
+        Route::get('/users/{user}/agencies/{agency}/addresses', [AgencyAddressesController::class, 'showForUserAgency']);
 
         Route::get('/users/check-profile-completed', [UsersController::class, 'checkUserProfileComplete']);
     });
