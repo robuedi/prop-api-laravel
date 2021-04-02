@@ -12,7 +12,7 @@ import userAddress from './userAddress.module'
 import savings from './savings.module'
 import agencyAddress from './agencyAddress.module'
 import agencyInfo from './agencyInfo.module'
-import propertyType from './propertyType.module'
+import propertyTypes from './propertyTypes.module'
 
 Vue.use(Vuex)
 
@@ -30,6 +30,6 @@ export default new Vuex.Store({
         savings,
         agencyAddress,
         agencyInfo,
-        propertyType
+        propertyTypes
     }
 })

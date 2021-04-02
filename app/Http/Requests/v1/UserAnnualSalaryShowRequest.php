@@ -3,6 +3,7 @@
 namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class UserAnnualSalaryShowRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UserAnnualSalaryShowRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('user') === auth()->user()->id;
+        return $this->route('user')->id === auth()->user()->id;
     }
 
     /**

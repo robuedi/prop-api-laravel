@@ -13,7 +13,7 @@ class UserRentStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('user') === auth()->user()->id;
+        return $this->route('user')->id === auth()->user()->id;
     }
 
     /**
