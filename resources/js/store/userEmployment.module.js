@@ -19,14 +19,16 @@ export default {
 
     actions: {
         async setEmployment ({ dispatch, commit }, data) {
-            return axios.post('/api/v1/user-employment', data).then((response) => {
+            let userId = this.context.rootState.auth.user.id
+            return axios.post(`/api/v1/users/${userId}/employments`, data).then((response) => {
                 commit('SET_EMPLOYMENT', response.data.data)
             }).catch(() => {
                 commit('SET_EMPLOYMENT', [])
             })
         },
         async getCurrentUserEmployment ({ dispatch, commit }) {
-            return axios.get('/api/v1/user-employment/current-user').then((response) => {
+            let userId = this.context.rootState.auth.user.id
+            return axios.get(`/api/v1/users/${userId}/employments`).then((response) => {
                 commit('SET_EMPLOYMENT', response.data.data)
             }).catch(() => {
                 commit('SET_EMPLOYMENT', [])

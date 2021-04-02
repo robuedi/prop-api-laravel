@@ -19,14 +19,16 @@ export default {
 
     actions: {
         async setRent ({ dispatch, commit }, amount) {
-            return axios.post('/api/v1/user-rent', amount).then((response) => {
+            let userId = this.context.rootState.auth.user.id
+            return axios.post(`/api/v1/users/${userId}/rents`, amount).then((response) => {
                 commit('SET_RENT', response.data.data)
             }).catch(() => {
                 commit('SET_RENT', [])
             })
         },
         async getCurrentUserRent ({ dispatch, commit }) {
-            return axios.get('/api/v1/user-rent/current-user').then((response) => {
+            let userId = this.context.rootState.auth.user.id
+            return axios.get(`/api/v1/users/${userId}/rents`).then((response) => {
                 commit('SET_RENT', response.data.data)
             }).catch(() => {
                 commit('SET_RENT', [])
