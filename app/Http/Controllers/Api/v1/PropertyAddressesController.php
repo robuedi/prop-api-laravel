@@ -10,6 +10,7 @@ use App\Http\Resources\v1\PropertyAddressResource;
 use App\Models\Property;
 use App\Models\User;
 use App\Repositories\PropertyAddressRepositoryInterface;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class PropertyAddressesController extends Controller
@@ -28,6 +29,11 @@ class PropertyAddressesController extends Controller
     }
 
     public function showForUserProperty(User $user, Property $property, UserPropertyAddressShowRequest $request)
+    {
+        return PropertyAddressResource::make($property->address()->first())->response()->setStatusCode(Response::HTTP_OK);
+    }
+
+    public function showForProperty(Property $property, Request $request)
     {
         return PropertyAddressResource::make($property->address()->first())->response()->setStatusCode(Response::HTTP_OK);
     }

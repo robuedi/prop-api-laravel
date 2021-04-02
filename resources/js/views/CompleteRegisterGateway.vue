@@ -24,10 +24,19 @@ export default {
         Tenant,
         Landlord
     },
+    watch: {
+        user() {
+            this.checkIfAccountRedirect();
+        }
+    },
     computed: {
         ...mapGetters('auth',{
-            user: 'user'
+            user: 'user',
+            profileCompleted: 'profileCompleted'
         })
+    },
+    mounted() {
+        this.checkIfAccountRedirect();
     },
     methods: {
         ...mapActions('auth', ['checkUserProfileComplete']),
@@ -42,11 +51,14 @@ export default {
         checkIfProfileCompleted()
         {
             this.checkUserProfileComplete().then((res) => {
-                if(res.data.data.status)
-                {
-                    this.$router.replace({name: 'account'})
-                }
             });
+        },
+        checkIfAccountRedirect()
+        {
+            if(this.profileCompleted)
+            {
+                this.$router.push({name: 'accountProfile'})
+            }
         }
     },
 }

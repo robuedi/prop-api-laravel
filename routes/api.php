@@ -45,7 +45,7 @@ Route::prefix('v1')->group(function (){
     Route::get('/properties/{property}', [PropertiesController::class, 'show']);
 
     //properties address
-    Route::get('/properties/{property}/address', [PropertiesController::class, 'showPropertyAddress']);
+    Route::get('/properties/{property}/address', [PropertyAddressesController::class, 'showForProperty']);
 
     Route::get('/agencies/{agency}/address', [AgencyAddressesController::class, 'showForAgency']);
 

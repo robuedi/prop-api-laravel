@@ -28,7 +28,7 @@ export default {
             axios.get('/api/v1/properties?fields=id,created_at&has_address=postcode,address_line&has_city=name&has_country=name').then((res) => {
                 this.properties = res.data.data;
             }).catch((error) => {
-                console.log(error)
+                throw error
             })
         }
     }

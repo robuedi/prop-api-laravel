@@ -127,7 +127,7 @@ export default {
             axios.get(`/api/v1/user-types?&fields=id,label`).then((res) => {
                 this.userTypes = res.data.data;
             }).catch((error) => {
-                console.log(error)
+                throw error
             })
         }
     },

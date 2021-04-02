@@ -21,12 +21,16 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
     data(){
         return {
+            cityName: '',
+            countryName: '',
             propertyCity: null
         }
     },
     computed: {
         ...mapGetters('properties',{
             property: 'property',
+        }),
+        ...mapGetters('propertyAddress',{
             propertyAddress: 'propertyAddress'
         }),
         ...mapGetters('propertiesStatuses',{
@@ -44,44 +48,37 @@ export default {
                 return status.label
             }
         },
-        city() {
-            let city = this.cities.find(item => item.id === this.propertyAddress.city_id)
-            if(city){
-                return city
-            }
-        },
-        cityName(){
-            if(!this.city)
-            {
-                return '';
-            }
-            return this.city.name;
-        },
-        cityId(){
-            if(!this.city)
-            {
-                return '';
-            }
-            return this.city.id;
-        },
-        countryName() {
-            let country = this.countries.find(item => item.id === this.cityId)
-            if(country){
-                return country.name
-            }
-            return ''
-        }
     },
     mounted() {
         this.getStatuses();
         this.showProperty(this.$route.params.property_id)
         this.showPropertyAddress(this.$route.params.property_id).then(() => {
-            this.getCities();
-            this.getCountries();
+            this.getCities().then(()=>{
+                let city = this.cities.find(item => item.id === this.propertyAddress.city_id)
+                this.cityName = city ? city.name : '';
+
+                if(city)
+                {
+                    this.cityName = city ? city.name : '';
+                    return city;
+                }
+
+                return '';
+            }).then((res) => {
+                if(!res)
+                {
+                    return;
+                }
+                this.getCountries().then(()=>{
+                    let country = this.cities.find(item => item.id === res.country_id)
+                    this.countryName = country ? country.name : '';
+                });
+            });
         });
     },
     methods: {
-        ...mapActions('properties', ['showProperty', 'showPropertyAddress']),
+        ...mapActions('properties', ['showProperty']),
+        ...mapActions('propertyAddress', ['showPropertyAddress']),
         ...mapActions('propertiesStatuses', ['getStatuses']),
         ...mapActions('cities', ['getCities']),
         ...mapActions('countries', ['getCountries']),

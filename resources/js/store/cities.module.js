@@ -31,6 +31,6 @@ export default {
                 commit('SET_CITIES', [])
                 throw err
             })
-        }
+        },
     }
 }

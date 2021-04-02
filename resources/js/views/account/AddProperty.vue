@@ -1,5 +1,6 @@
 <template>
     <div>
+        <AccountNavigation activeSection="addProperty"/>
         <NotificationLabels :errors="errors" :success="success"/>
 
         <form action="#" @submit.prevent="submit">
@@ -24,14 +25,16 @@
 </template>
 
 <script>
-import AddressInputs from './AddressInputs'
-import NotificationLabels from './NotificationLabels'
+import AccountNavigation from "./partials/AccountNavigation";
+import AddressInputs from '../../components/partials/AddressInputs'
+import NotificationLabels from '../../components/partials/NotificationLabels'
 import {mapActions, mapGetters} from "vuex";
 
 export default {
     components: {
         AddressInputs,
-        NotificationLabels
+        NotificationLabels,
+        AccountNavigation
     },
     data () {
         return {
@@ -60,7 +63,7 @@ export default {
     methods: {
         ...mapActions('propertiesStatuses', ['getStatuses']),
         ...mapActions('properties', ['storeUserProperty', 'clearProperty']),
-        ...mapActions('propertyAddress', ['storePropertyAddress']),
+        ...mapActions('propertyAddress', ['storeUserPropertyAddress']),
         async submit()
         {
             if(this.userProperty === null)
@@ -76,13 +79,13 @@ export default {
             else
             {
                 //make property address
-                this.createPropertyAddress(this.property.id)
+                this.createPropertyAddress(this.userProperty.id)
             }
 
         },
         createPropertyAddress(propertyId)
         {
-            this.storePropertyAddress({'propertyId': propertyId, 'address': this.form.address}).then((res) => {
+            this.storeUserPropertyAddress({'propertyId': propertyId, 'address': this.form.address}).then((res) => {
                 this.clearProperty()
                 this.clearData()
                 this.success.push('Property created');

@@ -27,10 +27,15 @@ window.Vue.use(VueRouter)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 import App from './components/App'
+import PassThrough from './components/PassThrough'
 import SignIn from './views/SignIn'
 import Home from './views/Home'
 import Register from './views/Register'
 import Account from './views/Account'
+import Profile from './views/account/Profile'
+import AddProperty from './views/account/AddProperty'
+import Applications from './views/account/Applications'
+import MyProperties from './views/account/MyProperties'
 import Property from './views/Property'
 import CompleteRegisterGateway from './views/CompleteRegisterGateway'
 
@@ -78,27 +83,68 @@ const router = new VueRouter({
             name: 'completeRegister',
             component: CompleteRegisterGateway
         },
-
         {
             path: '/account',
             name: 'account',
             component: Account,
-            beforeEnter(to, from, next) {
-                setTimeout(() => {
-                    if (!store.getters["auth/authenticated"]) {
-                        next({
-                            name: "signIn"
-                        });
-                    } if (!store.getters["auth/profileCompleted"]) {
-                        next({
-                            name: "completeRegister"
-                        });
-                    } else {
-                        next()
-                    }
-                }, 1000)
-            }
-        }
+            // beforeEnter(to, from, next) {
+            //     setTimeout(() => {
+            //         if (!store.getters["auth/authenticated"]) {
+            //             next({
+            //                 name: "signIn"
+            //             });
+            //         } if (!store.getters["auth/profileCompleted"]) {
+            //             next({
+            //                 name: "completeRegister"
+            //             });
+            //         } else {
+            //             next()
+            //         }
+            //     }, 1000)
+            // },
+            children:[
+                {
+                    path: '',
+                    name: 'accountProfile',
+                    component: Profile,
+                },
+                {
+                    path: 'my-properties',
+                    name: 'userProperties',
+                    component: MyProperties
+                },
+                {
+                    path: 'applications',
+                    name: 'userApplications',
+                    component: Applications
+                },
+                {
+                    path: 'add-property',
+                    name: 'addProperty',
+                    component: AddProperty
+                }
+            ]
+        },
+        // {
+        //     path: '/account',
+        //     name: 'account',
+        //     component: Account,
+        //     beforeEnter(to, from, next) {
+        //         setTimeout(() => {
+        //             if (!store.getters["auth/authenticated"]) {
+        //                 next({
+        //                     name: "signIn"
+        //                 });
+        //             } if (!store.getters["auth/profileCompleted"]) {
+        //                 next({
+        //                     name: "completeRegister"
+        //                 });
+        //             } else {
+        //                 next()
+        //             }
+        //         }, 1000)
+        //     }
+        // }
     ],
 });
 

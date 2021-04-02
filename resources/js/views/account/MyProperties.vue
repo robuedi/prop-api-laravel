@@ -1,5 +1,6 @@
 <template>
     <div>
+        <AccountNavigation activeSection="userProperties"/>
         <div class="card-columns" v-if="userProperties">
             <PropertyItemAccount v-for="property in userProperties" :key="property.id" :property="property"/>
         </div>
@@ -7,12 +8,14 @@
 </template>
 
 <script>
-import PropertyItemAccount from "./PropertyItemAccount";
+import AccountNavigation from "./partials/AccountNavigation";
+import PropertyItemAccount from "../../components/partials/PropertyItemAccount";
 import {mapActions, mapGetters} from "vuex";
 
 export default {
     components: {
-        PropertyItemAccount
+        PropertyItemAccount,
+        AccountNavigation
     },
     data () {
         return {

@@ -53,7 +53,7 @@ export default {
             axios.get('/api/v1/countries?fields=id,name').then((res) => {
                 this.countries = res.data.data;
             }).catch((error) => {
-                console.log(error)
+                throw error
             })
         },
         fetchCities(countryId)
@@ -61,7 +61,7 @@ export default {
             axios.get(`/api/v1/cities?where_country_id=${countryId}&fields=id,name`).then((res) => {
                 this.cities = res.data.data;
             }).catch((error) => {
-                console.log(error)
+                throw error
             })
         },
         addressUpdated()

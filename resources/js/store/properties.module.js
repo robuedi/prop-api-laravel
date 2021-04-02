@@ -3,13 +3,17 @@ export default {
 
     state: {
         userProperty: null,
-        propertyAddress: null,
+        property: null,
         properties: [],
         userProperties: [],
         userApplications: []
     },
 
     getters: {
+        property (state) {
+            return state.property
+        },
+
         properties (state) {
             return state.properties
         },
@@ -25,13 +29,13 @@ export default {
         userProperty (state) {
             return state.userProperty
         },
-
-        propertyAddress (state) {
-            return state.propertyAddress
-        },
     },
 
     mutations: {
+        SET_PROPERTY (state, value) {
+            state.property = value
+        },
+
         SET_PROPERTIES (state, value) {
             state.properties = value
         },
@@ -47,10 +51,6 @@ export default {
         SET_USER_PROPERTY (state, value) {
             state.userProperty = value
         },
-
-        SET_PROPERTY_ADDRESS (state, value) {
-            state.propertyAddress = value
-        }
     },
 
     actions: {
@@ -75,7 +75,6 @@ export default {
         },
 
         async getUserProperties ({ commit, rootGetters }) {
-            console.log('test')
             await axios.get(`/api/v1/users/${rootGetters['auth/userId']}/properties/`).then((response) => {
                 commit('SET_USER_PROPERTIES', response.data.data)
                 return response
@@ -99,15 +98,5 @@ export default {
         {
             commit('SET_PROPERTY', null)
         },
-
-        async showPropertyAddress ({ dispatch, commit }, propertyId) {
-            await axios.get('/api/v1/properties/'+propertyId+'/address').then((response) => {
-                commit('SET_PROPERTY_ADDRESS', response.data.data)
-                return response
-            }).catch((err) => {
-                commit('SET_PROPERTY_ADDRESS', null)
-                throw err
-            })
-        }
     }
 }

@@ -47,17 +47,6 @@ export default {
                 }
             })
         },
-        redirectCheckProfileCompleted()
-        {
-            if(this.user.is_completed)
-            {
-                this.$router.push({name: 'account'})
-            }
-            else
-            {
-                this.$router.push({name: 'completeRegister'})
-            }
-        }
     }
 }
 </script>
