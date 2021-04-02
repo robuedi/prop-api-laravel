@@ -18,7 +18,7 @@ export default {
     },
 
     actions: {
-        async setAgency ({ dispatch, commit }, data) {
+        async setAgency ({ dispatch, commit, rootGetters }, data) {
             return axios.post(`/api/v1/users/${rootGetters['auth/userId']}/agencies`, data).then((response) => {
                 commit('SET_AGENCY', response.data.data)
                 return response
@@ -27,7 +27,7 @@ export default {
                 throw err
             })
         },
-        async getCurrentUserAgency ({ dispatch, commit }) {
+        async getCurrentUserAgency ({ commit, rootGetters }) {
             return axios.get(`/api/v1/users/${rootGetters['auth/userId']}/agencies`).then((response) => {
                 commit('SET_AGENCY', response.data.data)
                 return response

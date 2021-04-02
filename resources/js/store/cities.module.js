@@ -18,7 +18,7 @@ export default {
     },
 
     actions: {
-        async getCities ({ dispatch, commit }) {
+        async getCities ({ commit }) {
             if(this.state.cities.length > 0)
             {
                 return

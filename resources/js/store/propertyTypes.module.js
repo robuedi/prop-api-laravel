@@ -18,7 +18,7 @@ export default {
     },
 
     actions: {
-        async getPropertyTypes ({ dispatch, commit }) {
+        async getPropertyTypes ({ commit }) {
             if(this.state.propertyTypes)
             {
                 return

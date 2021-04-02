@@ -18,7 +18,7 @@ export default {
     },
 
     actions: {
-        async getCountries ({ dispatch, commit }) {
+        async getCountries ({ commit }) {
             if(this.state.countries.length > 0)
             {
                 return

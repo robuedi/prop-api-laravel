@@ -18,7 +18,7 @@ export default {
     },
 
     actions: {
-        async getStatuses ({ dispatch, commit }) {
+        async getStatuses ({ commit }) {
             if(this.state.statuses)
             {
                 return

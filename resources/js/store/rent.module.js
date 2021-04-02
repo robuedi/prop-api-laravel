@@ -18,7 +18,7 @@ export default {
     },
 
     actions: {
-        async setRent ({ dispatch, commit }, amount) {
+        async setRent ({ dispatch, commit, rootGetters }, amount) {
             return axios.post(`/api/v1/users/${rootGetters['auth/userId']}/rents`, amount).then((response) => {
                 commit('SET_RENT', response.data.data)
                 return response
@@ -27,7 +27,7 @@ export default {
                 throw err
             })
         },
-        async getCurrentUserRent ({ dispatch, commit }) {
+        async getCurrentUserRent ({ commit, rootGetters }) {
             return axios.get(`/api/v1/users/${rootGetters['auth/userId']}/rents`).then((response) => {
                 commit('SET_RENT', response.data.data)
                 return response

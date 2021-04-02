@@ -27,7 +27,7 @@ export default {
                 throw err
             })
         },
-        async getCurrentUserAnnualSalary ({ dispatch, commit, rootGetters }) {
+        async getCurrentUserAnnualSalary ({ commit, rootGetters }) {
             return axios.get(`/api/v1/users/${rootGetters['auth/userId']}/annual-salaries`).then((response) => {
                 commit('SET_ANNUAL_SALARY', response.data.data)
                 return response

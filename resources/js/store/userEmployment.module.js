@@ -18,7 +18,7 @@ export default {
     },
 
     actions: {
-        async setEmployment ({ dispatch, commit }, data) {
+        async setEmployment ({ dispatch, commit, rootGetters }, data) {
             return axios.post(`/api/v1/users/${rootGetters['auth/userId']}/employments`, data).then((response) => {
                 commit('SET_EMPLOYMENT', response.data.data)
                 return response
@@ -27,7 +27,7 @@ export default {
                 throw err
             })
         },
-        async getCurrentUserEmployment ({ dispatch, commit }) {
+        async getCurrentUserEmployment ({ commit, rootGetters }) {
             return axios.get(`/api/v1/users/${rootGetters['auth/userId']}/employments`).then((response) => {
                 commit('SET_EMPLOYMENT', response.data.data)
                 return response

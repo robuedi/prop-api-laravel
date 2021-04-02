@@ -4242,12 +4242,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   actions: {
     setAgencyAddress: function setAgencyAddress(_ref, data) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit;
+        var dispatch, commit, rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit;
+                dispatch = _ref.dispatch, commit = _ref.commit, rootGetters = _ref.rootGetters;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/agencies/").concat(data.agencyId, "/address"), data.address).then(function (response) {
                   commit('SET_AGENCY_ADDRESS', response.data.data);
                   return response;
@@ -4266,12 +4266,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getAgencyAddress: function getAgencyAddress(_ref2, agencyId) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var dispatch, commit;
+        var dispatch, commit, rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                dispatch = _ref2.dispatch, commit = _ref2.commit;
+                dispatch = _ref2.dispatch, commit = _ref2.commit, rootGetters = _ref2.rootGetters;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/agencies/").concat(agencyId, "/address")).then(function (response) {
                   commit('SET_AGENCY_ADDRESS', response.data.data);
                   return response;
@@ -4330,12 +4330,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   actions: {
     setAgency: function setAgency(_ref, data) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit;
+        var dispatch, commit, rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit;
+                dispatch = _ref.dispatch, commit = _ref.commit, rootGetters = _ref.rootGetters;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/agencies"), data).then(function (response) {
                   commit('SET_AGENCY', response.data.data);
                   return response;
@@ -4354,12 +4354,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getCurrentUserAgency: function getCurrentUserAgency(_ref2) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var dispatch, commit;
+        var commit, rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                dispatch = _ref2.dispatch, commit = _ref2.commit;
+                commit = _ref2.commit, rootGetters = _ref2.rootGetters;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/agencies")).then(function (response) {
                   commit('SET_AGENCY', response.data.data);
                   return response;
@@ -4442,12 +4442,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getCurrentUserAnnualSalary: function getCurrentUserAnnualSalary(_ref2) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var dispatch, commit, rootGetters;
+        var commit, rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                dispatch = _ref2.dispatch, commit = _ref2.commit, rootGetters = _ref2.rootGetters;
+                commit = _ref2.commit, rootGetters = _ref2.rootGetters;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/annual-salaries")).then(function (response) {
                   commit('SET_ANNUAL_SALARY', response.data.data);
                   return response;
@@ -4668,12 +4668,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit;
+        var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit;
+                commit = _ref.commit;
 
                 if (!(_this.state.cities.length > 0)) {
                   _context.next = 3;
@@ -4744,12 +4744,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit;
+        var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit;
+                commit = _ref.commit;
 
                 if (!(_this.state.countries.length > 0)) {
                   _context.next = 3;
@@ -5009,12 +5009,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit;
+        var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit;
+                commit = _ref.commit;
 
                 if (!_this.state.statuses) {
                   _context.next = 3;
@@ -5085,12 +5085,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit;
+        var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit;
+                commit = _ref.commit;
 
                 if (!_this.state.propertyTypes) {
                   _context.next = 3;
@@ -5159,12 +5159,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   actions: {
     setRent: function setRent(_ref, amount) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit;
+        var dispatch, commit, rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit;
+                dispatch = _ref.dispatch, commit = _ref.commit, rootGetters = _ref.rootGetters;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/rents"), amount).then(function (response) {
                   commit('SET_RENT', response.data.data);
                   return response;
@@ -5183,12 +5183,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getCurrentUserRent: function getCurrentUserRent(_ref2) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var dispatch, commit;
+        var commit, rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                dispatch = _ref2.dispatch, commit = _ref2.commit;
+                commit = _ref2.commit, rootGetters = _ref2.rootGetters;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/rents")).then(function (response) {
                   commit('SET_RENT', response.data.data);
                   return response;
@@ -5247,12 +5247,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   actions: {
     setSavings: function setSavings(_ref, amount) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit;
+        var dispatch, commit, rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit;
+                dispatch = _ref.dispatch, commit = _ref.commit, rootGetters = _ref.rootGetters;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/savings"), amount).then(function (response) {
                   commit('SET_SAVINGS', response.data.data);
                   return response;
@@ -5271,12 +5271,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getCurrentUserSavings: function getCurrentUserSavings(_ref2) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var dispatch, commit;
+        var commit, rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                dispatch = _ref2.dispatch, commit = _ref2.commit;
+                commit = _ref2.commit, rootGetters = _ref2.rootGetters;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/savings")).then(function (response) {
                   commit('SET_SAVINGS', response.data.data);
                   return response;
@@ -5335,12 +5335,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   actions: {
     setUserAddress: function setUserAddress(_ref, data) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit;
+        var dispatch, commit, rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit;
+                dispatch = _ref.dispatch, commit = _ref.commit, rootGetters = _ref.rootGetters;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/addresses"), data).then(function (response) {
                   commit('SET_USER_ADDRESS', response.data.data);
                   return response;
@@ -5359,12 +5359,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getCurrentUserAddress: function getCurrentUserAddress(_ref2) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var dispatch, commit;
+        var commit, rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                dispatch = _ref2.dispatch, commit = _ref2.commit;
+                commit = _ref2.commit, rootGetters = _ref2.rootGetters;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/addresses")).then(function (response) {
                   commit('SET_USER_ADDRESS', response.data.data);
                   return response;
@@ -5423,12 +5423,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   actions: {
     setEmployment: function setEmployment(_ref, data) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit;
+        var dispatch, commit, rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit;
+                dispatch = _ref.dispatch, commit = _ref.commit, rootGetters = _ref.rootGetters;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/employments"), data).then(function (response) {
                   commit('SET_EMPLOYMENT', response.data.data);
                   return response;
@@ -5447,12 +5447,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getCurrentUserEmployment: function getCurrentUserEmployment(_ref2) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var dispatch, commit;
+        var commit, rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                dispatch = _ref2.dispatch, commit = _ref2.commit;
+                commit = _ref2.commit, rootGetters = _ref2.rootGetters;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/employments")).then(function (response) {
                   commit('SET_EMPLOYMENT', response.data.data);
                   return response;
