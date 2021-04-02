@@ -9,7 +9,7 @@ use App\Repositories\UserSavingRepositoryInterface;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 
-class UserSavingsController extends Controller
+class SavingsController extends Controller
 {
     private UserSavingRepositoryInterface $user_saving_repository;
 

@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Api\v1;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\v1\UserEmploymentShowRequest;
+use App\Http\Requests\v1\UserEmploymentStoreRequest;
 use App\Http\Resources\v1\UserEmploymentResource;
+use App\Models\User;
 use App\Repositories\UserEmploymentRepositoryInterface;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 
-class UserEmploymentController extends Controller
+class EmploymentController extends Controller
 {
     private UserEmploymentRepositoryInterface $user_employment_repository;
 
@@ -19,12 +22,12 @@ class UserEmploymentController extends Controller
         $this->user_employment_repository = $user_employment_repository;
     }
 
-    public function store(Request $request)
+    public function store(User $user,UserEmploymentStoreRequest $request)
     {
         //make property for user
         return UserEmploymentResource::make(
             $this->user_employment_repository->create(
-                auth()->user()->id,
+                $user->id,
                 $request->get('job_title'),
                 $request->get('start_date'),
                 $request->get('end_date')
@@ -32,11 +35,11 @@ class UserEmploymentController extends Controller
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function showCurrentUser()
+    public function showCurrentUser(User $user, UserEmploymentShowRequest $request)
     {
         //make property for user
         return UserEmploymentResource::make(
-            $this->user_employment_repository->getFirstByUserId(auth()->user()->id)
+            $this->user_employment_repository->getFirstByUserId($user->id)
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 

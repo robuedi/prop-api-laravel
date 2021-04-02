@@ -5,12 +5,12 @@ use App\Http\Controllers\Api\v1\CitiesController;
 use App\Http\Controllers\Api\v1\CountriesController;
 use App\Http\Controllers\Api\v1\PropertiesController;
 use App\Http\Controllers\Api\v1\PropertyStatusesController;
+use App\Http\Controllers\Api\v1\RentsController;
 use App\Http\Controllers\Api\v1\UserAddressController;
 use App\Http\Controllers\Api\v1\AgenciesController;
-use App\Http\Controllers\Api\v1\UserAnnualSalariesController;
-use App\Http\Controllers\Api\v1\UserEmploymentController;
-use App\Http\Controllers\Api\v1\UserRentsController;
-use App\Http\Controllers\Api\v1\UserSavingsController;
+use App\Http\Controllers\Api\v1\AnnualSalariesController;
+use App\Http\Controllers\Api\v1\EmploymentController;
+use App\Http\Controllers\Api\v1\SavingsController;
 use App\Http\Controllers\Api\v1\UsersController;
 use App\Http\Controllers\Api\v1\UserTypesController;
 use Illuminate\Http\Request;
@@ -51,24 +51,24 @@ Route::prefix('v1')->group(function (){
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/properties', [PropertiesController::class, 'store']);
 
-        Route::post('/annual-salaries', [UserAnnualSalariesController::class, 'store']);
-        Route::get('/annual-salaries/current-user', [UserAnnualSalariesController::class, 'showCurrentUser']);
+        Route::post('/users/{user}/annual-salaries', [AnnualSalariesController::class, 'storeForUser']);
+        Route::get('/users/{user}/annual-salaries', [AnnualSalariesController::class, 'showForUser']);
 
-        Route::post('/user-rent', [UserRentsController::class, 'store']);
-        Route::get('/user-rent/current-user', [UserRentsController::class, 'showCurrentUser']);
+        Route::post('/users/{user}/rents', [RentsController::class, 'storeForUser']);
+        Route::get('/users/{user}/rents', [RentsController::class, 'showForUser']);
 
-        Route::post('/user-employment', [UserEmploymentController::class, 'store']);
-        Route::get('/user-employment/current-user', [UserEmploymentController::class, 'showCurrentUser']);
+        Route::post('/users/{user}/employments', [EmploymentController::class, 'storeForUser']);
+        Route::get('/users/{user}/employments', [EmploymentController::class, 'showForUser']);
 
-        Route::post('/user-savings', [UserSavingsController::class, 'store']);
-        Route::get('/user-savings/current-user', [UserSavingsController::class, 'showCurrentUser']);
+        Route::post('/users/{user}/savings', [SavingsController::class, 'storeForUser']);
+        Route::get('/users/{user}/savings', [SavingsController::class, 'showForUser']);
 
-        Route::post('/user-address', [UserAddressController::class, 'store']);
-        Route::get('/user-address/current-user', [UserAddressController::class, 'showCurrentUser']);
+        Route::post('/users/{user}/addresses', [UserAddressController::class, 'storeForUser']);
+        Route::get('/users/{user}/addresses', [UserAddressController::class, 'showForUser']);
 
-        Route::post('/agencies', [AgenciesController::class, 'store']);
-        Route::get('/agencies/current-user', [AgenciesController::class, 'showCurrentUser']);
-        Route::post('/agencies/{agency}/address', [AgencyAddressesController::class, 'storeForAgency']);
+        Route::post('/users/{user}/agencies', [AgenciesController::class, 'storeForUser']);
+        Route::get('/users/{user}/agencies', [AgenciesController::class, 'showForUser']);
+        Route::post('/users/{user}/agencies/{agency}/address', [AgencyAddressesController::class, 'storeForUserAgency']);
 
         Route::get('/users/check-profile-completed', [UsersController::class, 'checkUserProfileComplete']);
     });
