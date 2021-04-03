@@ -94,6 +94,16 @@ export default {
             })
         },
 
+        async getProperties({ commit, rootGetters }){
+            return axios.get(`/api/v1/properties${rootGetters['paramsPropertyIndex/query']}`).then((response) => {
+                commit('SET_PROPERTIES', response.data.data)
+                return response
+            }).catch((error) => {
+                commit('SET_PROPERTIES', [])
+                throw error
+            })
+        },
+
         clearProperty({commit})
         {
             commit('SET_PROPERTY', null)

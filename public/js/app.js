@@ -2401,6 +2401,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -3399,6 +3400,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_partials_PropertyItemCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/partials/PropertyItemCard */ "./resources/js/components/partials/PropertyItemCard.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -3409,30 +3417,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     PropertyItemCard: _components_partials_PropertyItemCard__WEBPACK_IMPORTED_MODULE_0__.default
   },
-  data: function data() {
-    return {
-      properties: []
-    };
-  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('properties', {
+    properties: 'properties'
+  })),
   mounted: function mounted() {
-    this.fetchProperties();
+    this.setPropertyIndexParams();
+    this.getProperties();
   },
-  methods: {
-    fetchProperties: function fetchProperties() {
-      var _this = this;
-
-      axios.get('/api/v1/properties?fields=id,created_at&has_address=postcode,address_line&has_city=name&has_country=name').then(function (res) {
-        _this.properties = res.data.data;
-      })["catch"](function (error) {
-        throw error;
-      });
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('paramsPropertyIndex', ['setAddress', 'setCity', 'setFields', 'setCountry'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('properties', ['getProperties'])), {}, {
+    setPropertyIndexParams: function setPropertyIndexParams() {
+      this.setFields(['id', 'name', 'created_at']);
+      this.setAddress(['postcode', 'address_line']);
+      this.setCity(['name']);
+      this.setCountry(['name']);
     }
-  }
+  })
 });
 
 /***/ }),
@@ -5062,8 +5067,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _auth_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth.module */ "./resources/js/store/auth.module.js");
 /* harmony import */ var _properties_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./properties.module */ "./resources/js/store/properties.module.js");
 /* harmony import */ var _propertiesStatuses_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./propertiesStatuses.module */ "./resources/js/store/propertiesStatuses.module.js");
@@ -5078,6 +5083,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _agencyInfo_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./agencyInfo.module */ "./resources/js/store/agencyInfo.module.js");
 /* harmony import */ var _propertyTypes_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./propertyTypes.module */ "./resources/js/store/propertyTypes.module.js");
 /* harmony import */ var _propertyAddress_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./propertyAddress.module */ "./resources/js/store/propertyAddress.module.js");
+/* harmony import */ var _params_properties_index_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./params/properties/index.module */ "./resources/js/store/params/properties/index.module.js");
 
 
 
@@ -5094,8 +5100,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_14__.default.use(vuex__WEBPACK_IMPORTED_MODULE_15__.default);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_15__.default.Store({
+
+vue__WEBPACK_IMPORTED_MODULE_15__.default.use(vuex__WEBPACK_IMPORTED_MODULE_16__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_16__.default.Store({
   modules: {
     auth: _auth_module__WEBPACK_IMPORTED_MODULE_0__.default,
     properties: _properties_module__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -5110,9 +5117,120 @@ vue__WEBPACK_IMPORTED_MODULE_14__.default.use(vuex__WEBPACK_IMPORTED_MODULE_15__
     agencyAddress: _agencyAddress_module__WEBPACK_IMPORTED_MODULE_10__.default,
     agencyInfo: _agencyInfo_module__WEBPACK_IMPORTED_MODULE_11__.default,
     propertyTypes: _propertyTypes_module__WEBPACK_IMPORTED_MODULE_12__.default,
-    propertyAddress: _propertyAddress_module__WEBPACK_IMPORTED_MODULE_13__.default
+    propertyAddress: _propertyAddress_module__WEBPACK_IMPORTED_MODULE_13__.default,
+    paramsPropertyIndex: _params_properties_index_module__WEBPACK_IMPORTED_MODULE_14__.default
   }
 }));
+
+/***/ }),
+
+/***/ "./resources/js/store/params/properties/index.module.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/store/params/properties/index.module.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: {
+    fields: [],
+    address: [],
+    city: [],
+    country: []
+  },
+  getters: {
+    fields: function fields(state) {
+      return state.fields;
+    },
+    address: function address(state) {
+      return state.address;
+    },
+    city: function city(state) {
+      return state.city;
+    },
+    country: function country(state) {
+      return state.country;
+    },
+    query: function query(state) {
+      var queryItems = [];
+
+      if (state.fields.length > 0) {
+        queryItems.push('fields=' + state.fields.join(','));
+      }
+
+      if (state.address.length > 0) {
+        queryItems.push('has_address=' + state.address.join(','));
+      }
+
+      if (state.city.length > 0) {
+        queryItems.push('has_city=' + state.city.join(','));
+      }
+
+      if (state.country.length > 0) {
+        queryItems.push('has_country=' + state.country.join(','));
+      }
+
+      return queryItems.length > 0 ? '?' + queryItems.join('&') : '';
+    }
+  },
+  mutations: {
+    SET_FIELDS: function SET_FIELDS(state, value) {
+      state.fields = value;
+    },
+    SET_ADDRESS: function SET_ADDRESS(state, value) {
+      state.address = value;
+    },
+    SET_CITY: function SET_CITY(state, value) {
+      state.city = value;
+    },
+    SET_COUNTRY: function SET_COUNTRY(state, value) {
+      state.country = value;
+    }
+  },
+  actions: {
+    setFields: function setFields(_ref, values) {
+      var commit = _ref.commit;
+
+      if (values) {
+        commit('SET_FIELDS', values);
+      } else {
+        commit('SET_FIELDS', []);
+      }
+    },
+    setAddress: function setAddress(_ref2, values) {
+      var commit = _ref2.commit;
+
+      if (values) {
+        commit('SET_ADDRESS', values);
+      } else {
+        commit('SET_ADDRESS', []);
+      }
+    },
+    setCity: function setCity(_ref3, values) {
+      var commit = _ref3.commit;
+
+      if (values) {
+        commit('SET_CITY', values);
+      } else {
+        commit('SET_CITY', []);
+      }
+    },
+    setCountry: function setCountry(_ref4, values) {
+      var commit = _ref4.commit;
+
+      if (values) {
+        commit('SET_COUNTRY', values);
+      } else {
+        commit('SET_COUNTRY', []);
+      }
+    }
+  }
+});
 
 /***/ }),
 
@@ -5278,8 +5396,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee4);
       }))();
     },
-    clearProperty: function clearProperty(_ref5) {
-      var commit = _ref5.commit;
+    getProperties: function getProperties(_ref5) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var commit, rootGetters;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                commit = _ref5.commit, rootGetters = _ref5.rootGetters;
+                return _context5.abrupt("return", axios.get("/api/v1/properties".concat(rootGetters['paramsPropertyIndex/query'])).then(function (response) {
+                  commit('SET_PROPERTIES', response.data.data);
+                  return response;
+                })["catch"](function (error) {
+                  commit('SET_PROPERTIES', []);
+                  throw error;
+                }));
+
+              case 2:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+    clearProperty: function clearProperty(_ref6) {
+      var commit = _ref6.commit;
       commit('SET_PROPERTY', null);
     }
   }
@@ -66785,18 +66927,18 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
         _c("h5", { staticClass: "card-title" }, [
-          _vm._v(
-            _vm._s(
-              _vm.property.address.city.country.name +
-                ", " +
-                _vm.property.address.city.name
-            )
-          )
+          _vm._v(_vm._s(_vm.property.name))
         ]),
         _vm._v(" "),
         _c("p", { staticClass: "card-text" }, [
           _vm._v(
             "\n            " +
+              _vm._s(
+                _vm.property.address.city.country.name +
+                  ", " +
+                  _vm.property.address.city.name
+              ) +
+              "\n            " +
               _vm._s(_vm.property.address.address_line) +
               "\n            "
           ),

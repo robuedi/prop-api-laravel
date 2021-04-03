@@ -14,6 +14,7 @@ import agencyAddress from './agencyAddress.module'
 import agencyInfo from './agencyInfo.module'
 import propertyTypes from './propertyTypes.module'
 import propertyAddress from './propertyAddress.module'
+import paramsPropertyIndex from './params/properties/index.module'
 
 Vue.use(Vuex)
 
@@ -32,6 +33,7 @@ export default new Vuex.Store({
         agencyAddress,
         agencyInfo,
         propertyTypes,
-        propertyAddress
+        propertyAddress,
+        paramsPropertyIndex
     }
 })

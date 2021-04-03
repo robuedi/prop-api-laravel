@@ -10,26 +10,35 @@
 
 <script>
 import PropertyItemCard from "../components/partials/PropertyItemCard";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     components: {
         PropertyItemCard
     },
-    data () {
-        return {
-            properties: [],
-        }
+    computed: {
+        ...mapGetters('properties',{
+            properties: 'properties',
+        }),
     },
     mounted() {
-        this.fetchProperties();
+        this.setPropertyIndexParams()
+        this.getProperties()
     },
     methods: {
-        fetchProperties(){
-            axios.get('/api/v1/properties?fields=id,created_at&has_address=postcode,address_line&has_city=name&has_country=name').then((res) => {
-                this.properties = res.data.data;
-            }).catch((error) => {
-                throw error
-            })
+        ...mapActions('paramsPropertyIndex', [
+            'setAddress',
+            'setCity',
+            'setFields',
+            'setCountry'
+        ]),
+        ...mapActions('properties', ['getProperties']),
+        setPropertyIndexParams()
+        {
+            this.setFields(['id', 'name', 'created_at'])
+            this.setAddress(['postcode', 'address_line'])
+            this.setCity(['name'])
+            this.setCountry(['name'])
         }
     }
 }
