@@ -40,7 +40,7 @@ export default {
         ...mapActions('auth', ['signIn']),
         async submit () {
             await this.signIn(this.form).then((res)=>{
-                this.redirectCheckProfileCompleted()
+                this.$router.push({name: 'accountProfile'})
             }).catch((err) => {
                 for (const [key, msg] of Object.entries(err.response.data.errors)) {
                     this.errors.push(msg[0]);

@@ -1,5 +1,7 @@
 <template>
-    <router-view v-if="profileCompleted"/>
+    <div v-if="profileCompleted">
+        <router-view />
+    </div>
 </template>
 
 <script>
@@ -8,12 +10,12 @@ import { mapGetters } from 'vuex'
 
 export default {
     watch: {
-        user() {
+        profileCompleted() {
             this.profileCompletedCheck();
         }
     },
     computed: {
-        ...mapGetters('auth', ['user', 'profileCompleted'])
+        ...mapGetters('auth', ['profileCompleted'])
     },
     methods: {
         profileCompletedCheck()
@@ -23,6 +25,9 @@ export default {
                 this.$router.push({name: 'completeRegister'})
             }
         }
+    },
+    mounted() {
+        this.profileCompletedCheck()
     }
 }
 </script>

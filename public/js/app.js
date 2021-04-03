@@ -3281,14 +3281,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   watch: {
-    user: function user() {
+    profileCompleted: function profileCompleted() {
       this.profileCompletedCheck();
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('auth', ['user', 'profileCompleted'])),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('auth', ['profileCompleted'])),
   methods: {
     profileCompletedCheck: function profileCompletedCheck() {
       if (!this.profileCompleted) {
@@ -3297,6 +3299,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
     }
+  },
+  mounted: function mounted() {
+    this.profileCompletedCheck();
   }
 });
 
@@ -3817,7 +3822,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 0:
                 _context.next = 2;
                 return _this.signIn(_this.form).then(function (res) {
-                  _this.redirectCheckProfileCompleted();
+                  _this.$router.push({
+                    name: 'accountProfile'
+                  });
                 })["catch"](function (err) {
                   for (var _i = 0, _Object$entries = Object.entries(err.response.data.errors); _i < _Object$entries.length; _i++) {
                     var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
@@ -67649,7 +67656,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.profileCompleted ? _c("router-view") : _vm._e()
+  return _vm.profileCompleted ? _c("div", [_c("router-view")], 1) : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -67968,7 +67975,11 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control w-50",
-                    attrs: { type: "date", id: "dob" },
+                    attrs: {
+                      type: "string",
+                      placeholder: "day/month/year",
+                      id: "dob"
+                    },
                     domProps: { value: _vm.form.dob },
                     on: {
                       input: function($event) {

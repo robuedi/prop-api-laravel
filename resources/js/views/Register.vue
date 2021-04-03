@@ -29,7 +29,7 @@
 
                 <div class="mb-3" >
                     <label for="dob" class="form-label">Date of birth</label>
-                    <input type="date" v-model="form.dob" class="form-control w-50" id="dob" >
+                    <input type="string" placeholder="day/month/year" v-model="form.dob" class="form-control w-50" id="dob" >
                 </div>
 
                 <div class="mb-3" >
