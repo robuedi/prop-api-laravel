@@ -23,7 +23,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('properties',{
+        ...mapGetters('userProperties',{
             userProperties: 'userProperties',
         })
     },
@@ -31,7 +31,7 @@ export default {
         this.fetchProperties();
     },
     methods: {
-        ...mapActions('properties', ['getUserProperties']),
+        ...mapActions('userProperties', ['getUserProperties']),
         fetchProperties(){
             this.getUserProperties().then((res) => {
             }).catch((error) => {

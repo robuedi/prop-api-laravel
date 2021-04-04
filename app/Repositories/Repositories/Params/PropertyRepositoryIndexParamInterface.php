@@ -32,7 +32,7 @@ interface PropertyRepositoryIndexParamInterface
     /**
      * @param int|null $user_id
      */
-    public function setUserId(?int $user_id): void;
+    public function setUserId(?int $user_id): PropertyRepositoryIndexParamInterface;
 
     /**
      * @return string
@@ -53,4 +53,14 @@ interface PropertyRepositoryIndexParamInterface
      * @param string $address
      */
     public function setCountry(?string $country): PropertyRepositoryIndexParamInterface;
+
+    /**
+     * @return bool
+     */
+    public function getUserType(): bool;
+
+    /**
+     * @param bool $user_type
+     */
+    public function setUserType(bool $user_type): PropertyRepositoryIndexParamInterface;
 }

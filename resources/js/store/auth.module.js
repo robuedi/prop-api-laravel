@@ -1,7 +1,10 @@
+import apiStates from "./apiStates/apiStateValues";
+
 export default {
     namespaced: true,
 
     state: {
+        apiState: apiStates.INIT,
         authenticated: false,
         user: null
     },
@@ -36,6 +39,10 @@ export default {
                 return null;
             }
         },
+
+        apiState (state) {
+            return state.apiState
+        },
     },
 
     mutations: {
@@ -44,7 +51,12 @@ export default {
         },
 
         SET_USER (state, value) {
-            state.user = value
+            state.user = value,
+            state.apiState = apiStates.LOADING
+        },
+
+        SET_API_STATE (state, value) {
+            state.apiState = value
         }
     },
 
@@ -86,9 +98,11 @@ export default {
             return await axios.get('/api/user').then((response) => {
                 commit('SET_AUTHENTICATED', true)
                 commit('SET_USER', response.data)
+                commit('SET_API_STATE', apiStates.LOADED)
             }).catch(() => {
                 commit('SET_AUTHENTICATED', false)
                 commit('SET_USER', null)
+                commit('SET_API_STATE', apiStates.ERROR)
             })
         }
     }

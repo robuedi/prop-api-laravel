@@ -9,6 +9,8 @@ class Property extends Model
 {
     use HasFactory;
 
+    protected $table = 'properties';
+
     protected $fillable = [
         'status_id',
         'owner_id',
@@ -27,6 +29,11 @@ class Property extends Model
 
     public function owner()
     {
-        return $this->hasOne(User::class, 'id', 'owner_id');
+        return $this->belongsTo(User::class, 'id');
+    }
+
+    public function userType()
+    {
+        return $this->owner();
     }
 }

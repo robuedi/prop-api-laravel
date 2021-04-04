@@ -13,7 +13,7 @@ class UserPropertyAddressStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('property')->owner_id === auth()->user()->id;
+        return $this->route('property')->owner_id === auth()->user()->id && in_array(auth()->user()->type_id, [3,4]);
     }
 
     /**

@@ -13,6 +13,24 @@ class PropertyRepositoryIndexParam implements PropertyRepositoryIndexParamInterf
     private ?string $country = null;
     private array $fields = [];
     private ?int $user_id = null;
+    private bool $user_type = false;
+
+    /**
+     * @return bool
+     */
+    public function getUserType(): bool
+    {
+        return $this->user_type;
+    }
+
+    /**
+     * @param bool $user_type
+     */
+    public function setUserType(bool $user_type): PropertyRepositoryIndexParamInterface
+    {
+        $this->user_type = $user_type;
+        return $this;
+    }
 
     /**
      * @return int|null
@@ -25,9 +43,10 @@ class PropertyRepositoryIndexParam implements PropertyRepositoryIndexParamInterf
     /**
      * @param int|null $user_id
      */
-    public function setUserId(?int $user_id): void
+    public function setUserId(?int $user_id): PropertyRepositoryIndexParamInterface
     {
         $this->user_id = $user_id;
+        return $this;
     }
 
     /**
@@ -57,7 +76,6 @@ class PropertyRepositoryIndexParam implements PropertyRepositoryIndexParamInterf
             return null;
         }
 
-        Log::info($this->city);
         $extra_fields = $this->city ? ['property_id', 'city_id'] : ['property_id'];
         return array_merge(explode(',', $this->address), $extra_fields);
     }

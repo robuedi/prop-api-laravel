@@ -44,8 +44,8 @@ export default {
                 property: {
                     name: '',
                     status_id: '',
+                    address: {},
                 },
-                address: {},
             }
         }
     },
@@ -53,7 +53,7 @@ export default {
         ...mapGetters('propertiesStatuses',{
             statuses: 'statuses',
         }),
-        ...mapGetters('properties',{
+        ...mapGetters('userProperties',{
             userProperty: 'userProperty',
         })
     },
@@ -62,33 +62,14 @@ export default {
     },
     methods: {
         ...mapActions('propertiesStatuses', ['getStatuses']),
-        ...mapActions('properties', ['storeUserProperty', 'clearProperty']),
+        ...mapActions('userProperties', ['storeUserProperty', 'clearUserProperty']),
         ...mapActions('propertyAddress', ['storeUserPropertyAddress']),
         async submit()
         {
-            if(this.userProperty === null)
-            {
-                this.storeUserProperty(this.form.property).then((res) => {
-                    this.createPropertyAddress(res.id)
-                }).catch((error) => {
-                    for (const [key, msg] of Object.entries(error.response.data.errors)) {
-                        this.errors.push(msg[0]);
-                    }
-                });
-            }
-            else
-            {
-                //make property address
-                this.createPropertyAddress(this.userProperty.id)
-            }
-
-        },
-        createPropertyAddress(propertyId)
-        {
-            this.storeUserPropertyAddress({'propertyId': propertyId, 'address': this.form.address}).then((res) => {
-                this.clearProperty()
+            this.storeUserProperty(this.form.property).then((res) => {
+                this.success.push(`${res.name} property created.`);
+                this.clearUserProperty()
                 this.clearData()
-                this.success.push('Property created');
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
                     this.errors.push(msg[0]);
@@ -100,14 +81,12 @@ export default {
             this.error = [];
             this.form.property.status_id = '';
             this.form.property.name = '';
-            this.clearAddress();
-        },
-        clearAddress: function() {
+            this.form.property.address = {};
             this.$emit('clearAddress');
         },
         addressChange(address)
         {
-            this.form.address = address;
+            this.form.property.address = address;
         },
     }
 }

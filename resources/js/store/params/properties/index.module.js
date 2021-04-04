@@ -5,7 +5,8 @@ export default {
         fields: [],
         address: [],
         city: [],
-        country: []
+        country: [],
+        userType: false
     },
 
     getters: {
@@ -45,6 +46,11 @@ export default {
                 queryItems.push('has_country='+state.country.join(','))
             }
 
+            if(state.userType)
+            {
+                queryItems.push('has_user_type=true')
+            }
+
             return queryItems.length > 0 ? '?'+queryItems.join('&') : ''
         },
     },
@@ -61,6 +67,9 @@ export default {
         },
         SET_COUNTRY (state, value) {
             state.country = value
+        },
+        SET_USER_TYPE (state, value) {
+            state.userType = value
         }
     },
 
@@ -103,6 +112,16 @@ export default {
              else
              {
                  commit('SET_COUNTRY', [])
+             }
+        },
+         setUserType ({commit}, values) {
+             if(values)
+             {
+                 commit('SET_USER_TYPE', values)
+             }
+             else
+             {
+                 commit('SET_USER_TYPE', false)
              }
         },
     }

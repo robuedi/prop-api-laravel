@@ -53,7 +53,6 @@ Route::prefix('v1')->group(function (){
         Route::get('/users/{user}/properties', [PropertiesController::class, 'indexForUser']);
         Route::get('/users/{user}/property-applications', [PropertiesController::class, 'indexForUserApplications']);
 
-
         Route::post('/users/{user}/properties', [PropertiesController::class, 'storeForUser']);
         Route::post('/users/{user}/properties/{property}/addresses', [PropertyAddressesController::class, 'storeForUserProperty']);
         Route::get('/users/{user}/properties/{property}/addresses', [PropertyAddressesController::class, 'showForUserProperty']);

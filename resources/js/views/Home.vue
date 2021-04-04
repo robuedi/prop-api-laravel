@@ -1,10 +1,13 @@
 <template>
     <div>
         <h1>Properties</h1>
-        <div class="card-columns" v-if="properties.length > 0">
-            <PropertyItemCard v-for="property in properties" :key="property.id" :property="property"/>
-        </div>
-        <p v-else >No properties yet.</p>
+        <p v-if="loadingProperties">Loading properties...</p>
+        <template v-else>
+            <div class="card-columns" v-if="properties.length > 0">
+                <PropertyItemCard v-for="property in properties" :key="property.id" :property="property"/>
+            </div>
+            <p v-else >No properties yet.</p>
+        </template>
     </div>
 </template>
 
@@ -16,6 +19,11 @@ export default {
     components: {
         PropertyItemCard
     },
+    data() {
+        return {
+            loadingProperties: true
+        }
+    },
     computed: {
         ...mapGetters('properties',{
             properties: 'properties',
@@ -23,14 +31,17 @@ export default {
     },
     mounted() {
         this.setPropertyIndexParams()
-        this.getProperties()
+        this.getProperties().finally(()=>{
+            this.loadingProperties = false
+        })
     },
     methods: {
         ...mapActions('paramsPropertyIndex', [
             'setAddress',
             'setCity',
             'setFields',
-            'setCountry'
+            'setCountry',
+            'setUserType'
         ]),
         ...mapActions('properties', ['getProperties']),
         setPropertyIndexParams()
@@ -39,6 +50,7 @@ export default {
             this.setAddress(['postcode', 'address_line'])
             this.setCity(['name'])
             this.setCountry(['name'])
+            this.setUserType(true)
         }
     }
 }

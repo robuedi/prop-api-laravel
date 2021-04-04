@@ -18,7 +18,7 @@ export default {
         AccountNavigation
     },
     computed: {
-        ...mapGetters('properties',{
+        ...mapGetters('userProperties',{
             userApplications: 'userApplications',
         })
     },
@@ -26,7 +26,7 @@ export default {
         this.fetchProperties();
     },
     methods: {
-        ...mapActions('properties', ['getUserApplications']),
+        ...mapActions('userProperties', ['getUserApplications']),
         fetchProperties(){
             this.getUserApplications().then((res) => {
             }).catch((error) => {

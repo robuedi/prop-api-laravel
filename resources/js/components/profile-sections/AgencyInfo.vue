@@ -35,13 +35,13 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('agencyInfo',{
+        ...mapGetters('userAgencies',{
             agency: 'agency',
         })
     },
     methods: {
-        ...mapActions('agencyInfo', ['setAgency']),
-        ...mapActions('agencyInfo', ['getCurrentUserAgency']),
+        ...mapActions('userAgencies', ['setAgency']),
+        ...mapActions('userAgencies', ['getCurrentUserAgency']),
         async submit()
         {
             this.setAgency(this.form).then((res) => {

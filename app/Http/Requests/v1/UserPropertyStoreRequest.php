@@ -25,14 +25,20 @@ class UserPropertyStoreRequest extends FormRequest
     {
         return [
             'status_id' => 'required',
-            'name' => 'string|required'
+            'name' => 'string|required',
+            'address.city_id' => 'required_if:status_id,=,1|exists:cities,id',
+            'address.address_line' => 'required_if:status_id,=,1',
+            'address.postcode' => 'required_if:status_id,=,1',
         ];
     }
 
     public function messages()
     {
         return [
-            'status_id.required' => 'The status field is required.'
+            'status_id.required' => 'The status field is required.',
+            'address.city_id.required_if' => 'The city field is required if the property is active.',
+            'address.address_line.required_if' => 'The address line field is required if the property is active.',
+            'address.postcode.required_if' => 'The postcode field is required if the property is active.'
         ];
     }
 }

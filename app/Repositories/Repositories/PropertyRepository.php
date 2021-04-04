@@ -55,6 +55,11 @@ class PropertyRepository implements PropertyRepositoryInterface
             ->with(['applications']);
         }
 
+        if($index_param->getUserType())
+        {
+            $query->with(['userType']);
+        }
+
         if($index_param->getFields())
         {
             $query->select($index_param->getFields());
@@ -63,11 +68,23 @@ class PropertyRepository implements PropertyRepositoryInterface
         return $query->get();
     }
 
-
-
     public function create(array $data)
     {
         //make the property
         return $this->property::create($data);
+    }
+
+    public function createWithOptionalAddress(array $property_data, ?array $address_data)
+    {
+        //make the property
+        $property = $this->property::create($property_data);
+
+        //make address
+        if(!empty($address_data))
+        {
+            $property->address()->create($address_data);
+        }
+
+        return $property;
     }
 }

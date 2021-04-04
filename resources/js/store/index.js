@@ -10,11 +10,12 @@ import rent from './rent.module'
 import userEmployment from './userEmployment.module'
 import userAddress from './userAddress.module'
 import savings from './savings.module'
-import agencyAddress from './agencyAddress.module'
-import agencyInfo from './agencyInfo.module'
+import userAgencyAddress from './userAgencyAddresses.module'
+import userAgencies from './userAgencies.module'
 import propertyTypes from './propertyTypes.module'
 import propertyAddress from './propertyAddress.module'
 import paramsPropertyIndex from './params/properties/index.module'
+import userProperties from './userProperties.module'
 
 Vue.use(Vuex)
 
@@ -30,10 +31,11 @@ export default new Vuex.Store({
         userEmployment,
         userAddress,
         savings,
-        agencyAddress,
-        agencyInfo,
+        userAgencyAddress,
+        userAgencies,
         propertyTypes,
         propertyAddress,
-        paramsPropertyIndex
+        paramsPropertyIndex,
+        userProperties
     }
 })

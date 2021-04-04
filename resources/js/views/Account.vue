@@ -1,21 +1,33 @@
 <template>
-    <div v-if="profileCompleted">
-        <router-view />
+    <div >
+        <router-view v-if="profileCompleted" />
+        <p v-else-if="apiStateLoading">Loading...</p>
     </div>
 </template>
 
 <script>
 
+import apiStates from "../store/apiStates/apiStateValues";
+
 import { mapGetters } from 'vuex'
 
 export default {
     watch: {
-        profileCompleted() {
+        apiStateLoaded() {
             this.profileCompletedCheck();
         }
     },
     computed: {
-        ...mapGetters('auth', ['profileCompleted'])
+        ...mapGetters('auth', {
+            profileCompleted: 'profileCompleted',
+            apiState: 'apiState'
+        }),
+        apiStateLoaded() {
+            return this.apiState === apiStates.LOADED;
+        },
+        apiStateLoading() {
+            return this.apiState === apiStates.INIT || this.apiState === apiStates.LOADING;
+        }
     },
     methods: {
         profileCompletedCheck()
@@ -25,9 +37,6 @@ export default {
                 this.$router.push({name: 'completeRegister'})
             }
         }
-    },
-    mounted() {
-        this.profileCompletedCheck()
     }
 }
 </script>

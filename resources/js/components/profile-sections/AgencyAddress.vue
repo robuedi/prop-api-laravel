@@ -31,10 +31,10 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('agencyAddress',{
+        ...mapGetters('userAgencyAddress',{
             address: 'agencyAddress',
         }),
-        ...mapGetters('agencyInfo',{
+        ...mapGetters('userAgencies',{
             agency: 'agency',
         })
     },
@@ -42,7 +42,7 @@ export default {
         addressCompleted(address){
             this.currentAddress = address;
         },
-        ...mapActions('agencyAddress', ['setAgencyAddress', 'getAgencyAddress']),
+        ...mapActions('userAgencyAddress', ['setAgencyAddress', 'getAgencyAddress']),
         async submit()
         {
             this.setAgencyAddress({'agencyId':this.agency.id, 'address':this.currentAddress}).then((res) => {

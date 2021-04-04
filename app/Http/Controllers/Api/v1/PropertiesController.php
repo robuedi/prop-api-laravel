@@ -14,6 +14,7 @@ use App\Repositories\PropertyRepositoryInterface;
 use App\Repositories\Repositories\Params\PropertyRepositoryIndexParamInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class PropertiesController extends Controller
 {
@@ -32,6 +33,7 @@ class PropertiesController extends Controller
             ->setCity($request->get('has_city'))
             ->setCountry($request->get('has_country'))
             ->setFields($request->get('fields'))
+            ->setUserType($request->get('has_user_type') ? true : false)
             ->setUserId($request->has('has_current_user') ? auth()->id() : null);
 
         return PropertyResource::collection(
@@ -51,8 +53,13 @@ class PropertiesController extends Controller
 
     public function storeForUser(User $user, UserPropertyStoreRequest $request)
     {
+        $property = $this->property_repository->createWithOptionalAddress(
+            array_merge(['owner_id'=>$user->id],$request->all()),
+            $request->get('address')
+        );
+
         //make property for user
-        return PropertyResource::make($this->property_repository->create(array_merge(['owner_id'=>$user->id],$request->all())))->response()->setStatusCode(Response::HTTP_CREATED);
+        return PropertyResource::make($property)->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
     public function show(Property $property)
