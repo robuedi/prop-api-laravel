@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import AccountNavigation from "./partials/AccountNavigation";
+import AccountNavigation from "../partials/AccountNavigation";
 import {mapGetters} from "vuex";
 
 export default {

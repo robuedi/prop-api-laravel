@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-interface UserTypeRepositoryInterface
+interface RoleRepositoryInterface
 {
     public function index();
 }

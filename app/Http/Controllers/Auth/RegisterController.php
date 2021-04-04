@@ -72,8 +72,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'dob' => date('Y-m-d', strtotime($data['dob'])),
-            'type_id' => $data['type_id'],
+            'dob' => date('Y-m-d', strtotime($data['dob']))
         ]);
     }
 }

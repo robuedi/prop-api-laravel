@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import AccountNavigation from "./partials/AccountNavigation";
-import AddressInputs from '../../components/partials/AddressInputs'
-import NotificationLabels from '../../components/partials/NotificationLabels'
+import AccountNavigation from "../partials/AccountNavigation";
+import AddressInputs from '../../../components/partials/AddressInputs'
+import NotificationLabels from '../../../components/partials/NotificationLabels'
 import {mapActions, mapGetters} from "vuex";
 
 export default {
@@ -52,9 +52,6 @@ export default {
     computed: {
         ...mapGetters('propertiesStatuses',{
             statuses: 'statuses',
-        }),
-        ...mapGetters('userProperties',{
-            userProperty: 'userProperty',
         })
     },
     mounted() {
@@ -62,13 +59,12 @@ export default {
     },
     methods: {
         ...mapActions('propertiesStatuses', ['getStatuses']),
-        ...mapActions('userProperties', ['storeUserProperty', 'clearUserProperty']),
+        ...mapActions('userProperties', ['storeUserProperty']),
         ...mapActions('propertyAddress', ['storeUserPropertyAddress']),
         async submit()
         {
             this.storeUserProperty(this.form.property).then((res) => {
                 this.success.push(`${res.name} property created.`);
-                this.clearUserProperty()
                 this.clearData()
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {

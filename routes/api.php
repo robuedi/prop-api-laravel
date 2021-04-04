@@ -7,13 +7,13 @@ use App\Http\Controllers\Api\v1\PropertiesController;
 use App\Http\Controllers\Api\v1\PropertyAddressesController;
 use App\Http\Controllers\Api\v1\PropertyStatusesController;
 use App\Http\Controllers\Api\v1\RentsController;
+use App\Http\Controllers\Api\v1\RolesController;
 use App\Http\Controllers\Api\v1\UserAddressController;
 use App\Http\Controllers\Api\v1\AgenciesController;
 use App\Http\Controllers\Api\v1\AnnualSalariesController;
 use App\Http\Controllers\Api\v1\EmploymentController;
 use App\Http\Controllers\Api\v1\SavingsController;
 use App\Http\Controllers\Api\v1\UsersController;
-use App\Http\Controllers\Api\v1\UserTypesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return $request->user()->load('userRole', ' roles');
 });
 
 Auth::routes();
@@ -37,7 +37,6 @@ Auth::routes();
 Route::prefix('v1')->group(function (){
     Route::get('/countries', [CountriesController::class, 'index']);
     Route::get('/cities', [CitiesController::class, 'index']);
-    Route::get('/user-types', [UserTypesController::class, 'index']);
     Route::get('/property-statuses', [PropertyStatusesController::class, 'index']);
 
     //properties
@@ -52,6 +51,8 @@ Route::prefix('v1')->group(function (){
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/users/{user}/properties', [PropertiesController::class, 'indexForUser']);
         Route::get('/users/{user}/property-applications', [PropertiesController::class, 'indexForUserApplications']);
+
+        Route::post('/users/{user}/roles', [RolesController::class, 'getForUser']);
 
         Route::post('/users/{user}/properties', [PropertiesController::class, 'storeForUser']);
         Route::post('/users/{user}/properties/{property}/addresses', [PropertyAddressesController::class, 'storeForUserProperty']);
@@ -68,6 +69,8 @@ Route::prefix('v1')->group(function (){
 
         Route::post('/users/{user}/savings', [SavingsController::class, 'storeForUser']);
         Route::get('/users/{user}/savings', [SavingsController::class, 'showForUser']);
+
+//        Route::get('/roles-users/', [RolesUsersController::class, 'showForUser']);
 
         Route::post('/users/{user}/addresses', [UserAddressController::class, 'storeForUser']);
         Route::get('/users/{user}/addresses', [UserAddressController::class, 'showForUser']);

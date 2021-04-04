@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import AccountNavigation from "./partials/AccountNavigation";
-import PropertyItemAccount from "../../components/partials/PropertyItemAccount";
+import AccountNavigation from "../partials/AccountNavigation";
+import PropertyItemAccount from "../../../components/partials/PropertyItemAccount";
 import {mapActions, mapGetters} from "vuex";
 
 export default {

@@ -6,7 +6,8 @@ export default {
     state: {
         apiState: apiStates.INIT,
         authenticated: false,
-        user: null
+        user: null,
+        activeRole : null
     },
 
     getters: {
@@ -14,28 +15,19 @@ export default {
             return state.authenticated
         },
 
-        profileCompleted (state) {
-            if(state.user)
-            {
-                return state.user.is_completed
-            }
-            else
-            {
-                return 0;
-            }
-        },
-
         user (state) {
             return state.user
         },
 
+        activeRole (state) {
+            return state.activeRole
+        },
+
         userId (state) {
-            if(state.user)
-            {
+            if(state.user) {
                 return state.user.id
             }
-            else
-            {
+            else {
                 return null;
             }
         },
@@ -52,6 +44,11 @@ export default {
 
         SET_USER (state, value) {
             state.user = value,
+            state.apiState = apiStates.LOADING
+        },
+
+        SET_ACTIVE_ROLE (state, value) {
+            state.activeRole = value,
             state.apiState = apiStates.LOADING
         },
 
@@ -92,6 +89,11 @@ export default {
                     return res;
                 })
             });
+        },
+
+        setActiveRole({dispatch, commit}, activeRole)
+        {
+            commit('SET_ACTIVE_ROLE', activeRole)
         },
 
         async me ({ commit }) {

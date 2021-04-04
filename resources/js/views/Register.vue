@@ -3,16 +3,16 @@
         <h1 class="mb-4">Register</h1>
 
         <!-- Step 0 -->
-        <template v-if="!form.type_id">
-            <button type="button" v-for="userType in userTypes" @click="setUserType(userType.id)" class="btn btn-outline-dark btn-lg btn-block">
-                {{ userType.label }}
-            </button>
-        </template>
-        <template v-else>
-            <button type="button" class="btn btn-sm btn-outline-dark mb-4" @click="backToUserType()">Back</button>
-        </template>
+<!--        <template v-if="!form.type_id">-->
+<!--            <button type="button" v-for="userType in userTypes" @click="setUserType(userType.id)" class="btn btn-outline-dark btn-lg btn-block">-->
+<!--                {{ userType.label }}-->
+<!--            </button>-->
+<!--        </template>-->
+<!--        <template v-else>-->
+<!--            <button type="button" class="btn btn-sm btn-outline-dark mb-4" @click="backToUserType()">Back</button>-->
+<!--        </template>-->
 
-        <template v-if="form.type_id">
+        <template >
             <form action="#" @submit.prevent="submit">
 
                 <NotificationLabels :errors="errors"/>
@@ -62,7 +62,6 @@ export default {
     },
     data () {
         return {
-            userTypes: [],
             errors: [],
             form: {
                 name: '',
@@ -82,14 +81,6 @@ export default {
     },
     methods: {
         ...mapActions('auth', ['register']),
-        setUserType(userType)
-        {
-            this.form.type_id = userType;
-        },
-        backToUserType()
-        {
-            this.form.type_id = '';
-        },
         checkFieldsCompleted()
         {
             this.errors = [];
@@ -121,18 +112,7 @@ export default {
                     }
                 })
             }
-        },
-        fetchUserTypes()
-        {
-            axios.get(`/api/v1/user-types?&fields=id,label`).then((res) => {
-                this.userTypes = res.data.data;
-            }).catch((error) => {
-                throw error
-            })
         }
-    },
-    mounted() {
-        this.fetchUserTypes();
     }
 }
 </script>

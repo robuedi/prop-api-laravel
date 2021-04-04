@@ -22,8 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'dob',
-        'type_id',
+        'dob'
     ];
 
     /**
@@ -53,5 +52,15 @@ class User extends Authenticatable
     public function propertyApplications()
     {
         return $this->belongsToMany(Property::class);
+    }
+
+    public function userRole()
+    {
+        return $this->hasMany(RoleUser::class, 'user_id', 'id');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
     }
 }
