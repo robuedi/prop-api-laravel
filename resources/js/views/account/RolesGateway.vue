@@ -1,14 +1,14 @@
 <template>
     <div>
         <div class="mb-5" v-if="userRolesList.length">
-            <h1>Select an existing profile</h1>
+            <h1>Select profile</h1>
             <button type="button" v-for="userRole in userRolesList" @click="userRole.is_completed === 1 ? setActiveUserRole(userRole) : completeUserRole(userRole.id)" class="btn btn-outline-dark btn-lg btn-block">
                 {{ userRole.role.name }}
                 <small v-if="userRole.is_completed === 0">(Needs completion)</small>
             </button>
         </div>
         <div v-if="newRoles.length">
-            <h1>Create a new profile</h1>
+            <h1>Add profile</h1>
             <button type="button" v-for="role in newRoles" @click="makeUserRole(role.id)" class="btn btn-outline-dark btn-lg btn-block">
                 {{ role.name }}
             </button>

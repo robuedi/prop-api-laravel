@@ -3869,6 +3869,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -3889,7 +3890,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      selectedUserRole: null
+      selectedUserRole: null,
+      checkingProfileComplete: ''
     };
   },
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapGetters)('auth', {
@@ -3915,7 +3917,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this2 = this;
 
       //check if the user role is now completed
+      this.checkingProfileComplete = 'Checking if the profile is complete..';
       this.checkUserProfileComplete(this.selectedUserRole.id).then(function (res) {
+        _this2.checkingProfileComplete = 'The profile is complete, please wait..';
+
         if (res.status === true) {
           //refresh user data
           _this2.me().then(function () {
@@ -3930,6 +3935,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             });
           });
         }
+      })["catch"](function () {
+        _this2.checkingProfileComplete = 'Something went wrong.';
       });
     },
     initLoad: function initLoad() {
@@ -68947,6 +68954,10 @@ var render = function() {
       _vm._v(" "),
       _vm.authApiStateLoading ? _c("p", [_vm._v("Loading...")]) : _vm._e(),
       _vm._v(" "),
+      _vm.checkingProfileComplete
+        ? _c("p", [_vm._v(_vm._s(_vm.checkingProfileComplete))])
+        : _vm._e(),
+      _vm._v(" "),
       _vm.selectedUserRole
         ? [
             _vm.selectedUserRole
@@ -69005,7 +69016,7 @@ var render = function() {
           "div",
           { staticClass: "mb-5" },
           [
-            _c("h1", [_vm._v("Select an existing profile")]),
+            _c("h1", [_vm._v("Select profile")]),
             _vm._v(" "),
             _vm._l(_vm.userRolesList, function(userRole) {
               return _c(
@@ -69042,7 +69053,7 @@ var render = function() {
       ? _c(
           "div",
           [
-            _c("h1", [_vm._v("Create a new profile")]),
+            _c("h1", [_vm._v("Add profile")]),
             _vm._v(" "),
             _vm._l(_vm.newRoles, function(role) {
               return _c(

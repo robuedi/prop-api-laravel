@@ -6,6 +6,7 @@
         </button>
 
         <p v-if="authApiStateLoading">Loading...</p>
+        <p v-if="checkingProfileComplete">{{ checkingProfileComplete }}</p>
 
         <template v-if="selectedUserRole">
 
@@ -42,7 +43,8 @@ export default {
     },
     data (){
         return {
-            selectedUserRole: null
+            selectedUserRole: null,
+            checkingProfileComplete: ''
         }
     },
     computed: {
@@ -69,7 +71,9 @@ export default {
         checkIfProfileCompleted()
         {
             //check if the user role is now completed
+            this.checkingProfileComplete = 'Checking if the profile is complete..'
             this.checkUserProfileComplete(this.selectedUserRole.id).then((res) => {
+                this.checkingProfileComplete = 'The profile is complete, please wait..'
                 if(res.status === true)
                 {
                     //refresh user data
@@ -79,6 +83,8 @@ export default {
                         this.$router.push({name: 'accountProfile'})
                     });
                 }
+            }).catch(() => {
+                this.checkingProfileComplete = 'Something went wrong.';
             });
         },
         initLoad(){
