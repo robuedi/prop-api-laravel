@@ -34,7 +34,8 @@ class PropertiesController extends Controller
             ->setCountry($request->get('has_country'))
             ->setFields($request->get('fields'))
             ->setUserType($request->get('has_user_type') ? true : false)
-            ->setUserId($request->has('has_current_user') ? auth()->id() : null);
+            ->setUserId($request->has('has_current_user') ? auth()->id() : null)
+            ->setActive(true);
 
         return PropertyResource::collection(
             $this->property_repository->index($index_param)
@@ -62,8 +63,18 @@ class PropertiesController extends Controller
         return PropertyResource::make($property)->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(Property $property)
+    public function show(Property $property, Request $request)
     {
+        if($request->has('has_address'))
+        {
+            $property->load(['address:id,property_id,address_line,postcode,city_id', 'address.city:id,name,country_id', 'address.city.country:id,name']);
+        }
+
+        if($request->has('has_type'))
+        {
+            $property->load(['type:id,name']);
+        }
+
         return PropertyResource::make($property)->response()->setStatusCode(Response::HTTP_OK);
     }
 }

@@ -63,4 +63,14 @@ interface PropertyRepositoryIndexParamInterface
      * @param bool $user_type
      */
     public function setUserType(bool $user_type): PropertyRepositoryIndexParamInterface;
+
+    /**
+     * @return bool|null
+     */
+    public function getActive(): ?bool;
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): PropertyRepositoryIndexParamInterface;
 }

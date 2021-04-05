@@ -3446,73 +3446,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {
-      cityName: '',
-      countryName: '',
-      propertyCity: null
-    };
-  },
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('properties', {
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('properties', {
     property: 'property'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('propertyAddress', {
-    propertyAddress: 'propertyAddress'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('propertiesStatuses', {
-    statuses: 'statuses'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('cities', {
-    cities: 'cities'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('countries', {
-    countries: 'countries'
-  })), {}, {
-    statusLabel: function statusLabel() {
-      var _this = this;
-
-      var status = this.statuses.find(function (item) {
-        return item.id === _this.property.status_id;
-      });
-
-      if (status) {
-        return status.label;
-      }
-    }
-  }),
+  })),
   mounted: function mounted() {
-    var _this2 = this;
-
-    this.getStatuses();
-    this.showProperty(this.$route.params.property_id);
-    this.showPropertyAddress(this.$route.params.property_id).then(function () {
-      _this2.getCities().then(function () {
-        var city = _this2.cities.find(function (item) {
-          return item.id === _this2.propertyAddress.city_id;
-        });
-
-        _this2.cityName = city ? city.name : '';
-
-        if (city) {
-          _this2.cityName = city ? city.name : '';
-          return city;
-        }
-
-        return '';
-      }).then(function (res) {
-        if (!res) {
-          return;
-        }
-
-        _this2.getCountries().then(function () {
-          var country = _this2.cities.find(function (item) {
-            return item.id === res.country_id;
-          });
-
-          _this2.countryName = country ? country.name : '';
-        });
-      });
+    this.showProperty({
+      propertyId: this.$route.params.property_id,
+      query: 'has_address=true&has_type=true'
     });
   },
-  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('properties', ['showProperty'])), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('propertyAddress', ['showPropertyAddress'])), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('propertiesStatuses', ['getStatuses'])), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('cities', ['getCities'])), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('countries', ['getCountries']))
+  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('properties', ['showProperty']))
 });
 
 /***/ }),
@@ -4603,6 +4549,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
   // }
   ]
 });
+Vue.filter('capitalize', function (value) {
+  if (!value) return '';
+  value = value.toString();
+  return value.charAt(0).toUpperCase() + value.slice(1);
+});
 var app = new Vue({
   el: '#app',
   components: {
@@ -5370,16 +5321,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   actions: {
-    showProperty: function showProperty(_ref, propertyId) {
+    showProperty: function showProperty(_ref, data) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit;
+        var dispatch, commit, query;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 dispatch = _ref.dispatch, commit = _ref.commit;
-                _context.next = 3;
-                return axios.get('/api/v1/properties/' + propertyId).then(function (response) {
+                query = data.query ? '?' + data.query : data.query;
+                _context.next = 4;
+                return axios.get("/api/v1/properties/".concat(data.propertyId).concat(query)).then(function (response) {
                   commit('SET_PROPERTY', response.data.data);
                   return response;
                 })["catch"](function (err) {
@@ -5387,7 +5339,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   throw err;
                 });
 
-              case 3:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -5479,7 +5431,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 _context.next = 5;
-                return axios.get('/api/v1/property-statuses?fields=id,label').then(function (response) {
+                return axios.get('/api/v1/property-statuses?fields=id,name').then(function (response) {
                   commit('SET_STATUSES', response.data.data);
                   return response;
                 })["catch"](function (err) {
@@ -68547,47 +68499,46 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
-          _c("h5", { staticClass: "card-title" }, [
-            _vm._v(_vm._s(_vm.cityName + ", " + _vm.countryName))
+          _c("h5", { staticClass: "card-title mb-4" }, [
+            _vm._v(_vm._s(_vm.property.name))
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "card-text" }, [
-            _c("span", { staticClass: "badge badge-primary" }, [
-              _vm._v(_vm._s(_vm.statusLabel))
-            ])
-          ]),
+          _c(
+            "button",
+            { staticClass: "btn btn-primary mb-4", attrs: { type: "button" } },
+            [_vm._v(_vm._s(_vm._f("capitalize")(_vm.property.type.name)))]
+          ),
           _vm._v(" "),
-          _vm.propertyAddress
-            ? _c("p", { staticClass: "card-text" }, [
+          _c("div", { staticClass: "card-text" }, [
+            _c("p", [
+              _c("strong", [
                 _vm._v(
-                  "\n            " +
-                    _vm._s(
-                      _vm.propertyAddress.address_line +
-                        ", " +
-                        _vm.propertyAddress.postcode
-                    ) +
-                    "\n        "
+                  _vm._s(
+                    _vm.property.address.city.name +
+                      ", " +
+                      _vm.property.address.city.country.name
+                  )
+                )
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("small", [
+                _vm._v(
+                  _vm._s(
+                    _vm.property.address.address_line +
+                      ", " +
+                      _vm.property.address.postcode
+                  )
                 )
               ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm._m(0)
+            ])
+          ])
         ])
       ])
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "card-text" }, [
-      _c("small", { staticClass: "text-muted" }, [
-        _vm._v("Last updated 3 mins ago")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -69189,7 +69140,7 @@ var render = function() {
                 _vm._v(" "),
                 _vm._l(_vm.statuses, function(status) {
                   return _c("option", { domProps: { value: status.id } }, [
-                    _vm._v(_vm._s(status.label))
+                    _vm._v(_vm._s(status.name))
                   ])
                 })
               ],

@@ -60,6 +60,11 @@ class PropertyRepository implements PropertyRepositoryInterface
             $query->with(['userType']);
         }
 
+        if($index_param->getActive() === true)
+        {
+            $query->where('status_id', 1);
+        }
+
         if($index_param->getFields())
         {
             $query->select($index_param->getFields());

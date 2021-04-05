@@ -13,7 +13,7 @@
                 <label for="status">Status</label>
                 <select class="form-control"  v-model="form.property.status_id" id="status" >
                     <option></option>
-                    <option v-for="status in statuses" :value="status.id">{{status.label}}</option>
+                    <option v-for="status in statuses" :value="status.id">{{status.name}}</option>
                 </select>
             </div>
 

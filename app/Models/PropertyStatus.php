@@ -10,6 +10,6 @@ class PropertyStatus extends Model
     use HasFactory;
 
     protected $fillable = [
-        'label'
+        'name'
     ];
 }

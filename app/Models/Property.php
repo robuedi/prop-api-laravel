@@ -23,6 +23,11 @@ class Property extends Model
         return $this->hasOne(PropertyAddress::class, 'property_id', 'id');
     }
 
+    public function type()
+    {
+        return $this->belongsTo(PropertyType::class, 'type_id', 'id');
+    }
+
     public function applicants()
     {
         return $this->belongsToMany(User::class);

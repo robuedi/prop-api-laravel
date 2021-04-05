@@ -44,11 +44,11 @@ class DatabaseSeeder extends Seeder
         PropertyStatus::insert([
             [
             'id' => 1,
-            'label' => 'active'
+            'name' => 'active'
             ],
             [
             'id' => 2,
-            'label' => 'inactive'
+            'name' => 'inactive'
             ]
         ]);
         PropertyType::insert([

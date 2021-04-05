@@ -3,9 +3,6 @@
 
 namespace App\Repositories\Repositories\Params;
 
-
-use Illuminate\Support\Facades\Log;
-
 class PropertyRepositoryIndexParam implements PropertyRepositoryIndexParamInterface
 {
     private ?string $address = null;
@@ -14,6 +11,7 @@ class PropertyRepositoryIndexParam implements PropertyRepositoryIndexParamInterf
     private array $fields = [];
     private ?int $user_id = null;
     private bool $user_type = false;
+    private ?bool $active = null;
 
     /**
      * @return bool
@@ -36,6 +34,23 @@ class PropertyRepositoryIndexParam implements PropertyRepositoryIndexParamInterf
      * @return int|null
      */
     public function getUserId(): ?int
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param bool $active
+     */
+    public function setActive(?bool $active): PropertyRepositoryIndexParamInterface
+    {
+        $this->active = $active;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getActive(): ?bool
     {
         return $this->user_id;
     }
