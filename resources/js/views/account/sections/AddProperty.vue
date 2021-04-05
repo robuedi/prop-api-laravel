@@ -25,6 +25,8 @@
 </template>
 
 <script>
+
+import rolePropertyType from "./rolePropertyType";
 import AccountNavigation from "./layout/AccountNavigation";
 import AddressInputs from '../../../components/partials/AddressInputs'
 import NotificationLabels from '../../../components/partials/NotificationLabels'
@@ -38,6 +40,7 @@ export default {
     },
     data () {
         return {
+            rolePropertyType: null,
             success: [],
             errors: [],
             form: {
@@ -52,9 +55,13 @@ export default {
     computed: {
         ...mapGetters('propertiesStatuses',{
             statuses: 'statuses',
-        })
+        }),
+        ...mapGetters('auth', {
+            activeRole: 'activeRole',
+        }),
     },
     mounted() {
+        this.rolePropertyType = rolePropertyType
         this.getStatuses();
     },
     methods: {
@@ -63,7 +70,7 @@ export default {
         ...mapActions('propertyAddress', ['storeUserPropertyAddress']),
         async submit()
         {
-            this.storeUserProperty(this.form.property).then((res) => {
+            this.storeUserProperty(this.prepareFormData()).then((res) => {
                 this.success.push(`${res.name} property created.`);
                 this.clearData()
             }).catch((error) => {
@@ -79,6 +86,11 @@ export default {
             this.form.property.name = '';
             this.form.property.address = {};
             this.$emit('clearAddress');
+        },
+        prepareFormData()
+        {
+            //add the property type based on the role
+            return {...this.form.property, type_id:this.rolePropertyType[this.activeRole.role_id].propertyType}
         },
         addressChange(address)
         {

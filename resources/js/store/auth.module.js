@@ -53,8 +53,6 @@ export default {
         },
 
         SET_AUTH_API_STATE (state, value) {
-            console.log('state')
-            console.log(value)
             state.authApiState = value
         }
     },

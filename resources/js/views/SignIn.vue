@@ -37,10 +37,29 @@ export default {
         ...mapGetters('auth', ['user'])
     },
     methods: {
-        ...mapActions('auth', ['signIn']),
+        ...mapActions('auth', ['signIn', 'setActiveRole']),
         async submit () {
             await this.signIn(this.form).then((res)=>{
-                this.$router.push({name: 'chooseRoles'})
+                //no roles, make one
+                if(this.user.user_role.length === 0)
+                {
+                    this.$router.push({name: 'chooseRoles'})
+                }
+
+                //check if only one active if it has many
+                let activeRoles = this.user.user_role.filter(userRole => userRole.is_completed === 1);
+
+                //one active role found -> go to it
+                if(activeRoles.length === 1 && this.user.user_role.length === 1)
+                {
+                    this.setActiveRole(activeRoles[0])
+                    this.$router.push({name: 'accountProfile'})
+                }
+                else
+                {
+                    this.$router.push({name: 'chooseRoles'})
+                }
+
             }).catch((err) => {
                 for (const [key, msg] of Object.entries(err.response.data.errors)) {
                     this.errors.push(msg[0]);

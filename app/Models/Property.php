@@ -14,6 +14,7 @@ class Property extends Model
     protected $fillable = [
         'status_id',
         'owner_id',
+        'type_id',
         'name'
     ];
 

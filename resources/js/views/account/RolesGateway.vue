@@ -1,33 +1,31 @@
 <template>
     <div>
-        <p v-if="this.authApiStateLoading">Loading..</p>
-        <template v-if="this.authApiStateLoaded ">
-            <SelectProfile :userRolesList="userRolesList"/>
-        </template>
+        <div class="mb-5" v-if="userRolesList.length">
+            <h1>Select an existing profile</h1>
+            <button type="button" v-for="userRole in userRolesList" @click="userRole.is_completed === 1 ? setActiveUserRole(userRole) : completeUserRole(userRole.id)" class="btn btn-outline-dark btn-lg btn-block">
+                {{ userRole.role.name }}
+                <small v-if="userRole.is_completed === 0">(Needs completion)</small>
+            </button>
+        </div>
+        <div v-if="newRoles.length">
+            <h1>Create a new profile</h1>
+            <button type="button" v-for="role in newRoles" @click="makeUserRole(role.id)" class="btn btn-outline-dark btn-lg btn-block">
+                {{ role.name }}
+            </button>
+        </div>
     </div>
-
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
 
-import SelectProfile from './role-gateway-sections/SelectProfile'
+import {mapActions, mapGetters} from "vuex";
 import apiStates from "../../store/apiStates/apiStateValues";
 
 export default {
-    components: {
-        SelectProfile
-    },
     watch: {
         authApiStateLoaded() {
             this.initLoad()
         }
-    },
-    data() {
-      return{
-          roleSelectionActive: false,
-          userRolesList: []
-      }
     },
     computed: {
         ...mapGetters('auth', {
@@ -41,36 +39,42 @@ export default {
             return this.authApiState === apiStates.INIT || this.apiState === apiStates.LOADING;
         }
     },
-    methods: {
-        ...mapActions('auth', ['setActiveRole']),
-        chooseAccountActions()
+    data(){
+        return {
+            newRoles: [],
+            userRolesList: []
+        }
+    },
+    methods:{
+        ...mapActions('roles', ['getRoles', 'setUserRole']),
+        ...mapActions('roleUser', ['setUserRole']),
+        ...mapActions('auth', ['me', 'setActiveRole']),
+        setActiveUserRole(userRole)
         {
-            if(this.user.user_role.length > 0)
-            {
-                this.checkExistingRoles(this.user.user_role)
-            }
+            this.setActiveRole(userRole)
+            this.$router.push({name: 'accountProfile'})
         },
-        checkExistingRoles(userRoles)
+        completeUserRole(userRoleId)
         {
-            //check roles
-            let activeRoles = userRoles.filter(userRole => userRole.is_completed === 1);
-
-            //one active role found -> go to it
-            if(activeRoles.length === 1 && this.user.user_role.length === 1)
-            {
-                this.setActiveRole(activeRoles[0])
-                this.$router.push({name: 'accountProfile'})
-            }
-            else
-            {
-                this.userRolesList = userRoles
-            }
+            this.$router.push({name: 'completeRole', params: { userRoleId: userRoleId }});
+        },
+        makeUserRole(roleId)
+        {
+            this.setUserRole(roleId).then((res) => {
+                this.me().then(()=>{
+                    this.$router.push({name: 'completeRole', params: { userRoleId: res.id }});
+                })
+            })
         },
         initLoad() {
-
-            console.log(this.authApiState);
             if(this.authApiStateLoaded) {
-                this.chooseAccountActions();
+                this.userRolesList = this.user.user_role
+
+                //get any other roles
+                this.getRoles().then((res) => {
+                    let userRolesIds = this.userRolesList.map(userRole => userRole.role.id);
+                    this.newRoles = res.data.data.filter(role => !userRolesIds.includes(role.id))
+                });
             }
         }
     },
@@ -79,7 +83,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>
