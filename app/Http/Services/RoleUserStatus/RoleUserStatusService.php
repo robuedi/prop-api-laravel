@@ -1,27 +1,24 @@
 <?php
 
 
-namespace App\Http\Services\UserProfileStatus;
+namespace App\Http\Services\RoleUserStatus;
 
-use App\Http\Services\UserProfileStatus\UserProfileChecksInterface;
-use App\Repositories\UserRepositoryInterface;
+use App\Repositories\RoleUserRepositoryInterface;
 
-class UserProfileStatusService implements UserProfileStatusServiceInterface
+class RoleUserStatusService implements RoleUserStatusServiceInterface
 {
-    public UserRepositoryInterface $user_repository;
-    public UserProfileChecksInterface $user_profile_checks;
+    public RoleUserRepositoryInterface $role_user_repository;
+    public RoleUserChecksInterface $user_profile_checks;
 
-    public function __construct(UserRepositoryInterface $user_repository, UserProfileChecksInterface $user_profile_checks)
+    public function __construct(RoleUserRepositoryInterface $role_user_repository, RoleUserChecksInterface $user_profile_checks)
     {
-        $this->user_repository = $user_repository;
+        $this->role_user_repository = $role_user_repository;
         $this->user_profile_checks = $user_profile_checks;
     }
 
-    public function checkUserProfileCompleted(int $user_id) :bool
+    public function checkRoleUserCompleted(int $user_id, int $user_role_id) :bool
     {
-        $user_type = $this->user_repository->getUserTypeById($user_id);
-
-        switch ($user_type)
+        switch ($user_role_id)
         {
             case 1:
                 if(!$this->user_profile_checks->checkEmployment($user_id)
@@ -32,7 +29,7 @@ class UserProfileStatusService implements UserProfileStatusServiceInterface
                     return false;
                 }
 
-                $this->user_repository->makeUserProfileCompleted($user_id);
+                $this->role_user_repository->makeCompleted($user_role_id);
                 return true;
 
             case 2:
@@ -44,7 +41,7 @@ class UserProfileStatusService implements UserProfileStatusServiceInterface
                     return false;
                 }
 
-                $this->user_repository->makeUserProfileCompleted($user_id);
+                $this->role_user_repository->makeCompleted($user_role_id);
                 return true;
 
             case 3:
@@ -56,7 +53,7 @@ class UserProfileStatusService implements UserProfileStatusServiceInterface
                     return false;
                 }
 
-                $this->user_repository->makeUserProfileCompleted($user_id);
+                $this->role_user_repository->makeCompleted($user_role_id);
                 return true;
 
             default:

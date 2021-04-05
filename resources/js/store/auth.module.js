@@ -82,9 +82,9 @@ export default {
             })
         },
 
-        async checkUserProfileComplete({dispatch})
+        async checkUserProfileComplete({dispatch, rootGetters}, userRoleId)
         {
-            return await axios.get('/api/v1/users/check-profile-completed').then((res) => {
+            return await axios.get(`/api/v1/users/${rootGetters['auth/userId']}/roles-users/${userRoleId}/check-complete`).then((res) => {
                 return dispatch('me').then(() => {
                     return res;
                 })

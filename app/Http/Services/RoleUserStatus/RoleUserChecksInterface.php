@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Services\UserProfileStatus;
+namespace App\Http\Services\RoleUserStatus;
 
 use App\Models\UserEmployment;
 
-interface UserProfileChecksInterface
+interface RoleUserChecksInterface
 {
     public function checkEmployment(int $user_id);
     public function checkAnnualSalary(int $user_id);

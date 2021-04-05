@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Services\UserProfileStatus;
+namespace App\Http\Services\RoleUserStatus;
 
 
 use App\Models\UserEmployment;
@@ -14,7 +14,7 @@ use App\Repositories\UserRentRepositoryInterface;
 use App\Repositories\UserSavingRepositoryInterface;
 use Illuminate\Support\Facades\Log;
 
-class UserProfileChecks implements UserProfileChecksInterface
+class RoleUserChecks implements RoleUserChecksInterface
 {
     private UserEmploymentRepositoryInterface $user_employment_repository;
     private UserAnnualSalaryRepositoryInterface $user_annual_salary_repository;

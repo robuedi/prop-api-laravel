@@ -2,14 +2,10 @@
 
 namespace App\Providers;
 
-use App\Http\Services\PropertyFacadeService;
-use App\Http\Services\PropertyFacadeServiceInterface;
-use App\Http\Services\UserProfileStatus\UserProfileChecks;
-use App\Http\Services\UserProfileStatus\UserProfileChecksInterface;
-use App\Http\Services\UserProfileStatus\UserProfileStatusService;
-use App\Http\Services\UserProfileStatus\UserProfileStatusServiceInterface;
-use App\Http\Services\UserPropertyTypeService;
-use App\Http\Services\UserPropertyTypeServiceInterface;
+use App\Http\Services\RoleUserStatus\RoleUserChecks;
+use App\Http\Services\RoleUserStatus\RoleUserChecksInterface;
+use App\Http\Services\RoleUserStatus\RoleUserStatusService;
+use App\Http\Services\RoleUserStatus\RoleUserStatusServiceInterface;
 use App\Repositories\AgencyAddressRepositoryInterface;
 use App\Repositories\CityRepositoryInterface;
 use App\Repositories\CountryRepositoryInterface;
@@ -25,25 +21,21 @@ use App\Repositories\Repositories\PropertyAddressRepository;
 use App\Repositories\Repositories\PropertyRepository;
 use App\Repositories\Repositories\PropertyStatusRepository;
 use App\Repositories\Repositories\RoleRepository;
+use App\Repositories\Repositories\RoleUserRepository;
 use App\Repositories\Repositories\UserAddressRepository;
 use App\Repositories\Repositories\AgencyRepository;
 use App\Repositories\Repositories\UserAnnualSalaryRepository;
 use App\Repositories\Repositories\UserEmploymentRepository;
-use App\Repositories\Repositories\UserPropertyRepository;
 use App\Repositories\Repositories\UserRentRepository;
-use App\Repositories\Repositories\UserRepository;
 use App\Repositories\Repositories\UserSavingRepository;
 use App\Repositories\RoleRepositoryInterface;
+use App\Repositories\RoleUserRepositoryInterface;
 use App\Repositories\UserAddressRepositoryInterface;
 use App\Repositories\AgencyRepositoryInterface;
 use App\Repositories\UserEmploymentRepositoryInterface;
 use App\Repositories\UserRentRepositoryInterface;
-use App\Repositories\Repositories\UserTypeRepository;
 use App\Repositories\UserAnnualSalaryRepositoryInterface;
-use App\Repositories\UserPropertyRepositoryInterface;
-use App\Repositories\UserRepositoryInterface;
 use App\Repositories\UserSavingRepositoryInterface;
-use App\Repositories\UserTypeRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -66,13 +58,13 @@ class AppServiceProvider extends ServiceProvider
         app()->bind(UserRentRepositoryInterface::class, UserRentRepository::class);
         app()->bind(UserEmploymentRepositoryInterface::class, UserEmploymentRepository::class);
         app()->bind(UserAddressRepositoryInterface::class, UserAddressRepository::class);
-        app()->bind(UserRepositoryInterface::class, UserRepository::class);
+        app()->bind(RoleUserRepositoryInterface::class, RoleUserRepository::class);
         app()->bind(UserSavingRepositoryInterface::class, UserSavingRepository::class);
         app()->bind(AgencyRepositoryInterface::class, AgencyRepository::class);
         app()->bind(AgencyAddressRepositoryInterface::class, AgencyAddressRepository::class);
 
-        app()->bind(UserProfileChecksInterface::class, UserProfileChecks::class);
-        app()->bind(UserProfileStatusServiceInterface::class, UserProfileStatusService::class);
+        app()->bind(RoleUserChecksInterface::class, RoleUserChecks::class);
+        app()->bind(RoleUserStatusServiceInterface::class, RoleUserStatusService::class);
     }
 
     /**

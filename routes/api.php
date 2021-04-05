@@ -13,7 +13,7 @@ use App\Http\Controllers\Api\v1\AgenciesController;
 use App\Http\Controllers\Api\v1\AnnualSalariesController;
 use App\Http\Controllers\Api\v1\EmploymentController;
 use App\Http\Controllers\Api\v1\SavingsController;
-use App\Http\Controllers\Api\v1\UsersController;
+use App\Http\Controllers\Api\v1\RolesUsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +29,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user()->load('userRole', ' roles');
+    return $request->user()->load(['userRole' => function($query){
+        $query->with('role:id,name');
+    }]);
 });
 
 Auth::routes();
@@ -80,7 +82,7 @@ Route::prefix('v1')->group(function (){
         Route::post('/users/{user}/agencies/{agency}/addresses', [AgencyAddressesController::class, 'storeForUserAgency']);
         Route::get('/users/{user}/agencies/{agency}/addresses', [AgencyAddressesController::class, 'showForUserAgency']);
 
-        Route::get('/users/check-profile-completed', [UsersController::class, 'checkUserProfileComplete']);
+        Route::get('/users/{user}/roles-users/{role_user}/check-complete', [RolesUsersController::class, 'checkRoleUserComplete']);
     });
 });
 

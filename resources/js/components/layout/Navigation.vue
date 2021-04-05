@@ -21,14 +21,14 @@
                             <router-link class="nav-link" :to="{ name: 'register' }">Register</router-link>
                         </li>
                     </template>
-                    <template v-else-if="profileCompleted">
-                        <router-link class="nav-link" to="/account"  >{{ user.name }}</router-link>
-                        <a href="#" class="nav-link" @click.prevent="signOut" >Sign out</a>
-                    </template>
-                    <template v-else>
-                        <router-link class="nav-link" to="/complete-register"  >{{ user.name }}</router-link>
-                        <a href="#" class="nav-link" @click.prevent="signOut" >Sign out</a>
-                    </template>
+<!--                    <template v-else-if="profileCompleted">-->
+<!--                        <router-link class="nav-link" to="/account"  >{{ user.name }}</router-link>-->
+<!--                        <a href="#" class="nav-link" @click.prevent="signOut" >Sign out</a>-->
+<!--                    </template>-->
+<!--                    <template v-else>-->
+<!--                        <router-link class="nav-link" to="/complete-register"  >{{ user.name }}</router-link>-->
+<!--                        <a href="#" class="nav-link" @click.prevent="signOut" >Sign out</a>-->
+<!--                    </template>-->
                 </ul>
             </div>
         </div>
@@ -43,7 +43,6 @@ export default {
         ...mapGetters({
             authenticated: 'auth/authenticated',
             user: 'auth/user',
-            profileCompleted: 'auth/profileCompleted',
         })
     },
     methods: {

@@ -37,7 +37,8 @@ import AddProperty from './views/account/sections/AddProperty'
 import Applications from './views/account/sections/Applications'
 import MyProperties from './views/account/sections/MyProperties'
 import Property from './views/Property'
-import CompleteRegisterGateway from './views/CompleteRegisterGateway'
+import CompleteRoleGateway from './views/account/CompleteRoleGateway'
+import RolesGateway from "./views/account/RolesGateway";
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -78,10 +79,20 @@ const router = new VueRouter({
             name: 'register',
             component: Register
         },
+        // {
+        //     path: '/complete-register',
+        //     name: 'completeRegister',
+        //     component: CompleteRegisterGateway
+        // },
         {
-            path: '/complete-register',
-            name: 'completeRegister',
-            component: CompleteRegisterGateway
+            path: '/choose-roles',
+            name: 'chooseRoles',
+            component: RolesGateway
+        },
+        {
+            path: '/complete-role/:userRoleId',
+            name: 'completeRole',
+            component: CompleteRoleGateway
         },
         {
             path: '/account',
