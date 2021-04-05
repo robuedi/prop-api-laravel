@@ -3449,8 +3449,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('properties', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('properties', {
     property: 'property'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('auth', {
+    user: 'user'
   })),
   mounted: function mounted() {
     this.showProperty({
@@ -3458,7 +3460,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       query: 'has_address=true&has_type=true'
     });
   },
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('properties', ['showProperty']))
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('properties', ['showProperty'])), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('propertyUser', ['bookProperty'])), {}, {
+    bookProperty: function bookProperty(propertyId) {
+      this.bookProperty({
+        property_id: propertyId,
+        user_id: user.id
+      }).then(function () {
+        console.log('success');
+      });
+    }
+  })
 });
 
 /***/ }),
@@ -5086,8 +5097,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _auth_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth.module */ "./resources/js/store/auth.module.js");
 /* harmony import */ var _properties_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./properties.module */ "./resources/js/store/properties.module.js");
 /* harmony import */ var _propertiesStatuses_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./propertiesStatuses.module */ "./resources/js/store/propertiesStatuses.module.js");
@@ -5106,6 +5117,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _userProperties_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./userProperties.module */ "./resources/js/store/userProperties.module.js");
 /* harmony import */ var _roles_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./roles.module */ "./resources/js/store/roles.module.js");
 /* harmony import */ var _roleUser_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./roleUser.module */ "./resources/js/store/roleUser.module.js");
+/* harmony import */ var _propertyUser_module__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./propertyUser.module */ "./resources/js/store/propertyUser.module.js");
 
 
 
@@ -5126,8 +5138,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_18__.default.use(vuex__WEBPACK_IMPORTED_MODULE_19__.default);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_19__.default.Store({
+
+vue__WEBPACK_IMPORTED_MODULE_19__.default.use(vuex__WEBPACK_IMPORTED_MODULE_20__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_20__.default.Store({
   modules: {
     auth: _auth_module__WEBPACK_IMPORTED_MODULE_0__.default,
     properties: _properties_module__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -5146,7 +5159,8 @@ vue__WEBPACK_IMPORTED_MODULE_18__.default.use(vuex__WEBPACK_IMPORTED_MODULE_19__
     paramsPropertyIndex: _params_properties_index_module__WEBPACK_IMPORTED_MODULE_14__.default,
     userProperties: _userProperties_module__WEBPACK_IMPORTED_MODULE_15__.default,
     roles: _roles_module__WEBPACK_IMPORTED_MODULE_16__.default,
-    roleUser: _roleUser_module__WEBPACK_IMPORTED_MODULE_17__.default
+    roleUser: _roleUser_module__WEBPACK_IMPORTED_MODULE_17__.default,
+    propertyUser: _propertyUser_module__WEBPACK_IMPORTED_MODULE_18__.default
   }
 }));
 
@@ -5612,6 +5626,55 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/propertyUser.module.js":
+/*!***************************************************!*\
+  !*** ./resources/js/store/propertyUser.module.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  actions: {
+    bookProperty: function bookProperty(_ref, data) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var dispatch, commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                dispatch = _ref.dispatch, commit = _ref.commit;
+                return _context.abrupt("return", axios.post("/api/v1/users-properties/", data).then(function (response) {
+                  return response;
+                })["catch"](function (err) {
+                  throw err;
+                }));
+
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -68505,7 +68568,15 @@ var render = function() {
           _vm._v(" "),
           _c(
             "button",
-            { staticClass: "btn btn-primary mb-4", attrs: { type: "button" } },
+            {
+              staticClass: "btn btn-primary mb-4",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  return _vm.bookProperty(_vm.property.id)
+                }
+              }
+            },
             [_vm._v(_vm._s(_vm._f("capitalize")(_vm.property.type.name)))]
           ),
           _vm._v(" "),

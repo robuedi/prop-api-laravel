@@ -18,6 +18,7 @@ import paramsPropertyIndex from './params/properties/index.module'
 import userProperties from './userProperties.module'
 import roles from './roles.module'
 import roleUser from './roleUser.module'
+import propertyUser from './propertyUser.module'
 
 Vue.use(Vuex)
 
@@ -40,6 +41,7 @@ export default new Vuex.Store({
         paramsPropertyIndex,
         userProperties,
         roles,
-        roleUser
+        roleUser,
+        propertyUser
     }
 })
