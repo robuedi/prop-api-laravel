@@ -2,7 +2,9 @@
 
 namespace App\Http\Services\RoleUserStatus;
 
+use App\Models\RoleUser;
+
 interface RoleUserStatusServiceInterface
 {
-    public function checkRoleUserCompleted(int $user_id, int $user_role_id): bool;
+    public function checkRoleUserCompleted(int $user_id, RoleUser $role_user): bool;
 }

@@ -4,7 +4,7 @@ export default {
     namespaced: true,
 
     state: {
-        apiState: apiStates.INIT,
+        authApiState: apiStates.INIT,
         authenticated: false,
         user: null,
         activeRole : null
@@ -32,8 +32,8 @@ export default {
             }
         },
 
-        apiState (state) {
-            return state.apiState
+        authApiState (state) {
+            return state.authApiState
         },
     },
 
@@ -52,8 +52,10 @@ export default {
             state.apiState = apiStates.LOADING
         },
 
-        SET_API_STATE (state, value) {
-            state.apiState = value
+        SET_AUTH_API_STATE (state, value) {
+            console.log('state')
+            console.log(value)
+            state.authApiState = value
         }
     },
 
@@ -86,7 +88,7 @@ export default {
         {
             return await axios.get(`/api/v1/users/${rootGetters['auth/userId']}/roles-users/${userRoleId}/check-complete`).then((res) => {
                 return dispatch('me').then(() => {
-                    return res;
+                    return res.data.data;
                 })
             });
         },
@@ -100,11 +102,11 @@ export default {
             return await axios.get('/api/user').then((response) => {
                 commit('SET_AUTHENTICATED', true)
                 commit('SET_USER', response.data)
-                commit('SET_API_STATE', apiStates.LOADED)
+                commit('SET_AUTH_API_STATE', apiStates.LOADED)
             }).catch(() => {
                 commit('SET_AUTHENTICATED', false)
                 commit('SET_USER', null)
-                commit('SET_API_STATE', apiStates.ERROR)
+                commit('SET_AUTH_API_STATE', apiStates.ERROR)
             })
         }
     }

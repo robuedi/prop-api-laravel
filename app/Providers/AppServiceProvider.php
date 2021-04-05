@@ -49,7 +49,6 @@ class AppServiceProvider extends ServiceProvider
     {
         app()->bind(CountryRepositoryInterface::class, CountryRepository::class);
         app()->bind(CityRepositoryInterface::class, CityRepository::class);
-        app()->bind(RoleRepositoryInterface::class, RoleRepository::class);
         app()->bind(PropertyStatusRepositoryInterface::class, PropertyStatusRepository::class);
         app()->bind(PropertyRepositoryInterface::class, PropertyRepository::class);
         app()->bind(PropertyAddressRepositoryInterface::class, PropertyAddressRepository::class);
@@ -62,6 +61,7 @@ class AppServiceProvider extends ServiceProvider
         app()->bind(UserSavingRepositoryInterface::class, UserSavingRepository::class);
         app()->bind(AgencyRepositoryInterface::class, AgencyRepository::class);
         app()->bind(AgencyAddressRepositoryInterface::class, AgencyAddressRepository::class);
+        app()->bind(RoleRepositoryInterface::class, RoleRepository::class);
 
         app()->bind(RoleUserChecksInterface::class, RoleUserChecks::class);
         app()->bind(RoleUserStatusServiceInterface::class, RoleUserStatusService::class);

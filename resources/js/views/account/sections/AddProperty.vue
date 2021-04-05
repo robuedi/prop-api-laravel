@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import AccountNavigation from "../partials/AccountNavigation";
+import AccountNavigation from "./layout/AccountNavigation";
 import AddressInputs from '../../../components/partials/AddressInputs'
 import NotificationLabels from '../../../components/partials/NotificationLabels'
 import {mapActions, mapGetters} from "vuex";

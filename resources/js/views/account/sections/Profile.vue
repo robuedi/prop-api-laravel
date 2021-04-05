@@ -3,23 +3,22 @@
         <router-view></router-view>
         <AccountNavigation activeSection="accountProfile"/>
         <template v-if="user">
-            <p>
+            <p class="mb-3">
                 <strong>Name</strong>: {{user.name}}
                 <br/>
                 <strong>Email</strong>: {{user.email}}
                 <br/>
-                <strong>Account type:</strong>
-                <span v-if="user.type_id === 1">Tenant</span>
-                <span v-else-if="user.type_id === 2">Buyer</span>
-                <span v-else-if="user.type_id === 3">Landlord</span>
-                <span v-else-if="user.type_id === 4">Seller</span>
+                <strong>Account type:</strong> <span >{{activeRole.role.name}}</span>
             </p>
+            <button type="button" @click="$router.push({name: 'chooseRoles'})" class="btn btn-outline-dark btn-md mb-5">
+                Change profile
+            </button>
         </template>
     </div>
 </template>
 
 <script>
-import AccountNavigation from "../partials/AccountNavigation";
+import AccountNavigation from "./layout/AccountNavigation";
 import {mapGetters} from "vuex";
 
 export default {
@@ -29,6 +28,7 @@ export default {
     computed: {
         ...mapGetters('auth',{
             user: 'user',
+            activeRole: 'activeRole'
         }),
     },
 }

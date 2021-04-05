@@ -3,6 +3,7 @@
 
 namespace App\Http\Services\RoleUserStatus;
 
+use App\Models\RoleUser;
 use App\Repositories\RoleUserRepositoryInterface;
 
 class RoleUserStatusService implements RoleUserStatusServiceInterface
@@ -16,9 +17,9 @@ class RoleUserStatusService implements RoleUserStatusServiceInterface
         $this->user_profile_checks = $user_profile_checks;
     }
 
-    public function checkRoleUserCompleted(int $user_id, int $user_role_id) :bool
+    public function checkRoleUserCompleted(int $user_id, RoleUser $role_user) :bool
     {
-        switch ($user_role_id)
+        switch ($role_user->role_id)
         {
             case 1:
                 if(!$this->user_profile_checks->checkEmployment($user_id)
@@ -29,7 +30,7 @@ class RoleUserStatusService implements RoleUserStatusServiceInterface
                     return false;
                 }
 
-                $this->role_user_repository->makeCompleted($user_role_id);
+                $this->role_user_repository->makeCompleted($role_user->id);
                 return true;
 
             case 2:
@@ -41,7 +42,7 @@ class RoleUserStatusService implements RoleUserStatusServiceInterface
                     return false;
                 }
 
-                $this->role_user_repository->makeCompleted($user_role_id);
+                $this->role_user_repository->makeCompleted($role_user->id);
                 return true;
 
             case 3:
@@ -53,7 +54,7 @@ class RoleUserStatusService implements RoleUserStatusServiceInterface
                     return false;
                 }
 
-                $this->role_user_repository->makeCompleted($user_role_id);
+                $this->role_user_repository->makeCompleted($role_user->id);
                 return true;
 
             default:

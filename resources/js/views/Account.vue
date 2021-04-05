@@ -1,6 +1,6 @@
 <template>
     <div >
-        <router-view v-if="profileCompleted" />
+        <router-view v-if="activeRole" />
         <p v-else-if="apiStateLoading">Loading...</p>
     </div>
 </template>
@@ -19,8 +19,9 @@ export default {
     },
     computed: {
         ...mapGetters('auth', {
-            profileCompleted: 'profileCompleted',
-            apiState: 'apiState'
+            authenticated: 'authenticated',
+            activeRole: 'activeRole',
+            apiState: 'authApiState'
         }),
         apiStateLoaded() {
             return this.apiState === apiStates.LOADED;
@@ -32,11 +33,23 @@ export default {
     methods: {
         profileCompletedCheck()
         {
-            if(!this.profileCompleted)
+            if(this.apiStateLoaded !== true)
             {
-                this.$router.push({name: 'completeRegister'})
+                return;
+            }
+
+            if(!this.authenticated)
+            {
+                this.$router.push({name: 'signIn'})
+            }
+            else if(this.authenticated && !this.activeRole)
+            {
+                this.$router.push({name: 'chooseRoles'})
             }
         }
+    },
+    mounted() {
+        this.profileCompletedCheck()
     }
 }
 </script>

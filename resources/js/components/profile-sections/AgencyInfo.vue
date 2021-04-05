@@ -1,22 +1,25 @@
 <template>
     <div v-if="show === true">
-        <div class="alert alert-warning alert-dismissible fade show" role="alert" v-for="error in errors">
-            {{ error }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <form action="#" @submit.prevent="submit">
-            <div class="mb-3" >
-                <label for="agency_name" class="form-label">Agency name</label>
-                <input type="text" v-model="form.name" class="form-control w-50" id="agency_name" >
+        <template v-if="show === true">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" v-for="error in errors">
+                {{ error }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="form-check mb-3">
-                <input type="checkbox"  v-model="form.is_public" class="form-check-input" id="is_public">
-                <label class="form-check-label" for="is_public">Keep the agency private?</label>
-            </div>
-            <button class="btn btn-success">Submit</button>
-        </form>
+            <form action="#" @submit.prevent="submit">
+                <div class="mb-3" >
+                    <label for="agency_name" class="form-label">Agency name</label>
+                    <input type="text" v-model="form.name" class="form-control w-50" id="agency_name" >
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox"  v-model="form.is_public" class="form-check-input" id="is_public">
+                    <label class="form-check-label" for="is_public">Keep the agency private?</label>
+                </div>
+                <button class="btn btn-success">Submit</button>
+            </form>
+        </template>
+        <p v-else>Loading..</p>
     </div>
 </template>
 

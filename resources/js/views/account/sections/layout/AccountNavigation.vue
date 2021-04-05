@@ -1,8 +1,8 @@
 <template>
     <div>
-        <template v-for="(btnName, btnId) in btnsAll" >
+        <template v-for="(btnInfo, btnId) in btns" v-if="btnInfo.roles.includes(activeRole.role_id)">
             <button type="button" @click="$router.push({name: btnId})" :class="{ 'active' : activeSection === btnId}"  class="mb-5 mr-4 btn btn-outline-dark">
-                {{btnName}}
+                {{btnInfo.name}}
             </button>
         </template>
     </div>
@@ -11,6 +11,7 @@
 
 <script>
 
+import apiStates from "../rolesSections";
 import { mapGetters } from 'vuex'
 
 export default {
@@ -19,26 +20,17 @@ export default {
     },
     data () {
         return {
-            btns: {
-                'accountProfile': 'Profile',
-                'userApplications': 'Applications',
-            },
-            owners: {
-                'userProperties': 'My Properties',
-                'addProperty': 'Add property',
-            }
+            btns: null
         }
     },
     computed: {
-        ...mapGetters('auth', ['user']),
-        btnsAll (){
-            if(this.user && this.user.type_id)
-            {
-                return {...this.btns, ...this.owners}
-            }
-
-            return this.btns
-        }
+        ...mapGetters('auth', [
+            'user',
+            'activeRole'
+        ]),
+    },
+    mounted() {
+        this.btns = apiStates
     },
     methods: {
         setActiveSection(sectionName)

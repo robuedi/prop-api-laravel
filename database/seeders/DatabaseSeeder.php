@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\PropertyStatus;
+use App\Models\PropertyType;
 use App\Models\Role;
 use App\Models\UserPropertyType;
 use App\Models\UserType;
@@ -25,29 +26,39 @@ class DatabaseSeeder extends Seeder
         Role::insert([
             [
             'id' => 1,
-            'name' => 'Tenant'
+            'name' => 'tenant'
             ],
             [
             'id' => 2,
-            'name' => 'Buyer'
+            'name' => 'buyer'
             ],
             [
             'id' => 3,
-            'name' => 'Landlord'
+            'name' => 'landlord'
             ],
             [
             'id' => 4,
-            'name' => 'Seller'
+            'name' => 'seller'
             ]
         ]);
         PropertyStatus::insert([
             [
             'id' => 1,
-            'label' => 'Active'
+            'label' => 'active'
             ],
             [
             'id' => 2,
-            'label' => 'Inactive'
+            'label' => 'inactive'
+            ]
+        ]);
+        PropertyType::insert([
+            [
+            'id' => 1,
+            'name' => 'rent'
+            ],
+            [
+            'id' => 2,
+            'label' => 'sell'
             ]
         ]);
 

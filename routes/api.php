@@ -82,7 +82,10 @@ Route::prefix('v1')->group(function (){
         Route::post('/users/{user}/agencies/{agency}/addresses', [AgencyAddressesController::class, 'storeForUserAgency']);
         Route::get('/users/{user}/agencies/{agency}/addresses', [AgencyAddressesController::class, 'showForUserAgency']);
 
+        Route::get('/roles', [RolesController::class, 'index']);
+
         Route::get('/users/{user}/roles-users/{role_user}/check-complete', [RolesUsersController::class, 'checkRoleUserComplete']);
+        Route::post('/users/{user}/roles-users', [RolesUsersController::class, 'storeForUser']);
     });
 });
 

@@ -1,16 +1,19 @@
 <template>
-    <div v-if="show === true">
-        <div class="alert alert-warning alert-dismissible fade show" role="alert" v-for="error in errors">
-            {{ error }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <form action="#" @submit.prevent="submit">
-            <AddressInputs title="Agency Address" v-on:addressCompleted="addressCompleted" change-event="addressCompleted"/>
+    <div >
+        <template v-if="show === true">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" v-for="error in errors">
+                {{ error }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="#" @submit.prevent="submit">
+                <AddressInputs title="Agency Address" v-on:addressCompleted="addressCompleted" change-event="addressCompleted"/>
 
-            <button class="btn btn-success">Submit</button>
-        </form>
+                <button class="btn btn-success">Submit</button>
+            </form>
+        </template>
+        <p v-else>Loading..</p>
     </div>
 </template>
 

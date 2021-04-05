@@ -1,11 +1,8 @@
 <template>
     <div>
         <p v-if="this.authApiStateLoading">Loading..</p>
-        <template v-if="this.authApiStateLoaded && userRolesList">
+        <template v-if="this.authApiStateLoaded ">
             <SelectProfile :userRolesList="userRolesList"/>
-        </template>
-        <template v-else-if="this.authApiStateLoaded ">
-            <CreateProfile />
         </template>
     </div>
 
@@ -14,13 +11,11 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 
-import CreateProfile from './role-gateway-sections/CreateProfile'
 import SelectProfile from './role-gateway-sections/SelectProfile'
 import apiStates from "../../store/apiStates/apiStateValues";
 
 export default {
     components: {
-        CreateProfile,
         SelectProfile
     },
     watch: {
@@ -37,7 +32,7 @@ export default {
     computed: {
         ...mapGetters('auth', {
             user: 'user',
-            authApiState: 'apiState'
+            authApiState: 'authApiState'
         }),
         authApiStateLoaded() {
             return this.authApiState === apiStates.LOADED;
@@ -50,11 +45,7 @@ export default {
         ...mapActions('auth', ['setActiveRole']),
         chooseAccountActions()
         {
-            if(this.user.user_role.length === 0)
-            {
-                this.$router.push({name: 'makeRole'})
-            }
-            else if(this.user.user_role.length > 0)
+            if(this.user.user_role.length > 0)
             {
                 this.checkExistingRoles(this.user.user_role)
             }
@@ -76,7 +67,9 @@ export default {
             }
         },
         initLoad() {
-            if(this.authApiStateLoaded === true) {
+
+            console.log(this.authApiState);
+            if(this.authApiStateLoaded) {
                 this.chooseAccountActions();
             }
         }

@@ -1,6 +1,9 @@
 <template>
     <div>
         <h1 class="mb-4">Complete Registration</h1>
+        <button type="button" @click="$router.push({name: 'chooseRoles'})" class="btn btn-outline-dark btn-md mb-5">
+            Choose profiles
+        </button>
 
         <p v-if="authApiStateLoading">Loading...</p>
 
@@ -45,10 +48,9 @@ export default {
     computed: {
         ...mapGetters('auth', {
             user: 'user',
-            authApiState: 'apiState',
+            authApiState: 'authApiState',
         }),
         authApiStateLoaded() {
-            console.log('c2')
             return this.authApiState === apiStates.LOADED;
         },
         authApiStateLoading() {
@@ -58,6 +60,7 @@ export default {
     methods: {
         ...mapActions('auth', [
             'checkUserProfileComplete',
+            'setActiveRole',
             'me',
         ]),
         getSelectedUserRole(){
@@ -65,14 +68,18 @@ export default {
         },
         checkIfProfileCompleted()
         {
+            //check if the user role is now completed
             this.checkUserProfileComplete(this.selectedUserRole.id).then((res) => {
-                this.doIfCompleted()
+                if(res.status === true)
+                {
+                    //refresh user data
+                    this.me().then(() => {
+                        let activeRole = this.user.user_role.filter(userRole => userRole.id === parseInt(this.$route.params.userRoleId)).shift()
+                        this.setActiveRole(activeRole)
+                        this.$router.push({name: 'accountProfile'})
+                    });
+                }
             });
-        },
-        doIfCompleted()
-        {
-            this.me();
-            this.$router.push({name: 'chooseRoles'})
         },
         initLoad(){
             if(this.authApiStateLoaded) {

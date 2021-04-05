@@ -4,6 +4,7 @@
 namespace App\Repositories\Repositories;
 
 use App\Models\Role;
+use App\Repositories\RoleRepositoryInterface;
 
 class RoleRepository implements RoleRepositoryInterface
 {
