@@ -166,10 +166,17 @@ Vue.filter('capitalize', function (value) {
 })
 
 Vue.filter("date", function (value) {
+    if(!value) {
+        return ''
+    }
     return Moment(value).format("Do MMMM YYYY");
+
 });
 
 Vue.filter("datetime", function (value) {
+    if(!value) {
+        return ''
+    }
     return Moment(value).format("Do MMMM YYYY HH:mm");
 });
 

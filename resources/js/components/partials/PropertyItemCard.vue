@@ -13,7 +13,7 @@
                 {{property.address.city.country.name+', '+property.address.city.name}}
                 {{property.address.address_line}}
                 <br/>
-                <span class="float-right">Added on: {{formatDate(property.created_at)}}</span>
+                <span class="float-right">Added on {{property.created_at | date}}</span>
             </p>
 
         </div>
@@ -21,16 +21,12 @@
 </template>
 
 <script>
-import moment from 'moment';
 
 export default {
     props: {
         property: Object
     },
     methods: {
-        formatDate: function (date) {
-            return moment(date).format('YYYY-MM-DD');
-        },
         redirectToProperty() {
             this.$router.push({path: '/property/'+this.property.id})
         }

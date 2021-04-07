@@ -25,8 +25,8 @@ class UserEmploymentStoreRequest extends FormRequest
     {
         return [
             'job_title' => 'string|required',
-            'start_date' => 'required|date_format:d/m/Y',
-            'end_date' => 'nullable|date_format:d/m/Y|after_or_equal:start_date'
+            'start_date' => 'required|date_format:Y-m-d',
+            'end_date' => 'nullable|date_format:Y-m-d|after_or_equal:start_date'
         ];
     }
 }

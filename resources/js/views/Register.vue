@@ -28,9 +28,15 @@
                 </div>
 
                 <div class="mb-3" >
-                    <label for="dob" class="form-label">Date of birth</label>
-                    <input type="string" placeholder="day/month/year" v-model="form.dob" class="form-control w-50" id="dob" >
+                    <label class="form-label">Date of birth</label>
+                    <br/>
+                    <date-range-picker class="w-50" ref="picker" :auto-apply="true" :showDropdowns="true" v-model="dateRange" :singleDatePicker="true" :ranges="false" >
+                        <template v-slot:input="picker"  >
+                            {{ picker.startDate | date }}
+                        </template>
+                    </date-range-picker>
                 </div>
+
 
                 <div class="mb-3" >
                     <label for="InputPassword" class="form-label">Password</label>
@@ -50,18 +56,32 @@
 </template>
 
 <script>
+
+import DateRangePicker from 'vue2-daterange-picker'
+import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
+
 import AddressInputs from '../components/partials/AddressInputs'
 import NotificationLabels from "../components/partials/NotificationLabels";
 
 import { mapActions } from 'vuex'
+import Moment from "moment";
 
 export default {
     components: {
         AddressInputs,
-        NotificationLabels
+        NotificationLabels,
+        DateRangePicker,
+    },
+    watch: {
+        dateRange(val){
+            this.form.dob = Moment(val.startDate).format("YYYY-MM-DD")
+        }
     },
     data () {
         return {
+            dateRange: {
+                startDate: null,
+            },
             errors: [],
             form: {
                 name: '',

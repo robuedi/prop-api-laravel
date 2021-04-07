@@ -30,8 +30,8 @@ class EmploymentController extends Controller
             $this->user_employment_repository->create(
                 $user->id,
                 $request->get('job_title'),
-                DateTime::createFromFormat('d/m/Y', $request->get('start_date'))->format('Y-m-d'),
-                $request->has('end_date') ? DateTime::createFromFormat('d/m/Y', $request->get('end_date'))->format('Y-m-d') : null,
+                date('Y-m-d', strtotime($request->get('start_date'))),
+                $request->has('end_date') ? date('Y-m-d', strtotime($request->get('end_date'))): null,
             )
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }

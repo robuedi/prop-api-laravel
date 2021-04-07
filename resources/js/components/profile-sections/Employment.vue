@@ -12,12 +12,25 @@
                 <input type="text" v-model="form.job_title" class="form-control w-50" id="job_title" >
             </div>
             <div class="mb-3" >
-                <label for="start_date" class="form-label">Start date </label>
-                <input type="text" v-model="form.start_date" placeholder="day/month/year" class="form-control w-50" id="start_date" >
+                <label class="form-label">Start date</label>
+                <br/>
+                <date-range-picker class="w-50" ref="pickerStart" :auto-apply="true" :maxDate="endDate.endDate" :showDropdowns="true" v-model="startDate" :singleDatePicker="true" :ranges="false" >
+                    <template v-slot:input="pickerStart"  >
+                        {{ pickerStart.startDate | date }}
+                    </template>
+                </date-range-picker>
             </div>
             <div class="mb-3" >
-                <label for="end_date" class="form-label">End date (optional)</label>
-                <input type="text" v-model="form.end_date" placeholder="day/month/year" class="form-control w-50" id="end_date" >
+                <label class="form-label">End date (optional)</label>
+                <br/>
+                <date-range-picker class="w-50" ref="pickerEnd" :auto-apply="true" :minDate="startDate.startDate" :showDropdowns="true" v-model="endDate" :singleDatePicker="true" :ranges="false" >
+                    <template v-slot:input="pickerEnd"  >
+                        {{ pickerEnd.startDate | date }}
+                    </template>
+                </date-range-picker>
+                <div class="w-50" v-if="endDate.endDate">
+                    <button type="button" @click="endDate.endDate = null" class="btn btn-outline-dark btn-sm float-right mt-1">Clear</button>
+                </div>
             </div>
 
             <button class="btn btn-success">Submit</button>
@@ -26,11 +39,34 @@
 </template>
 
 <script>
+
+import DateRangePicker from 'vue2-daterange-picker'
+import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 import {mapActions, mapGetters} from "vuex";
+import AddressInputs from "../partials/AddressInputs";
+import NotificationLabels from "../partials/NotificationLabels";
+import Moment from "moment";
 
 export default {
+    components: {
+        DateRangePicker
+    },
+    watch: {
+        startDate(val){
+            this.form.start_date = Moment(val.startDate).format("YYYY-MM-DD")
+        },
+        endDate(val){
+            this.form.end_date = Moment(val.endDate).format("YYYY-MM-DD")
+        }
+    },
     data () {
         return {
+            startDate: {
+                startDate: null,
+            },
+            endDate: {
+                endDate: null,
+            },
             show: false,
             errors: [],
             form: {

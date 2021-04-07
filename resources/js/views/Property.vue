@@ -9,6 +9,8 @@
                     <strong>{{ property.address.city.name+', '+property.address.city.country.name }}</strong>
                     <br/>
                     <small>{{property.address.address_line+', '+property.address.postcode}}</small>
+                    <br/>
+                    <span class="float-right">Added on {{property.created_at | date}}</span>
                 </p>
             </div>
         </div>

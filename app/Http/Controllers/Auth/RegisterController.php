@@ -53,7 +53,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'dob' => ['required', 'date_format:d/m/Y'],
+            'dob' => ['required', 'date_format:Y-m-d'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], [
             'dob.required' => 'The date of birth is required.',
@@ -73,7 +73,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'dob' => DateTime::createFromFormat('d/m/Y', $data['dob'])->format('Y-m-d')
+            'dob' => date('Y-m-d', strtotime($data['dob']))
         ]);
     }
 }
