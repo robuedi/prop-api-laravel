@@ -2437,8 +2437,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _partials_AddressInputs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/AddressInputs */ "./resources/js/components/partials/AddressInputs.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _partials_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/NotificationLabels */ "./resources/js/components/partials/NotificationLabels.vue");
+/* harmony import */ var _partials_AddressInputs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../partials/AddressInputs */ "./resources/js/components/partials/AddressInputs.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -2477,16 +2478,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    AddressInputs: _partials_AddressInputs__WEBPACK_IMPORTED_MODULE_1__.default
+    AddressInputs: _partials_AddressInputs__WEBPACK_IMPORTED_MODULE_2__.default,
+    NotificationLabels: _partials_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__.default
   },
   data: function data() {
     return {
@@ -2495,16 +2493,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       currentAddress: ''
     };
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('userAgencyAddress', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('userAgencyAddress', {
     address: 'agencyAddress'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('userAgencies', {
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('userAgencies', {
     agency: 'agency'
   })),
   methods: _objectSpread(_objectSpread({
     addressCompleted: function addressCompleted(address) {
       this.currentAddress = address;
     }
-  }, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('userAgencyAddress', ['setAgencyAddress', 'getAgencyAddress'])), {}, {
+  }, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)('userAgencyAddress', ['setAgencyAddress', 'getAgencyAddress'])), {}, {
     submit: function submit() {
       var _this = this;
 
@@ -2565,7 +2563,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _partials_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/NotificationLabels */ "./resources/js/components/partials/NotificationLabels.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -2610,13 +2609,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    NotificationLabels: _partials_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__.default
+  },
   data: function data() {
     return {
       show: false,
@@ -2627,10 +2625,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('userAgencies', {
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('userAgencies', {
     agency: 'agency'
   })),
-  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('userAgencies', ['setAgency'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('userAgencies', ['getCurrentUserAgency'])), {}, {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('userAgencies', ['setAgency'])), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('userAgencies', ['getCurrentUserAgency'])), {}, {
     submit: function submit() {
       var _this = this;
 
@@ -2807,11 +2805,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue2_daterange_picker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue2-daterange-picker */ "./node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.umd.min.js");
 /* harmony import */ var vue2_daterange_picker__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue2_daterange_picker__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vue2_daterange_picker_dist_vue2_daterange_picker_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue2-daterange-picker/dist/vue2-daterange-picker.css */ "./node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.css");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _partials_AddressInputs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../partials/AddressInputs */ "./resources/js/components/partials/AddressInputs.vue");
-/* harmony import */ var _partials_NotificationLabels__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../partials/NotificationLabels */ "./resources/js/components/partials/NotificationLabels.vue");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _partials_NotificationLabels__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../partials/NotificationLabels */ "./resources/js/components/partials/NotificationLabels.vue");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
 
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -2873,10 +2870,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-
 
 
 
@@ -2884,14 +2877,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    DateRangePicker: (vue2_daterange_picker__WEBPACK_IMPORTED_MODULE_1___default())
+    DateRangePicker: (vue2_daterange_picker__WEBPACK_IMPORTED_MODULE_1___default()),
+    NotificationLabels: _partials_NotificationLabels__WEBPACK_IMPORTED_MODULE_3__.default
   },
   watch: {
     startDate: function startDate(val) {
-      this.form.start_date = moment__WEBPACK_IMPORTED_MODULE_5___default()(val.startDate).format("YYYY-MM-DD");
+      this.form.start_date = moment__WEBPACK_IMPORTED_MODULE_4___default()(val.startDate).format("YYYY-MM-DD");
     },
     endDate: function endDate(val) {
-      this.form.end_date = moment__WEBPACK_IMPORTED_MODULE_5___default()(val.endDate).format("YYYY-MM-DD");
+      this.form.end_date = moment__WEBPACK_IMPORTED_MODULE_4___default()(val.endDate).format("YYYY-MM-DD");
     }
   },
   data: function data() {
@@ -2911,10 +2905,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)('userEmployment', {
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapGetters)('userEmployment', {
     employment: 'employment'
   })),
-  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapActions)('userEmployment', ['setEmployment'])), (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapActions)('userEmployment', ['getCurrentUserEmployment'])), {}, {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('userEmployment', ['setEmployment'])), (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('userEmployment', ['getCurrentUserEmployment'])), {}, {
     submit: function submit() {
       var _this = this;
 
@@ -2972,7 +2966,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _partials_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/NotificationLabels */ "./resources/js/components/partials/NotificationLabels.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -3013,11 +3008,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    NotificationLabels: _partials_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__.default
+  },
   data: function data() {
     return {
       show: false,
@@ -3027,10 +3023,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('rent', {
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('rent', {
     rent: 'rent'
   })),
-  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('rent', ['setRent'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('rent', ['getCurrentUserRent'])), {}, {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('rent', ['setRent'])), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('rent', ['getCurrentUserRent'])), {}, {
     submit: function submit() {
       var _this = this;
 
@@ -3088,7 +3084,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _partials_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/NotificationLabels */ "./resources/js/components/partials/NotificationLabels.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -3129,11 +3126,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    NotificationLabels: _partials_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__.default
+  },
   data: function data() {
     return {
       show: false,
@@ -3143,10 +3141,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('savings', {
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('savings', {
     savings: 'savings'
   })),
-  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('savings', ['setSavings'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('savings', ['getCurrentUserSavings'])), {}, {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('savings', ['setSavings'])), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('savings', ['getCurrentUserSavings'])), {}, {
     submit: function submit() {
       var _this = this;
 
@@ -3204,8 +3202,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _partials_AddressInputs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/AddressInputs */ "./resources/js/components/partials/AddressInputs.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _partials_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/NotificationLabels */ "./resources/js/components/partials/NotificationLabels.vue");
+/* harmony import */ var _partials_AddressInputs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../partials/AddressInputs */ "./resources/js/components/partials/AddressInputs.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -3243,14 +3242,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    AddressInputs: _partials_AddressInputs__WEBPACK_IMPORTED_MODULE_1__.default
+    AddressInputs: _partials_AddressInputs__WEBPACK_IMPORTED_MODULE_2__.default,
+    NotificationLabels: _partials_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__.default
   },
   data: function data() {
     return {
@@ -3259,14 +3257,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       currentAddress: ''
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('userAddress', {
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('userAddress', {
     userAddress: 'userAddress'
   })),
   methods: _objectSpread(_objectSpread({
     addressCompleted: function addressCompleted(address) {
       this.currentAddress = address;
     }
-  }, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('userAddress', ['setUserAddress', 'getCurrentUserAddress'])), {}, {
+  }, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)('userAddress', ['setUserAddress', 'getCurrentUserAddress'])), {}, {
     submit: function submit() {
       var _this = this;
 
@@ -67765,20 +67763,7 @@ var render = function() {
     [
       _vm.show === true
         ? [
-            _vm._l(_vm.errors, function(error) {
-              return _c(
-                "div",
-                {
-                  staticClass:
-                    "alert alert-warning alert-dismissible fade show",
-                  attrs: { role: "alert" }
-                },
-                [
-                  _vm._v("\n            " + _vm._s(error) + "\n            "),
-                  _vm._m(0, true)
-                ]
-              )
-            }),
+            _c("NotificationLabels", { attrs: { errors: _vm.errors } }),
             _vm._v(" "),
             _c(
               "form",
@@ -67812,25 +67797,7 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "alert",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -67859,22 +67826,7 @@ var render = function() {
         [
           _vm.show === true
             ? [
-                _vm._l(_vm.errors, function(error) {
-                  return _c(
-                    "div",
-                    {
-                      staticClass:
-                        "alert alert-warning alert-dismissible fade show",
-                      attrs: { role: "alert" }
-                    },
-                    [
-                      _vm._v(
-                        "\n            " + _vm._s(error) + "\n            "
-                      ),
-                      _vm._m(0, true)
-                    ]
-                  )
-                }),
+                _c("NotificationLabels", { attrs: { errors: _vm.errors } }),
                 _vm._v(" "),
                 _c(
                   "form",
@@ -67990,25 +67942,7 @@ var render = function() {
       )
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "alert",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -68119,19 +68053,7 @@ var render = function() {
     ? _c(
         "div",
         [
-          _vm._l(_vm.errors, function(error) {
-            return _c(
-              "div",
-              {
-                staticClass: "alert alert-warning alert-dismissible fade show",
-                attrs: { role: "alert" }
-              },
-              [
-                _vm._v("\n        " + _vm._s(error) + "\n        "),
-                _vm._m(0, true)
-              ]
-            )
-          }),
+          _c("NotificationLabels", { attrs: { errors: _vm.errors } }),
           _vm._v(" "),
           _c(
             "form",
@@ -68304,29 +68226,11 @@ var render = function() {
             ]
           )
         ],
-        2
+        1
       )
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "alert",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -68353,19 +68257,7 @@ var render = function() {
     ? _c(
         "div",
         [
-          _vm._l(_vm.errors, function(error) {
-            return _c(
-              "div",
-              {
-                staticClass: "alert alert-warning alert-dismissible fade show",
-                attrs: { role: "alert" }
-              },
-              [
-                _vm._v("\n        " + _vm._s(error) + "\n        "),
-                _vm._m(0, true)
-              ]
-            )
-          }),
+          _c("NotificationLabels", { attrs: { errors: _vm.errors } }),
           _vm._v(" "),
           _c(
             "form",
@@ -68418,29 +68310,11 @@ var render = function() {
             ]
           )
         ],
-        2
+        1
       )
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "alert",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -68467,19 +68341,7 @@ var render = function() {
     ? _c(
         "div",
         [
-          _vm._l(_vm.errors, function(error) {
-            return _c(
-              "div",
-              {
-                staticClass: "alert alert-warning alert-dismissible fade show",
-                attrs: { role: "alert" }
-              },
-              [
-                _vm._v("\n        " + _vm._s(error) + "\n        "),
-                _vm._m(0, true)
-              ]
-            )
-          }),
+          _c("NotificationLabels", { attrs: { errors: _vm.errors } }),
           _vm._v(" "),
           _c(
             "form",
@@ -68529,29 +68391,11 @@ var render = function() {
             ]
           )
         ],
-        2
+        1
       )
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "alert",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -68578,19 +68422,7 @@ var render = function() {
     ? _c(
         "div",
         [
-          _vm._l(_vm.errors, function(error) {
-            return _c(
-              "div",
-              {
-                staticClass: "alert alert-warning alert-dismissible fade show",
-                attrs: { role: "alert" }
-              },
-              [
-                _vm._v("\n        " + _vm._s(error) + "\n        "),
-                _vm._m(0, true)
-              ]
-            )
-          }),
+          _c("NotificationLabels", { attrs: { errors: _vm.errors } }),
           _vm._v(" "),
           _c(
             "form",
@@ -68616,29 +68448,11 @@ var render = function() {
             1
           )
         ],
-        2
+        1
       )
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "alert",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

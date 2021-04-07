@@ -1,11 +1,8 @@
 <template>
     <div v-if="show === true">
-        <div class="alert alert-warning alert-dismissible fade show" role="alert" v-for="error in errors">
-            {{ error }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+
+        <NotificationLabels :errors="errors"/>
+
         <form action="#" @submit.prevent="submit">
             <div class="mb-3" >
                 <label for="job_title" class="form-label">Job title</label>
@@ -43,13 +40,13 @@
 import DateRangePicker from 'vue2-daterange-picker'
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 import {mapActions, mapGetters} from "vuex";
-import AddressInputs from "../partials/AddressInputs";
 import NotificationLabels from "../partials/NotificationLabels";
 import Moment from "moment";
 
 export default {
     components: {
-        DateRangePicker
+        DateRangePicker,
+        NotificationLabels
     },
     watch: {
         startDate(val){

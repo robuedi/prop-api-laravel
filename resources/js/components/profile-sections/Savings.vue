@@ -1,11 +1,8 @@
 <template>
     <div v-if="show === true">
-        <div class="alert alert-warning alert-dismissible fade show" role="alert" v-for="error in errors">
-            {{ error }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+
+        <NotificationLabels :errors="errors"/>
+
         <form action="#" @submit.prevent="submit">
             <div class="mb-3" >
                 <label for="savings" class="form-label">Total savings available for a deposit</label>
@@ -18,9 +15,14 @@
 </template>
 
 <script>
+
+import NotificationLabels from "../partials/NotificationLabels";
 import {mapActions, mapGetters} from "vuex";
 
 export default {
+    components: {
+        NotificationLabels
+    },
     data () {
         return {
             show: false,
