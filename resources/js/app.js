@@ -29,16 +29,16 @@ import Moment from "moment";
 import App from './components/App'
 import PassThrough from './components/PassThrough'
 import SignIn from './views/SignIn'
-import Home from './views/Home'
+import Home from './views/home/Home'
 import Register from './views/Register'
-import Account from './views/Account'
+import Account from './views/account/Account'
 import Profile from './views/account/sections/Profile'
 import AddProperty from './views/account/sections/AddProperty'
 import Applications from './views/account/sections/Applications'
 import MyProperties from './views/account/sections/MyProperties'
 import Property from './views/Property'
-import CompleteRoleGateway from './views/account/CompleteRoleGateway'
-import RolesGateway from "./views/account/RolesGateway";
+import CompleteRoleGateway from './views/account-roles/CompleteRoleGateway'
+import RolesGateway from "./views/account-roles/RolesGateway";
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

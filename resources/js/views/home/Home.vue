@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import PropertyItemCard from "../components/partials/PropertyItemCard";
+import PropertyItemCard from "./partials/PropertyItemCard";
 import {mapActions, mapGetters} from "vuex";
 
 export default {

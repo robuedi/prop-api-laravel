@@ -7,7 +7,7 @@
 
 <script>
 
-import apiStates from "../store/apiStates/apiStateValues";
+import apiStates from "../../store/apiStates/apiStateValues";
 
 import { mapGetters } from 'vuex'
 

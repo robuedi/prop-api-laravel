@@ -2,7 +2,7 @@
     <div>
         <template >
             <AnnualSalary v-if="activeStep === 0" v-on:hasAnnualSalary="annualSalaryCompleted()"/>
-            <Savings v-if="activeStep === 1" v-on:hasSavings="savingsCompleted()"/>
+            <Rent v-if="activeStep === 1" v-on:hasRent="rentCompleted()"/>
             <Employment v-if="activeStep === 2" v-on:hasEmployment="employmentCompleted()"/>
             <UserAddress v-if="activeStep === 3" v-on:hasAddress="addressCompleted()"/>
         </template>
@@ -10,22 +10,22 @@
 </template>
 
 <script>
-import AnnualSalary from '../profile-sections/AnnualSalary'
-import Savings from '../profile-sections/Savings'
-import Employment from '../profile-sections/Employment'
-import UserAddress from '../profile-sections/UserAddress'
+import AnnualSalary from '../../../components/profile-sections/AnnualSalary'
+import Rent from '../../../components/profile-sections/Rent'
+import Employment from '../../../components/profile-sections/Employment'
+import UserAddress from '../../../components/profile-sections/UserAddress'
 
 export default {
     components: {
         UserAddress,
         AnnualSalary,
-        Savings,
+        Rent,
         Employment
     },
     data () {
         return {
             activeStep: 0,
-            errors: []
+            errors: [],
         }
     },
     methods: {
@@ -37,7 +37,7 @@ export default {
         {
             this.activeStep = 1;
         },
-        savingsCompleted()
+        rentCompleted()
         {
             this.activeStep = 2;
         },

@@ -9,7 +9,7 @@
 
 <script>
 import AccountNavigation from "./layout/AccountNavigation";
-import PropertyItemAccount from "../../../components/partials/PropertyItemAccount";
+import PropertyItemAccount from "../partials/PropertyItemAccount";
 import {mapActions, mapGetters} from "vuex";
 
 export default {
