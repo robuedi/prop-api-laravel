@@ -14,8 +14,8 @@
 
 <script>
 
-import NotificationLabels from '../partials/NotificationLabels'
-import AddressInputs from '../partials/AddressInputs'
+import NotificationLabels from '../../../components/NotificationLabels'
+import AddressInputs from '../../../components/AddressInputs'
 import {mapActions, mapGetters} from "vuex";
 
 export default {

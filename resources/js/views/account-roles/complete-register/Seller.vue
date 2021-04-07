@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import AgencyAddress from '../../../components/profile-sections/AgencyAddress'
-import AgencyInfo from '../../../components/profile-sections/AgencyInfo'
+import AgencyAddress from '../profile-sections/AgencyAddress'
+import AgencyInfo from '../profile-sections/AgencyInfo'
 
 export default {
     components: {

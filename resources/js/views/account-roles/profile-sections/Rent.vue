@@ -16,7 +16,7 @@
 
 <script>
 
-import NotificationLabels from "../partials/NotificationLabels";
+import NotificationLabels from "../../../components/NotificationLabels";
 import {mapActions, mapGetters} from "vuex";
 
 export default {

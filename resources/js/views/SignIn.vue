@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import NotificationLabels from "../components/partials/NotificationLabels";
+import NotificationLabels from "../components/NotificationLabels";
 import {mapActions, mapGetters} from 'vuex'
 
 export default {

@@ -4,10 +4,7 @@
         <NotificationLabels :errors="errors"/>
 
         <form action="#" @submit.prevent="submit">
-            <div class="mb-3" >
-                <label for="savings" class="form-label">Total savings available for a deposit</label>
-                <input type="text" v-model="form.amount" class="form-control w-50" id="savings" >
-            </div>
+            <AddressInputs title="Address" v-on:addressCompleted="addressCompleted" change-event="addressCompleted"/>
 
             <button class="btn btn-success">Submit</button>
         </form>
@@ -16,34 +13,36 @@
 
 <script>
 
-import NotificationLabels from "../partials/NotificationLabels";
+import NotificationLabels from "../../../components/NotificationLabels";
+import AddressInputs from '../../../components/AddressInputs'
 import {mapActions, mapGetters} from "vuex";
 
 export default {
     components: {
+        AddressInputs,
         NotificationLabels
     },
-    data () {
+    data(){
         return {
             show: false,
             errors: [],
-            form: {
-                amount: null,
-            },
+            currentAddress: ''
         }
     },
     computed: {
-        ...mapGetters('savings',{
-            savings: 'savings',
+        ...mapGetters('userAddress',{
+            userAddress: 'userAddress',
         })
     },
-    methods: {
-        ...mapActions('savings', ['setSavings']),
-        ...mapActions('savings', ['getCurrentUserSavings']),
+    methods:{
+        addressCompleted(address){
+            this.currentAddress = address;
+        },
+        ...mapActions('userAddress', ['setUserAddress', 'getCurrentUserAddress']),
         async submit()
         {
-            this.setSavings(this.form).then((res) => {
-                this.$emit('hasSavings')
+            this.setUserAddress(this.currentAddress).then((res) => {
+                this.$emit('hasAddress')
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
                     this.errors.push(msg[0]);
@@ -52,10 +51,10 @@ export default {
         }
     },
     mounted() {
-        this.getCurrentUserSavings().then((res) => {
-            if(this.savings.length !== 0)
+        this.getCurrentUserAddress().then((res) => {
+            if(this.userAddress.length !== 0)
             {
-                this.$emit('hasSavings');
+                this.$emit('hasAddress');
             }
             else
             {

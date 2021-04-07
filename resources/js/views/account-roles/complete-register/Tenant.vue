@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import AnnualSalary from '../../../components/profile-sections/AnnualSalary'
-import Rent from '../../../components/profile-sections/Rent'
-import Employment from '../../../components/profile-sections/Employment'
-import UserAddress from '../../../components/profile-sections/UserAddress'
+import AnnualSalary from '../profile-sections/AnnualSalary'
+import Rent from '../profile-sections/Rent'
+import Employment from '../profile-sections/Employment'
+import UserAddress from '../profile-sections/UserAddress'
 
 export default {
     components: {

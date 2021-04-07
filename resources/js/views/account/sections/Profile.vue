@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import AccountNavigation from "./layout/AccountNavigation";
+import AccountNavigation from "../layout/AccountNavigation";
 import {mapGetters} from "vuex";
 
 export default {

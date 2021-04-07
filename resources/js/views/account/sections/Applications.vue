@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import AccountNavigation from "./layout/AccountNavigation";
+import AccountNavigation from "../layout/AccountNavigation";
 import PropertyItemAccount from "../partials/PropertyItemAccount";
 import {mapActions, mapGetters} from "vuex";
 

@@ -8,12 +8,15 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+//libs
+import Moment from "moment";
+
+// vuex
 import store from './store/index'
 store.dispatch('auth/me')
 
-import VueRouter from 'vue-router'
-window.Vue.use(VueRouter)
-
+//router
+import router from './router';
 
 /**
  * The following block of code may be used to automatically register your
@@ -23,22 +26,7 @@ window.Vue.use(VueRouter)
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-//libs
-import Moment from "moment";
-
-import App from './components/App'
-import PassThrough from './components/PassThrough'
-import SignIn from './views/SignIn'
-import Home from './views/home/Home'
-import Register from './views/Register'
-import Account from './views/account/Account'
-import Profile from './views/account/sections/Profile'
-import AddProperty from './views/account/sections/AddProperty'
-import Applications from './views/account/sections/Applications'
-import MyProperties from './views/account/sections/MyProperties'
-import Property from './views/Property'
-import CompleteRoleGateway from './views/account-roles/CompleteRoleGateway'
-import RolesGateway from "./views/account-roles/RolesGateway";
+import App from './layout/App'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -46,143 +34,13 @@ import RolesGateway from "./views/account-roles/RolesGateway";
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const router = new VueRouter({
-    mode: 'history',
-    routes: [
-        {
-            path: '/',
-            name: 'home',
-            component: Home
-        },
-        {
-            path: '/property/:property_id',
-            name: 'propertyItem',
-            component: Property
-        },
-        {
-            path: '/signin',
-            name: 'signIn',
-            component: SignIn,
-            beforeEnter(to, from, next) {
-                if (store.getters["auth/authenticated"]) {
-                    next({
-                        name: "account"
-                    });
-                }
-                else {
-                    next()
-                }
-            }
-        },
-        {
-            path: '/register',
-            name: 'register',
-            component: Register
-        },
-        // {
-        //     path: '/complete-register',
-        //     name: 'completeRegister',
-        //     component: CompleteRegisterGateway
-        // },
-        {
-            path: '/choose-roles',
-            name: 'chooseRoles',
-            component: RolesGateway
-        },
-        {
-            path: '/complete-role/:userRoleId',
-            name: 'completeRole',
-            component: CompleteRoleGateway
-        },
-        {
-            path: '/account',
-            name: 'account',
-            component: Account,
-            // beforeEnter(to, from, next) {
-            //     setTimeout(() => {
-            //         if (!store.getters["auth/authenticated"]) {
-            //             next({
-            //                 name: "signIn"
-            //             });
-            //         } if (!store.getters["auth/profileCompleted"]) {
-            //             next({
-            //                 name: "completeRegister"
-            //             });
-            //         } else {
-            //             next()
-            //         }
-            //     }, 1000)
-            // },
-            children:[
-                {
-                    path: '',
-                    name: 'accountProfile',
-                    component: Profile,
-                },
-                {
-                    path: 'my-properties',
-                    name: 'userProperties',
-                    component: MyProperties
-                },
-                {
-                    path: 'applications',
-                    name: 'userApplications',
-                    component: Applications
-                },
-                {
-                    path: 'add-property',
-                    name: 'addProperty',
-                    component: AddProperty
-                }
-            ]
-        },
-        // {
-        //     path: '/account',
-        //     name: 'account',
-        //     component: Account,
-        //     beforeEnter(to, from, next) {
-        //         setTimeout(() => {
-        //             if (!store.getters["auth/authenticated"]) {
-        //                 next({
-        //                     name: "signIn"
-        //                 });
-        //             } if (!store.getters["auth/profileCompleted"]) {
-        //                 next({
-        //                     name: "completeRegister"
-        //                 });
-        //             } else {
-        //                 next()
-        //             }
-        //         }, 1000)
-        //     }
-        // }
-    ],
-});
+//filters
+import '. /filters'
 
-Vue.filter('capitalize', function (value) {
-    if (!value) return ''
-    value = value.toString()
-    return value.charAt(0).toUpperCase() + value.slice(1)
-})
-
-Vue.filter("date", function (value) {
-    if(!value) {
-        return ''
-    }
-    return Moment(value).format("Do MMMM YYYY");
-
-});
-
-Vue.filter("datetime", function (value) {
-    if(!value) {
-        return ''
-    }
-    return Moment(value).format("Do MMMM YYYY HH:mm");
-});
-
+//make app
 const app = new Vue({
     el: '#app',
-    components: { App },
+    components: { App, Moment },
     store,
     router
 });

@@ -60,8 +60,8 @@
 import DateRangePicker from 'vue2-daterange-picker'
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 
-import AddressInputs from '../components/partials/AddressInputs'
-import NotificationLabels from "../components/partials/NotificationLabels";
+import AddressInputs from '../components/AddressInputs'
+import NotificationLabels from "../components/NotificationLabels";
 
 import { mapActions } from 'vuex'
 import Moment from "moment";

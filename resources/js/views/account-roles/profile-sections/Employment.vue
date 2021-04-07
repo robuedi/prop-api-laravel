@@ -40,7 +40,7 @@
 import DateRangePicker from 'vue2-daterange-picker'
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 import {mapActions, mapGetters} from "vuex";
-import NotificationLabels from "../partials/NotificationLabels";
+import NotificationLabels from "../../../components/NotificationLabels";
 import Moment from "moment";
 
 export default {

@@ -1,10 +1,11 @@
 <template>
     <div v-if="show === true">
-
         <NotificationLabels :errors="errors"/>
-
         <form action="#" @submit.prevent="submit">
-            <AddressInputs title="Address" v-on:addressCompleted="addressCompleted" change-event="addressCompleted"/>
+            <div class="mb-3" >
+                <label for="annual_salary" class="form-label">Annual salary</label>
+                <input type="text" v-model="form.amount" class="form-control w-50" id="annual_salary" >
+            </div>
 
             <button class="btn btn-success">Submit</button>
         </form>
@@ -12,37 +13,34 @@
 </template>
 
 <script>
-
-import NotificationLabels from "../partials/NotificationLabels";
-import AddressInputs from '../partials/AddressInputs'
+import NotificationLabels from '../../../components/NotificationLabels'
 import {mapActions, mapGetters} from "vuex";
 
 export default {
     components: {
-        AddressInputs,
         NotificationLabels
     },
-    data(){
+    data () {
         return {
             show: false,
             errors: [],
-            currentAddress: ''
+            form: {
+                amount: null,
+            },
         }
     },
     computed: {
-        ...mapGetters('userAddress',{
-            userAddress: 'userAddress',
+        ...mapGetters('annualSalary',{
+            annualSalary: 'annualSalary',
         })
     },
-    methods:{
-        addressCompleted(address){
-            this.currentAddress = address;
-        },
-        ...mapActions('userAddress', ['setUserAddress', 'getCurrentUserAddress']),
+    methods: {
+        ...mapActions('annualSalary', ['setAnnualSalary']),
+        ...mapActions('annualSalary', ['getCurrentUserAnnualSalary']),
         async submit()
         {
-            this.setUserAddress(this.currentAddress).then((res) => {
-                this.$emit('hasAddress')
+            this.setAnnualSalary(this.form).then((res) => {
+                this.$emit('hasAnnualSalary')
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
                     this.errors.push(msg[0]);
@@ -51,10 +49,10 @@ export default {
         }
     },
     mounted() {
-        this.getCurrentUserAddress().then((res) => {
-            if(this.userAddress.length !== 0)
+        this.getCurrentUserAnnualSalary().then((res) => {
+            if(this.annualSalary.length !== 0)
             {
-                this.$emit('hasAddress');
+                this.$emit('hasAnnualSalary');
             }
             else
             {

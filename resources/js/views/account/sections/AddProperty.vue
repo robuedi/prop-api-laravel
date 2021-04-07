@@ -27,9 +27,9 @@
 <script>
 
 import rolePropertyType from "./rolePropertyType";
-import AccountNavigation from "./layout/AccountNavigation";
-import AddressInputs from '../../../components/partials/AddressInputs'
-import NotificationLabels from '../../../components/partials/NotificationLabels'
+import AccountNavigation from "../layout/AccountNavigation";
+import AddressInputs from '../../../components/AddressInputs'
+import NotificationLabels from '../../../components/NotificationLabels'
 import {mapActions, mapGetters} from "vuex";
 
 export default {
