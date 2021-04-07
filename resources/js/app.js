@@ -23,8 +23,8 @@ window.Vue.use(VueRouter)
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+//libs
+import Moment from "moment";
 
 import App from './components/App'
 import PassThrough from './components/PassThrough'
@@ -164,6 +164,14 @@ Vue.filter('capitalize', function (value) {
     value = value.toString()
     return value.charAt(0).toUpperCase() + value.slice(1)
 })
+
+Vue.filter("date", function (value) {
+    return Moment(value).format("Do MMMM YYYY");
+});
+
+Vue.filter("datetime", function (value) {
+    return Moment(value).format("Do MMMM YYYY HH:mm");
+});
 
 const app = new Vue({
     el: '#app',

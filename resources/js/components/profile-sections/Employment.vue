@@ -13,11 +13,11 @@
             </div>
             <div class="mb-3" >
                 <label for="start_date" class="form-label">Start date </label>
-                <input type="date" v-model="form.start_date" class="form-control w-50" id="start_date" >
+                <input type="text" v-model="form.start_date" placeholder="day/month/year" class="form-control w-50" id="start_date" >
             </div>
             <div class="mb-3" >
-                <label for="end_date" class="form-label">End date</label>
-                <input type="date" v-model="form.end_date" class="form-control w-50" id="end_date" >
+                <label for="end_date" class="form-label">End date (optional)</label>
+                <input type="text" v-model="form.end_date" placeholder="day/month/year" class="form-control w-50" id="end_date" >
             </div>
 
             <button class="btn btn-success">Submit</button>

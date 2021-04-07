@@ -10,6 +10,7 @@ use App\Http\Requests\v1\UserEmploymentStoreRequest;
 use App\Http\Resources\v1\UserEmploymentResource;
 use App\Models\User;
 use App\Repositories\UserEmploymentRepositoryInterface;
+use DateTime;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 
@@ -29,8 +30,8 @@ class EmploymentController extends Controller
             $this->user_employment_repository->create(
                 $user->id,
                 $request->get('job_title'),
-                $request->get('start_date'),
-                $request->get('end_date')
+                DateTime::createFromFormat('d/m/Y', $request->get('start_date'))->format('Y-m-d'),
+                $request->has('end_date') ? DateTime::createFromFormat('d/m/Y', $request->get('end_date'))->format('Y-m-d') : null,
             )
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }

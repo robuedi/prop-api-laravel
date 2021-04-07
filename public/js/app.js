@@ -4408,19 +4408,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.vue");
-/* harmony import */ var _components_PassThrough__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/PassThrough */ "./resources/js/components/PassThrough.vue");
-/* harmony import */ var _views_SignIn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/SignIn */ "./resources/js/views/SignIn.vue");
-/* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
-/* harmony import */ var _views_Register__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./views/Register */ "./resources/js/views/Register.vue");
-/* harmony import */ var _views_Account__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./views/Account */ "./resources/js/views/Account.vue");
-/* harmony import */ var _views_account_sections_Profile__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./views/account/sections/Profile */ "./resources/js/views/account/sections/Profile.vue");
-/* harmony import */ var _views_account_sections_AddProperty__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./views/account/sections/AddProperty */ "./resources/js/views/account/sections/AddProperty.vue");
-/* harmony import */ var _views_account_sections_Applications__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./views/account/sections/Applications */ "./resources/js/views/account/sections/Applications.vue");
-/* harmony import */ var _views_account_sections_MyProperties__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./views/account/sections/MyProperties */ "./resources/js/views/account/sections/MyProperties.vue");
-/* harmony import */ var _views_Property__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./views/Property */ "./resources/js/views/Property.vue");
-/* harmony import */ var _views_account_CompleteRoleGateway__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./views/account/CompleteRoleGateway */ "./resources/js/views/account/CompleteRoleGateway.vue");
-/* harmony import */ var _views_account_RolesGateway__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./views/account/RolesGateway */ "./resources/js/views/account/RolesGateway.vue");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.vue");
+/* harmony import */ var _components_PassThrough__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/PassThrough */ "./resources/js/components/PassThrough.vue");
+/* harmony import */ var _views_SignIn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/SignIn */ "./resources/js/views/SignIn.vue");
+/* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
+/* harmony import */ var _views_Register__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./views/Register */ "./resources/js/views/Register.vue");
+/* harmony import */ var _views_Account__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./views/Account */ "./resources/js/views/Account.vue");
+/* harmony import */ var _views_account_sections_Profile__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./views/account/sections/Profile */ "./resources/js/views/account/sections/Profile.vue");
+/* harmony import */ var _views_account_sections_AddProperty__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./views/account/sections/AddProperty */ "./resources/js/views/account/sections/AddProperty.vue");
+/* harmony import */ var _views_account_sections_Applications__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./views/account/sections/Applications */ "./resources/js/views/account/sections/Applications.vue");
+/* harmony import */ var _views_account_sections_MyProperties__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./views/account/sections/MyProperties */ "./resources/js/views/account/sections/MyProperties.vue");
+/* harmony import */ var _views_Property__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./views/Property */ "./resources/js/views/Property.vue");
+/* harmony import */ var _views_account_CompleteRoleGateway__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./views/account/CompleteRoleGateway */ "./resources/js/views/account/CompleteRoleGateway.vue");
+/* harmony import */ var _views_account_RolesGateway__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./views/account/RolesGateway */ "./resources/js/views/account/RolesGateway.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -4440,8 +4442,8 @@ window.Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_1__.default);
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+//libs
+
 
 
 
@@ -4467,15 +4469,15 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
   routes: [{
     path: '/',
     name: 'home',
-    component: _views_Home__WEBPACK_IMPORTED_MODULE_5__.default
+    component: _views_Home__WEBPACK_IMPORTED_MODULE_6__.default
   }, {
     path: '/property/:property_id',
     name: 'propertyItem',
-    component: _views_Property__WEBPACK_IMPORTED_MODULE_12__.default
+    component: _views_Property__WEBPACK_IMPORTED_MODULE_13__.default
   }, {
     path: '/signin',
     name: 'signIn',
-    component: _views_SignIn__WEBPACK_IMPORTED_MODULE_4__.default,
+    component: _views_SignIn__WEBPACK_IMPORTED_MODULE_5__.default,
     beforeEnter: function beforeEnter(to, from, next) {
       if (_store_index__WEBPACK_IMPORTED_MODULE_0__.default.getters["auth/authenticated"]) {
         next({
@@ -4488,7 +4490,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
   }, {
     path: '/register',
     name: 'register',
-    component: _views_Register__WEBPACK_IMPORTED_MODULE_6__.default
+    component: _views_Register__WEBPACK_IMPORTED_MODULE_7__.default
   }, // {
   //     path: '/complete-register',
   //     name: 'completeRegister',
@@ -4497,15 +4499,15 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
   {
     path: '/choose-roles',
     name: 'chooseRoles',
-    component: _views_account_RolesGateway__WEBPACK_IMPORTED_MODULE_14__.default
+    component: _views_account_RolesGateway__WEBPACK_IMPORTED_MODULE_15__.default
   }, {
     path: '/complete-role/:userRoleId',
     name: 'completeRole',
-    component: _views_account_CompleteRoleGateway__WEBPACK_IMPORTED_MODULE_13__.default
+    component: _views_account_CompleteRoleGateway__WEBPACK_IMPORTED_MODULE_14__.default
   }, {
     path: '/account',
     name: 'account',
-    component: _views_Account__WEBPACK_IMPORTED_MODULE_7__.default,
+    component: _views_Account__WEBPACK_IMPORTED_MODULE_8__.default,
     // beforeEnter(to, from, next) {
     //     setTimeout(() => {
     //         if (!store.getters["auth/authenticated"]) {
@@ -4524,19 +4526,19 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
     children: [{
       path: '',
       name: 'accountProfile',
-      component: _views_account_sections_Profile__WEBPACK_IMPORTED_MODULE_8__.default
+      component: _views_account_sections_Profile__WEBPACK_IMPORTED_MODULE_9__.default
     }, {
       path: 'my-properties',
       name: 'userProperties',
-      component: _views_account_sections_MyProperties__WEBPACK_IMPORTED_MODULE_11__.default
+      component: _views_account_sections_MyProperties__WEBPACK_IMPORTED_MODULE_12__.default
     }, {
       path: 'applications',
       name: 'userApplications',
-      component: _views_account_sections_Applications__WEBPACK_IMPORTED_MODULE_10__.default
+      component: _views_account_sections_Applications__WEBPACK_IMPORTED_MODULE_11__.default
     }, {
       path: 'add-property',
       name: 'addProperty',
-      component: _views_account_sections_AddProperty__WEBPACK_IMPORTED_MODULE_9__.default
+      component: _views_account_sections_AddProperty__WEBPACK_IMPORTED_MODULE_10__.default
     }]
   } // {
   //     path: '/account',
@@ -4565,10 +4567,16 @@ Vue.filter('capitalize', function (value) {
   value = value.toString();
   return value.charAt(0).toUpperCase() + value.slice(1);
 });
+Vue.filter("date", function (value) {
+  return moment__WEBPACK_IMPORTED_MODULE_2___default()(value).format("Do MMMM YYYY");
+});
+Vue.filter("datetime", function (value) {
+  return moment__WEBPACK_IMPORTED_MODULE_2___default()(value).format("Do MMMM YYYY HH:mm");
+});
 var app = new Vue({
   el: '#app',
   components: {
-    App: _components_App__WEBPACK_IMPORTED_MODULE_2__.default
+    App: _components_App__WEBPACK_IMPORTED_MODULE_3__.default
   },
   store: _store_index__WEBPACK_IMPORTED_MODULE_0__.default,
   router: router
@@ -68061,7 +68069,11 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control w-50",
-                  attrs: { type: "date", id: "start_date" },
+                  attrs: {
+                    type: "text",
+                    placeholder: "day/month/year",
+                    id: "start_date"
+                  },
                   domProps: { value: _vm.form.start_date },
                   on: {
                     input: function($event) {
@@ -68078,7 +68090,7 @@ var render = function() {
                 _c(
                   "label",
                   { staticClass: "form-label", attrs: { for: "end_date" } },
-                  [_vm._v("End date")]
+                  [_vm._v("End date (optional)")]
                 ),
                 _vm._v(" "),
                 _c("input", {
@@ -68091,7 +68103,11 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control w-50",
-                  attrs: { type: "date", id: "end_date" },
+                  attrs: {
+                    type: "text",
+                    placeholder: "day/month/year",
+                    id: "end_date"
+                  },
                   domProps: { value: _vm.form.end_date },
                   on: {
                     input: function($event) {
