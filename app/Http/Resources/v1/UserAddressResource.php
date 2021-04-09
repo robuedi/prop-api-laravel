@@ -14,6 +14,10 @@ class UserAddressResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'postcode' => $this->postcode,
+            'address_line' => $this->address_line,
+            'city' => CityResource::make($this->whenLoaded('city')),
+        ];
     }
 }

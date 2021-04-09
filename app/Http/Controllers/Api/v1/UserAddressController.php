@@ -37,8 +37,8 @@ class UserAddressController extends Controller
     public function showForUser(User $user, UserAddressShowRequest $request)
     {
         //make property for user
-        return UserAddressResource::make(
-            $this->user_address_repository->getFirstByUserId($user->id)
+        return UserAddressResource::collection(
+            $user->address
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 }

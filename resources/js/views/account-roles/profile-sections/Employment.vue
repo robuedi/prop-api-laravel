@@ -73,11 +73,6 @@ export default {
             },
         }
     },
-    computed: {
-        ...mapGetters('userEmployment',{
-            employment: 'employment',
-        })
-    },
     methods: {
         ...mapActions('userEmployment', ['setEmployment']),
         ...mapActions('userEmployment', ['getCurrentUserEmployment']),
@@ -94,15 +89,12 @@ export default {
     },
     mounted() {
         this.getCurrentUserEmployment().then((res) => {
-            if(this.employment.length !== 0)
-            {
+            if(res.data.data.length !== 0){
                 this.$emit('hasEmployment');
             }
-            else
-            {
+            else{
                 this.show = true
             }
-
         });
     }
 }

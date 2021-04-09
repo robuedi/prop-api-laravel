@@ -14,6 +14,10 @@ class UserEmploymentResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'job_title' => $this->job_title,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+        ];
     }
 }

@@ -32,8 +32,8 @@ class SavingsController extends Controller
     public function showForUser(User $user, UserSavingsShowRequest $request)
     {
         //make property for user
-        return UserSavingResource::make(
-            $this->user_saving_repository->getFirstByUserId($user->id)
+        return UserSavingResource::collection(
+            $user->savings
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 

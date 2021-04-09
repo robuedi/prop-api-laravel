@@ -3457,9 +3457,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapGetters)('userEmployment', {
-    employment: 'employment'
-  })),
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('userEmployment', ['setEmployment'])), (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('userEmployment', ['getCurrentUserEmployment'])), {}, {
     submit: function submit() {
       var _this = this;
@@ -3494,7 +3491,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this2 = this;
 
     this.getCurrentUserEmployment().then(function (res) {
-      if (_this2.employment.length !== 0) {
+      if (res.data.data.length !== 0) {
         _this2.$emit('hasEmployment');
       } else {
         _this2.show = true;
@@ -3693,9 +3690,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('savings', {
-    savings: 'savings'
-  })),
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('savings', ['setSavings'])), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('savings', ['getCurrentUserSavings'])), {}, {
     submit: function submit() {
       var _this = this;
@@ -3730,7 +3724,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this2 = this;
 
     this.getCurrentUserSavings().then(function (res) {
-      if (_this2.savings.length !== 0) {
+      if (res.data.data.length !== 0) {
         _this2.$emit('hasSavings');
       } else {
         _this2.show = true;

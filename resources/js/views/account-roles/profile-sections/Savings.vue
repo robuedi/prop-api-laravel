@@ -32,11 +32,6 @@ export default {
             },
         }
     },
-    computed: {
-        ...mapGetters('savings',{
-            savings: 'savings',
-        })
-    },
     methods: {
         ...mapActions('savings', ['setSavings']),
         ...mapActions('savings', ['getCurrentUserSavings']),
@@ -53,12 +48,10 @@ export default {
     },
     mounted() {
         this.getCurrentUserSavings().then((res) => {
-            if(this.savings.length !== 0)
-            {
+            if(res.data.data.length !== 0){
                 this.$emit('hasSavings');
             }
-            else
-            {
+            else{
                 this.show = true
             }
         });

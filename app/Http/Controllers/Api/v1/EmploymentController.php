@@ -39,8 +39,8 @@ class EmploymentController extends Controller
     public function showForUser(User $user, UserEmploymentShowRequest $request)
     {
         //make property for user
-        return UserEmploymentResource::make(
-            $this->user_employment_repository->getFirstByUserId($user->id)
+        return UserEmploymentResource::collection(
+            $user->employment
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 

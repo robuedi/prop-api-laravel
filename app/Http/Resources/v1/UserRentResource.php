@@ -14,6 +14,8 @@ class UserRentResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'amount' => $this->amount,
+        ];
     }
 }
