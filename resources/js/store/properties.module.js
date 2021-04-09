@@ -29,7 +29,7 @@ export default {
     actions: {
         async showProperty ({ dispatch, commit }, data) {
             let query = data.query ? '?'+data.query : data.query
-            await axios.get(`/api/v1/properties/${data.propertyId}${query}`).then((response) => {
+            await axios.get(`/api/v1/properties/${data.propertyIdentifier}${query}`).then((response) => {
                 commit('SET_PROPERTY', response.data.data)
                 return response
             }).catch((err) => {

@@ -43,7 +43,7 @@ Route::prefix('v1')->group(function (){
 
     //properties
     Route::get('/properties', [PropertiesController::class, 'index']);
-    Route::get('/properties/{property}', [PropertiesController::class, 'show']);
+    Route::get('/properties/{property:slug}', [PropertiesController::class, 'show']);
 
     //properties address
     Route::get('/properties/{property}/address', [PropertyAddressesController::class, 'showForProperty']);

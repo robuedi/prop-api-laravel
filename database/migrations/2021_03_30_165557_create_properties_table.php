@@ -15,10 +15,11 @@ class CreatePropertiesTable extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('slug');
             $table->bigInteger('status_id')->unsigned();
             $table->bigInteger('owner_id')->unsigned();
             $table->bigInteger('type_id')->unsigned();
-            $table->string('name');
             $table->timestamps();
         });
     }

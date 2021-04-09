@@ -3,7 +3,7 @@
         <img class="card-img-top" src="https://i.stack.imgur.com/y9DpT.jpg" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title mb-4">{{property.name}}</h5>
-            <button type="button" @click="bookProperty(property.id)" class="btn btn-primary mb-4">{{ property.type.name | capitalize }}</button>
+            <button type="button" @click="bookProperty(property.slug)" class="btn btn-primary mb-4">{{ property.type.name | capitalize }}</button>
             <div class="card-text">
                 <p>
                     <strong>{{ property.address.city.name+', '+property.address.city.country.name }}</strong>
@@ -31,14 +31,15 @@ export default {
         }),
     },
     mounted() {
-        this.showProperty({propertyId:this.$route.params.property_id, query: 'has_address=true&has_type=true'})
+        console.log(this.$route.params.propertySlug)
+        this.showProperty({propertyIdentifier:this.$route.params.propertySlug, query: 'has_address=true&has_type=true'})
     },
     methods: {
         ...mapActions('properties', ['showProperty']),
         ...mapActions('propertyUser', ['bookProperty']),
-        bookProperty(propertyId)
+        bookProperty(propertySlug)
         {
-            this.bookProperty({property_id: propertyId, user_id: user.id}).then(()=>{
+            this.bookProperty({property_slug: propertySlug, user_id: user.id}).then(()=>{
                 console.log('success')
             })
         }

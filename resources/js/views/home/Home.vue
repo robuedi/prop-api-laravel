@@ -4,7 +4,7 @@
         <p v-if="loadingProperties">Loading properties...</p>
         <template v-else>
             <div class="card-columns" v-if="properties.length > 0">
-                <PropertyItemCard v-for="property in properties" :key="property.id" :property="property"/>
+                <PropertyItemCard v-for="property in properties" :key="property.slug" :property="property"/>
             </div>
             <p v-else >No properties yet.</p>
         </template>
@@ -46,7 +46,7 @@ export default {
         ...mapActions('properties', ['getProperties']),
         setPropertyIndexParams()
         {
-            this.setFields(['id', 'name', 'created_at'])
+            this.setFields(['id', 'name', 'slug', 'created_at'])
             this.setAddress(['postcode', 'address_line'])
             this.setCity(['name'])
             this.setCountry(['name'])

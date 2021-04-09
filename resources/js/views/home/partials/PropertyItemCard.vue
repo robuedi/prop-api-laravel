@@ -28,7 +28,7 @@ export default {
     },
     methods: {
         redirectToProperty() {
-            this.$router.push({path: '/property/'+this.property.id})
+            this.$router.push({path: '/property/'+this.property.slug})
         }
     }
 }

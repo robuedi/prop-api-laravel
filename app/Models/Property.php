@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\traits\SlugConvertValue;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Property extends Model
 {
-    use HasFactory;
+    use HasFactory, SlugConvertValue;
 
     protected $table = 'properties';
+    protected $slug_source_field = 'name';
 
     protected $fillable = [
         'status_id',
@@ -17,6 +19,13 @@ class Property extends Model
         'type_id',
         'name'
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->slug = $this->name;
+    }
 
     public function address()
     {

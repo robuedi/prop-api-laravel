@@ -4,9 +4,12 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+import VueRouter from "vue-router";
+
 require('./bootstrap');
 
 window.Vue = require('vue').default;
+window.Vue.use(VueRouter)
 
 //libs
 import Moment from "moment";
@@ -35,7 +38,7 @@ import App from './layout/App'
  */
 
 //filters
-import '. /filters'
+import './filters'
 
 //make app
 const app = new Vue({
