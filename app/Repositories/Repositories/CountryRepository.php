@@ -17,14 +17,8 @@ class CountryRepository implements CountryRepositoryInterface
 
     public function index()
     {
-
-        $query = $this->country::query();
-
-        if(request()->get('fields'))
-        {
-            $query->select(explode(',', request()->get('fields')));
-        }
-
-        return $query->get();
+        return $this->country
+                    ->with(['cities'])
+                    ->get();
     }
 }

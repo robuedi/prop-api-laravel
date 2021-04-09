@@ -1856,6 +1856,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1884,6 +1891,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     title: String,
@@ -1902,32 +1910,38 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('countries', {
+    loadedCountries: 'countries'
+  })),
   mounted: function mounted() {
-    this.fetchCountries();
+    this.loadCountries();
   },
-  methods: {
-    fetchCountries: function fetchCountries() {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('countries', ['getCountries'])), {}, {
+    loadCountries: function loadCountries() {
       var _this = this;
 
-      axios.get('/api/v1/countries?fields=id,name').then(function (res) {
-        _this.countries = res.data.data;
-      })["catch"](function (error) {
-        throw error;
-      });
-    },
-    fetchCities: function fetchCities(countryId) {
-      var _this2 = this;
-
-      axios.get("/api/v1/cities?where_country_id=".concat(countryId, "&fields=id,name")).then(function (res) {
-        _this2.cities = res.data.data;
-      })["catch"](function (error) {
-        throw error;
-      });
+      if (this.loadedCountries.length > 0) {
+        this.countries = this.loadedCountries;
+      } else {
+        this.getCountries().then(function (res) {
+          _this.countries = res.data.data;
+        })["catch"](function (error) {
+          throw error;
+        });
+      }
     },
     addressUpdated: function addressUpdated() {
       if (this.form.city_id !== '' && this.form.address_line !== '' && this.form.postcode !== '' && this.changeEvent !== '') {
         this.$emit(this.changeEvent, this.form);
       }
+    },
+    updateCities: function updateCities() {
+      var _this2 = this;
+
+      var currentCountry = this.countries.filter(function (country) {
+        return country.name === _this2.selectedCountry;
+      });
+      this.cities = currentCountry.length === 1 ? currentCountry.shift().cities : [];
     },
     clearValues: function clearValues() {
       this.form.city_id = '';
@@ -1935,7 +1949,7 @@ __webpack_require__.r(__webpack_exports__);
       this.form.postcode = '';
       this.selectedCountry = '';
     }
-  },
+  }),
   created: function created() {
     if (this.clearEvent !== '') {
       this.$parent.$on(this.clearEvent, this.clearValues);
@@ -3293,9 +3307,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('annualSalary', {
-    annualSalary: 'annualSalary'
-  })),
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('annualSalary', ['setAnnualSalary'])), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('annualSalary', ['getCurrentUserAnnualSalary'])), {}, {
     submit: function submit() {
       var _this = this;
@@ -3330,7 +3341,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this2 = this;
 
     this.getCurrentUserAnnualSalary().then(function (res) {
-      if (_this2.annualSalary.length !== 0) {
+      if (res.data.data.length !== 0) {
         _this2.$emit('hasAnnualSalary');
       } else {
         _this2.show = true;
@@ -4120,7 +4131,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.rolePropertyType = _rolePropertyType__WEBPACK_IMPORTED_MODULE_1__.default;
     this.getStatuses();
   },
-  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('propertiesStatuses', ['getStatuses'])), (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('userProperties', ['storeUserProperty'])), (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('propertyAddress', ['storeUserPropertyAddress'])), {}, {
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('propertiesStatuses', ['getStatuses'])), (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('properties', ['storeUserProperty'])), (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('propertyAddress', ['storeUserPropertyAddress'])), {}, {
     submit: function submit() {
       var _this = this;
 
@@ -4209,13 +4220,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     PropertyItemAccount: _partials_PropertyItemAccount__WEBPACK_IMPORTED_MODULE_1__.default,
     AccountNavigation: _layout_AccountNavigation__WEBPACK_IMPORTED_MODULE_0__.default
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('userProperties', {
-    userApplications: 'userApplications'
-  })),
+  data: function data() {
+    return {
+      userApplications: []
+    };
+  },
   mounted: function mounted() {
     this.fetchProperties();
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('userProperties', ['getUserApplications'])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('properties', ['getUserApplications'])), {}, {
     fetchProperties: function fetchProperties() {
       this.getUserApplications().then(function (res) {})["catch"](function (error) {
         throw error;
@@ -4265,16 +4278,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      properties: []
+      properties: [],
+      userProperties: []
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('userProperties', {
-    userProperties: 'userProperties'
-  })),
   mounted: function mounted() {
     this.fetchProperties();
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('userProperties', ['getUserProperties'])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('properties', ['getUserProperties'])), {}, {
     fetchProperties: function fetchProperties() {
       this.getUserProperties().then(function (res) {})["catch"](function (error) {
         throw error;
@@ -4734,19 +4745,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
-  state: {
-    annualSalary: []
-  },
-  getters: {
-    annualSalary: function annualSalary(state) {
-      return state.annualSalary;
-    }
-  },
-  mutations: {
-    SET_ANNUAL_SALARY: function SET_ANNUAL_SALARY(state, value) {
-      state.annualSalary = value;
-    }
-  },
   actions: {
     setAnnualSalary: function setAnnualSalary(_ref, amount) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -4757,10 +4755,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 dispatch = _ref.dispatch, commit = _ref.commit, rootGetters = _ref.rootGetters;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/annual-salaries"), amount).then(function (response) {
-                  commit('SET_ANNUAL_SALARY', response.data.data);
                   return response;
                 })["catch"](function (err) {
-                  commit('SET_ANNUAL_SALARY', []);
                   throw err;
                 }));
 
@@ -4781,10 +4777,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref2.commit, rootGetters = _ref2.rootGetters;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/annual-salaries")).then(function (response) {
-                  commit('SET_ANNUAL_SALARY', response.data.data);
                   return response;
                 })["catch"](function (err) {
-                  commit('SET_ANNUAL_SALARY', []);
                   throw err;
                 }));
 
@@ -5137,8 +5131,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   actions: {
     getCountries: function getCountries(_ref) {
-      var _this = this;
-
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -5146,17 +5138,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 commit = _ref.commit;
-
-                if (!(_this.state.countries.length > 0)) {
-                  _context.next = 3;
-                  break;
-                }
-
-                return _context.abrupt("return");
-
-              case 3:
-                _context.next = 5;
-                return axios.get('/api/v1/countries?fields=id,name').then(function (response) {
+                _context.next = 3;
+                return axios.get('/api/v1/countries').then(function (response) {
                   commit('SET_COUNTRIES', response.data.data);
                   return response;
                 })["catch"](function (err) {
@@ -5164,7 +5147,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   throw err;
                 });
 
-              case 5:
+              case 3:
+                return _context.abrupt("return", _context.sent);
+
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -5188,8 +5174,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _auth_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth.module */ "./resources/js/store/auth.module.js");
 /* harmony import */ var _properties_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./properties.module */ "./resources/js/store/properties.module.js");
 /* harmony import */ var _propertiesStatuses_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./propertiesStatuses.module */ "./resources/js/store/propertiesStatuses.module.js");
@@ -5205,10 +5191,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _propertyTypes_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./propertyTypes.module */ "./resources/js/store/propertyTypes.module.js");
 /* harmony import */ var _propertyAddress_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./propertyAddress.module */ "./resources/js/store/propertyAddress.module.js");
 /* harmony import */ var _params_properties_index_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./params/properties/index.module */ "./resources/js/store/params/properties/index.module.js");
-/* harmony import */ var _userProperties_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./userProperties.module */ "./resources/js/store/userProperties.module.js");
-/* harmony import */ var _roles_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./roles.module */ "./resources/js/store/roles.module.js");
-/* harmony import */ var _roleUser_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./roleUser.module */ "./resources/js/store/roleUser.module.js");
-/* harmony import */ var _propertyUser_module__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./propertyUser.module */ "./resources/js/store/propertyUser.module.js");
+/* harmony import */ var _roles_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./roles.module */ "./resources/js/store/roles.module.js");
+/* harmony import */ var _roleUser_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./roleUser.module */ "./resources/js/store/roleUser.module.js");
+/* harmony import */ var _propertyUser_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./propertyUser.module */ "./resources/js/store/propertyUser.module.js");
 
 
 
@@ -5229,9 +5214,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-vue__WEBPACK_IMPORTED_MODULE_19__.default.use(vuex__WEBPACK_IMPORTED_MODULE_20__.default);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_20__.default.Store({
+vue__WEBPACK_IMPORTED_MODULE_18__.default.use(vuex__WEBPACK_IMPORTED_MODULE_19__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_19__.default.Store({
   modules: {
     auth: _auth_module__WEBPACK_IMPORTED_MODULE_0__.default,
     properties: _properties_module__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -5248,10 +5232,9 @@ vue__WEBPACK_IMPORTED_MODULE_19__.default.use(vuex__WEBPACK_IMPORTED_MODULE_20__
     propertyTypes: _propertyTypes_module__WEBPACK_IMPORTED_MODULE_12__.default,
     propertyAddress: _propertyAddress_module__WEBPACK_IMPORTED_MODULE_13__.default,
     paramsPropertyIndex: _params_properties_index_module__WEBPACK_IMPORTED_MODULE_14__.default,
-    userProperties: _userProperties_module__WEBPACK_IMPORTED_MODULE_15__.default,
-    roles: _roles_module__WEBPACK_IMPORTED_MODULE_16__.default,
-    roleUser: _roleUser_module__WEBPACK_IMPORTED_MODULE_17__.default,
-    propertyUser: _propertyUser_module__WEBPACK_IMPORTED_MODULE_18__.default
+    roles: _roles_module__WEBPACK_IMPORTED_MODULE_15__.default,
+    roleUser: _roleUser_module__WEBPACK_IMPORTED_MODULE_16__.default,
+    propertyUser: _propertyUser_module__WEBPACK_IMPORTED_MODULE_17__.default
   }
 }));
 
@@ -5474,6 +5457,74 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee2);
+      }))();
+    },
+    storeUserProperty: function storeUserProperty(_ref3, property) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var rootGetters;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                rootGetters = _ref3.rootGetters;
+                return _context3.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/properties"), property).then(function (response) {
+                  return response.data.data;
+                })["catch"](function (err) {
+                  throw err;
+                }));
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    getUserProperties: function getUserProperties(_ref4) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var rootGetters;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                rootGetters = _ref4.rootGetters;
+                _context4.next = 3;
+                return axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/properties/")).then(function (response) {
+                  return response;
+                })["catch"](function (err) {
+                  throw err;
+                });
+
+              case 3:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    getUserApplications: function getUserApplications(_ref5) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var rootGetters;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                rootGetters = _ref5.rootGetters;
+                _context5.next = 3;
+                return axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/property-applications/")).then(function (response) {
+                  return response;
+                })["catch"](function (err) {
+                  throw err;
+                });
+
+              case 3:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     }
   }
@@ -5873,12 +5924,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   actions: {
     setUserRole: function setUserRole(_ref, roleId) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit, rootGetters;
+        var rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit, rootGetters = _ref.rootGetters;
+                rootGetters = _ref.rootGetters;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/roles-users"), {
                   role_id: roleId
                 }).then(function (response) {
@@ -6239,33 +6290,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
-  state: {
-    agencyAddress: []
-  },
-  getters: {
-    agencyAddress: function agencyAddress(state) {
-      return state.agencyAddress;
-    }
-  },
-  mutations: {
-    SET_AGENCY_ADDRESS: function SET_AGENCY_ADDRESS(state, value) {
-      state.agencyAddress = value;
-    }
-  },
   actions: {
     setAgencyAddress: function setAgencyAddress(_ref, data) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit, rootGetters;
+        var rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit, rootGetters = _ref.rootGetters;
+                rootGetters = _ref.rootGetters;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/agencies/").concat(data.agencyId, "/addresses"), data.address).then(function (response) {
-                  commit('SET_AGENCY_ADDRESS', response.data.data);
                   return response;
                 })["catch"](function (err) {
-                  commit('SET_AGENCY_ADDRESS', []);
                   throw err;
                 }));
 
@@ -6279,17 +6315,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getAgencyAddress: function getAgencyAddress(_ref2, agencyId) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var dispatch, commit, rootGetters;
+        var rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                dispatch = _ref2.dispatch, commit = _ref2.commit, rootGetters = _ref2.rootGetters;
+                rootGetters = _ref2.rootGetters;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/agencies/").concat(agencyId, "/addresses")).then(function (response) {
-                  commit('SET_AGENCY_ADDRESS', response.data.data);
                   return response;
                 })["catch"](function (err) {
-                  commit('SET_AGENCY_ADDRESS', []);
                   throw err;
                 }));
 
@@ -6330,12 +6364,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   actions: {
     setEmployment: function setEmployment(_ref, data) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit, rootGetters;
+        var rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit, rootGetters = _ref.rootGetters;
+                rootGetters = _ref.rootGetters;
                 return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/employments"), data).then(function (response) {
                   return response;
                 })["catch"](function (err) {
@@ -6352,12 +6386,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     getCurrentUserEmployment: function getCurrentUserEmployment(_ref2) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, rootGetters;
+        var rootGetters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref2.commit, rootGetters = _ref2.rootGetters;
+                rootGetters = _ref2.rootGetters;
                 return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/employments")).then(function (response) {
                   return response;
                 })["catch"](function (err) {
@@ -6370,140 +6404,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee2);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/store/userProperties.module.js":
-/*!*****************************************************!*\
-  !*** ./resources/js/store/userProperties.module.js ***!
-  \*****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _apiStates_apiStateValues__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./apiStates/apiStateValues */ "./resources/js/store/apiStates/apiStateValues.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  namespaced: true,
-  state: {
-    apiState: _apiStates_apiStateValues__WEBPACK_IMPORTED_MODULE_1__.default.INIT,
-    userProperties: [],
-    userApplications: []
-  },
-  getters: {
-    userProperties: function userProperties(state) {
-      return state.userProperties;
-    },
-    userApplications: function userApplications(state) {
-      return state.userApplications;
-    },
-    apiState: function apiState(state) {
-      return state.apiState;
-    }
-  },
-  mutations: {
-    SET_USER_PROPERTIES: function SET_USER_PROPERTIES(state, value) {
-      state.apiState = _apiStates_apiStateValues__WEBPACK_IMPORTED_MODULE_1__.default.LOADING;
-      state.userProperties = value;
-    },
-    SET_USER_APPLICATIONS: function SET_USER_APPLICATIONS(state, value) {
-      state.apiState = _apiStates_apiStateValues__WEBPACK_IMPORTED_MODULE_1__.default.LOADING;
-      state.userApplications = value;
-    },
-    SET_API_STATE: function SET_API_STATE(state, value) {
-      state.apiState = value;
-    }
-  },
-  actions: {
-    storeUserProperty: function storeUserProperty(_ref, property) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit, rootGetters;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit, rootGetters = _ref.rootGetters;
-                return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/properties"), property).then(function (response) {
-                  return response.data.data;
-                })["catch"](function (err) {
-                  throw err;
-                }));
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    getUserProperties: function getUserProperties(_ref2) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, rootGetters;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref2.commit, rootGetters = _ref2.rootGetters;
-                _context2.next = 3;
-                return axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/properties/")).then(function (response) {
-                  commit('SET_USER_PROPERTIES', response.data.data);
-                  commit('SET_API_STATE', _apiStates_apiStateValues__WEBPACK_IMPORTED_MODULE_1__.default.LOADED);
-                  return response;
-                })["catch"](function (err) {
-                  commit('SET_USER_PROPERTIES', []);
-                  commit('SET_API_STATE', _apiStates_apiStateValues__WEBPACK_IMPORTED_MODULE_1__.default.ERROR);
-                  throw err;
-                });
-
-              case 3:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    },
-    getUserApplications: function getUserApplications(_ref3) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var commit, rootGetters;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                commit = _ref3.commit, rootGetters = _ref3.rootGetters;
-                _context3.next = 3;
-                return axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/property-applications/")).then(function (response) {
-                  commit('SET_USER_APPLICATIONS', response.data.data);
-                  commit('SET_API_STATE', _apiStates_apiStateValues__WEBPACK_IMPORTED_MODULE_1__.default.LOADED);
-                  return response;
-                })["catch"](function (err) {
-                  commit('SET_USER_APPLICATIONS', []);
-                  commit('SET_API_STATE', _apiStates_apiStateValues__WEBPACK_IMPORTED_MODULE_1__.default.ERROR);
-                  throw err;
-                });
-
-              case 3:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
       }))();
     }
   }
@@ -66826,7 +66726,7 @@ var render = function() {
                   : $$selectedVal[0]
               },
               function($event) {
-                return _vm.fetchCities(_vm.selectedCountry)
+                return _vm.updateCities()
               }
             ]
           }
@@ -66835,7 +66735,7 @@ var render = function() {
           _c("option"),
           _vm._v(" "),
           _vm._l(_vm.countries, function(country) {
-            return _c("option", { domProps: { value: country.id } }, [
+            return _c("option", { domProps: { value: country.name } }, [
               _vm._v(_vm._s(country.name))
             ])
           })

@@ -66,7 +66,7 @@ export default {
     },
     methods: {
         ...mapActions('propertiesStatuses', ['getStatuses']),
-        ...mapActions('userProperties', ['storeUserProperty']),
+        ...mapActions('properties', ['storeUserProperty']),
         ...mapActions('propertyAddress', ['storeUserPropertyAddress']),
         async submit()
         {

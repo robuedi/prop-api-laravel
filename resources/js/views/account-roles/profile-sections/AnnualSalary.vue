@@ -29,11 +29,6 @@ export default {
             },
         }
     },
-    computed: {
-        ...mapGetters('annualSalary',{
-            annualSalary: 'annualSalary',
-        })
-    },
     methods: {
         ...mapActions('annualSalary', ['setAnnualSalary']),
         ...mapActions('annualSalary', ['getCurrentUserAnnualSalary']),
@@ -50,12 +45,10 @@ export default {
     },
     mounted() {
         this.getCurrentUserAnnualSalary().then((res) => {
-            if(this.annualSalary.length !== 0)
-            {
+            if(res.data.data.length !== 0) {
                 this.$emit('hasAnnualSalary');
             }
-            else
-            {
+            else {
                 this.show = true
             }
         });

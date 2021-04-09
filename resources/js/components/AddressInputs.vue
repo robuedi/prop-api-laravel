@@ -3,9 +3,9 @@
         <h5 class="mb-2">{{ title }}</h5>
         <div class="form-group">
             <label for="countries">Country</label>
-            <select class="form-control"  v-model="selectedCountry" id="countries" v-on:change="fetchCities(selectedCountry)">
+            <select class="form-control"  v-model="selectedCountry" id="countries" v-on:change="updateCities()">
                 <option></option>
-                <option v-for="country in countries" :value="country.id">{{country.name}}</option>
+                <option v-for="country in countries" :value="country.name">{{country.name}}</option>
             </select>
         </div>
         <div class="form-group" v-if="selectedCountry" >
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex";
+
 export default {
     props: {
         title: String,
@@ -45,31 +47,37 @@ export default {
             }
         }
     },
+    computed: {
+        ...mapGetters('countries',{
+            loadedCountries: 'countries',
+        })
+    },
     mounted() {
-        this.fetchCountries();
+        this.loadCountries()
     },
     methods: {
-        fetchCountries(){
-            axios.get('/api/v1/countries?fields=id,name').then((res) => {
-                this.countries = res.data.data;
-            }).catch((error) => {
-                throw error
-            })
-        },
-        fetchCities(countryId)
+        ...mapActions('countries', ['getCountries']),
+        loadCountries()
         {
-            axios.get(`/api/v1/cities?where_country_id=${countryId}&fields=id,name`).then((res) => {
-                this.cities = res.data.data;
-            }).catch((error) => {
-                throw error
-            })
+            if(this.loadedCountries.length > 0) {
+                this.countries = this.loadedCountries;
+            }
+            else{
+                this.getCountries().then((res) => {
+                    this.countries = res.data.data;
+                }).catch((error) => {
+                    throw error
+                })
+            }
         },
-        addressUpdated()
-        {
-            if(this.form.city_id !== '' && this.form.address_line !== '' && this.form.postcode !== '' && this.changeEvent !== '')
-            {
+        addressUpdated(){
+            if(this.form.city_id !== '' && this.form.address_line !== '' && this.form.postcode !== '' && this.changeEvent !== '') {
                 this.$emit(this.changeEvent, this.form)
             }
+        },
+        updateCities(){
+            let currentCountry = this.countries.filter(country => country.name === this.selectedCountry)
+            this.cities = currentCountry.length === 1 ? currentCountry.shift().cities : [];
         },
         clearValues(){
             this.form.city_id = '';
@@ -79,8 +87,7 @@ export default {
         }
     },
     created() {
-        if(this.clearEvent!== '')
-        {
+        if(this.clearEvent!== '') {
             this.$parent.$on(this.clearEvent, this.clearValues);
         }
     }

@@ -17,12 +17,8 @@ export default {
     data () {
         return {
             properties: [],
+            userProperties: []
         }
-    },
-    computed: {
-        ...mapGetters('properties',{
-            userProperties: 'userProperties',
-        })
     },
     mounted() {
         this.fetchProperties();

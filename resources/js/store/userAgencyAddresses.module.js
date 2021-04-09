@@ -1,38 +1,18 @@
 export default {
     namespaced: true,
 
-    state: {
-        agencyAddress: [],
-    },
-
-    getters: {
-        agencyAddress (state) {
-            return state.agencyAddress
-        }
-    },
-
-    mutations: {
-        SET_AGENCY_ADDRESS (state, value) {
-            state.agencyAddress = value
-        }
-    },
-
     actions: {
-        async setAgencyAddress ({ dispatch, commit, rootGetters }, data) {
+        async setAgencyAddress ({ rootGetters }, data) {
             return axios.post(`/api/v1/users/${rootGetters['auth/userId']}/agencies/${data.agencyId}/addresses`, data.address).then((response) => {
-                commit('SET_AGENCY_ADDRESS', response.data.data)
                 return response
             }).catch((err) => {
-                commit('SET_AGENCY_ADDRESS', [])
                 throw err
             })
         },
-        async getAgencyAddress ({ dispatch, commit, rootGetters }, agencyId) {
+        async getAgencyAddress ({ rootGetters }, agencyId) {
             return axios.get(`/api/v1/users/${rootGetters['auth/userId']}/agencies/${agencyId}/addresses`).then((response) => {
-                commit('SET_AGENCY_ADDRESS', response.data.data)
                 return response
             }).catch((err) => {
-                commit('SET_AGENCY_ADDRESS', [])
                 throw err
             })
         }

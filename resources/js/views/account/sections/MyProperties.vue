@@ -20,18 +20,14 @@ export default {
     data () {
         return {
             properties: [],
+            userProperties: []
         }
-    },
-    computed: {
-        ...mapGetters('userProperties',{
-            userProperties: 'userProperties',
-        })
     },
     mounted() {
         this.fetchProperties();
     },
     methods: {
-        ...mapActions('userProperties', ['getUserProperties']),
+        ...mapActions('properties', ['getUserProperties']),
         fetchProperties(){
             this.getUserProperties().then((res) => {
             }).catch((error) => {

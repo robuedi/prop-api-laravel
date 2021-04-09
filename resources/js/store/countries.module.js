@@ -19,12 +19,7 @@ export default {
 
     actions: {
         async getCountries ({ commit }) {
-            if(this.state.countries.length > 0)
-            {
-                return
-            }
-
-            await axios.get('/api/v1/countries?fields=id,name').then((response) => {
+            return await axios.get('/api/v1/countries').then((response) => {
                 commit('SET_COUNTRIES', response.data.data)
                 return response
             }).catch((err) => {

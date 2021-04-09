@@ -17,16 +17,16 @@ export default {
         PropertyItemAccount,
         AccountNavigation
     },
-    computed: {
-        ...mapGetters('userProperties',{
-            userApplications: 'userApplications',
-        })
+    data() {
+        return {
+            userApplications: []
+        }
     },
     mounted() {
         this.fetchProperties();
     },
     methods: {
-        ...mapActions('userProperties', ['getUserApplications']),
+        ...mapActions('properties', ['getUserApplications']),
         fetchProperties(){
             this.getUserApplications().then((res) => {
             }).catch((error) => {

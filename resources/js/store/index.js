@@ -15,7 +15,6 @@ import userAgencies from './userAgencies.module'
 import propertyTypes from './propertyTypes.module'
 import propertyAddress from './propertyAddress.module'
 import paramsPropertyIndex from './params/properties/index.module'
-import userProperties from './userProperties.module'
 import roles from './roles.module'
 import roleUser from './roleUser.module'
 import propertyUser from './propertyUser.module'
@@ -39,7 +38,6 @@ export default new Vuex.Store({
         propertyTypes,
         propertyAddress,
         paramsPropertyIndex,
-        userProperties,
         roles,
         roleUser,
         propertyUser
