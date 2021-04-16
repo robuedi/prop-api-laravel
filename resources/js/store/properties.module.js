@@ -1,8 +1,6 @@
 import Property from "../api/Property";
 
 export default {
-    namespaced: true,
-
     state: {
         property: null,
     },

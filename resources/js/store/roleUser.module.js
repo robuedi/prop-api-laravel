@@ -1,6 +1,4 @@
 export default {
-    namespaced: true,
-
     actions: {
 
         async setUserRole ({ rootGetters }, roleId) {

@@ -1,6 +1,4 @@
 export default {
-    namespaced: true,
-
     actions: {
         async setAgencyAddress ({ rootGetters }, data) {
             return axios.post(`/api/v1/users/${rootGetters['auth/userId']}/agencies/${data.agencyId}/addresses`, data.address).then((response) => {

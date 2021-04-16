@@ -1,6 +1,4 @@
 export default {
-    namespaced: true,
-
     actions: {
         async getRoles ({ commit }) {
             return axios.get(`/api/v1/roles`).then((response) => {

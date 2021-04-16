@@ -1,6 +1,4 @@
 export default {
-    namespaced: true,
-
     actions: {
         async setRent ({ dispatch, commit, rootGetters }, amount) {
             return axios.post(`/api/v1/users/${rootGetters['auth/userId']}/rents`, amount).then((response) => {

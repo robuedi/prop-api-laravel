@@ -1,6 +1,4 @@
 export default {
-    namespaced: true,
-
     actions: {
         async setEmployment ({ rootGetters }, data) {
             return axios.post(`/api/v1/users/${rootGetters['auth/userId']}/employments`, data).then((response) => {
