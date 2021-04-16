@@ -57,38 +57,41 @@ Route::prefix('v1')->group(function (){
         Route::post('users/{user}/roles', [RolesController::class, 'indexUser']);
         Route::post('users/{user}/roles-users', [RolesUsersController::class, 'store']);
 
-        Route::put('roles-users/{role_user}', [RolesUsersController::class, 'update']);
-
         Route::get('roles', [RolesController::class, 'index']);
 
         Route::post('agencies/{agency}/addresses', [AgencyAddressesController::class, 'store']);
         Route::get('agencies/{agency}/addresses', [AgencyAddressesController::class, 'show']);
 
-        //role user address
-        Route::post('roles-users/{role_user}/addresses', [UserAddressController::class, 'store']);
-        Route::get('roles-users/{role_user}/addresses', [UserAddressController::class, 'index']);
-
         Route::post('properties/{property}/addresses', [PropertyAddressesController::class, 'store']);
         Route::get('properties/{property}/addresses', [PropertyAddressesController::class, 'index']);
 
-        Route::post('roles-users/{role_user}/annual-salaries', [AnnualSalariesController::class, 'store']);
-        Route::get('roles-users/{role_user}/annual-salaries', [AnnualSalariesController::class, 'index']);
+        Route::put('roles-users/{role_user}', [RolesUsersController::class, 'update']);
 
-        //rent
-        Route::post('roles-users/{role_user}/rents', [RentsController::class, 'store']);
-        Route::get('roles-users/{role_user}/rents', [RentsController::class, 'index']);
+        Route::prefix('roles-users/{role_user}')->group(function (){
+            //role user address
+            Route::post('addresses', [UserAddressController::class, 'store']);
+            Route::get('addresses', [UserAddressController::class, 'index']);
 
-        //employment
-        Route::post('roles-users/{role_user}/employments', [EmploymentController::class, 'store']);
-        Route::get('roles-users/{role_user}/employments', [EmploymentController::class, 'index']);
+            //annual salaries
+            Route::post('annual-salaries', [AnnualSalariesController::class, 'store']);
+            Route::get('annual-salaries', [AnnualSalariesController::class, 'index']);
 
-        //savings
-        Route::post('roles-users/{role_user}/savings', [SavingsController::class, 'store']);
-        Route::get('roles-users/{role_user}/savings', [SavingsController::class, 'index']);
+            //rent
+            Route::post('rents', [RentsController::class, 'store']);
+            Route::get('rents', [RentsController::class, 'index']);
 
-        //agencies
-        Route::post('roles-users/{role_user}/agencies', [AgenciesController::class, 'store']);
-        Route::get('roles-users/{role_user}/agencies', [AgenciesController::class, 'index']);
+            //employment
+            Route::post('employments', [EmploymentController::class, 'store']);
+            Route::get('employments', [EmploymentController::class, 'index']);
+
+            //savings
+            Route::post('savings', [SavingsController::class, 'store']);
+            Route::get('savings', [SavingsController::class, 'index']);
+
+            //agencies
+            Route::post('agencies', [AgenciesController::class, 'store']);
+            Route::get('agencies', [AgenciesController::class, 'index']);
+        });
     });
 });
 
