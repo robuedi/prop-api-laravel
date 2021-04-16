@@ -15,16 +15,6 @@ class AgencyRepository implements AgencyRepositoryInterface
         $this->agency = $agency;
     }
 
-    public function create(int $user_id, string $name, int $is_public) : Agency
-    {
-        return $this->agency
-            ->create([
-                'user_id' => $user_id,
-                'name' => $name,
-                'is_public' => $is_public
-            ]);
-    }
-
     public function getFirstByUserId(int $user_id) : ?Agency
     {
         return $this->agency

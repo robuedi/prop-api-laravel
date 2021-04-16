@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserAgenciesTable extends Migration
+class CreateAnnualSalariesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateUserAgenciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('agencies', function (Blueprint $table) {
+        Schema::create('annual_salaries', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->bigInteger('user_id')->unsigned();
-            $table->tinyInteger('is_public')->default(0);
+            $table->bigInteger('role_user_id')->unsigned();
+            $table->float('amount', 8, 2);
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateUserAgenciesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_agencies');
+        Schema::dropIfExists('user_annual_salaries');
     }
 }

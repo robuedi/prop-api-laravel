@@ -4,19 +4,19 @@
 namespace App\Repositories\Repositories;
 
 
-use App\Models\UserAddress;
+use App\Models\RoleUserAddress;
 use App\Repositories\UserAddressRepositoryInterface;
 
 class UserAddressRepository implements UserAddressRepositoryInterface
 {
-    private UserAddress $user_address;
+    private RoleUserAddress $user_address;
 
-    public function __construct(UserAddress $user_address)
+    public function __construct(RoleUserAddress $user_address)
     {
         $this->user_address = $user_address;
     }
 
-    public function create(int $user_id, int $city_id, string $address_line, string $postcode) : UserAddress
+    public function create(int $user_id, int $city_id, string $address_line, string $postcode) : RoleUserAddress
     {
         return $this->user_address
             ->create([
@@ -27,7 +27,7 @@ class UserAddressRepository implements UserAddressRepositoryInterface
             ]);
     }
 
-    public function getFirstByUserId(int $user_id) : ?UserAddress
+    public function getFirstByUserId(int $user_id) : ?RoleUserAddress
     {
         return $this->user_address
             ->where(['user_id' => $user_id])

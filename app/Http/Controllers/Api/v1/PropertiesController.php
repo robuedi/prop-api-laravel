@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Http\Controllers\Api\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\UserPropertyStoreRequest;
 use App\Http\Resources\v1\PropertyResource;

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserEmploymentsTable extends Migration
+class CreateRentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateUserEmploymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_employments', function (Blueprint $table) {
+        Schema::create('rents', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned();
-            $table->string('job_title');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->bigInteger('role_user_id')->unsigned();
+            $table->float('amount', 8, 2);
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateUserEmploymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_employments');
+        Schema::dropIfExists('user_rents');
     }
 }

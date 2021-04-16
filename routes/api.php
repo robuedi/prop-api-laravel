@@ -76,10 +76,10 @@ Route::prefix('v1')->group(function (){
         Route::post('/users/{user}/addresses', [UserAddressController::class, 'storeForUser']);
         Route::get('/users/{user}/addresses', [UserAddressController::class, 'showForUser']);
 
-        Route::post('/users/{user}/agencies', [AgenciesController::class, 'storeForUser']);
-        Route::get('/users/{user}/agencies', [AgenciesController::class, 'showForUser']);
-        Route::post('/users/{user}/agencies/{agency}/addresses', [AgencyAddressesController::class, 'storeForUserAgency']);
-        Route::get('/users/{user}/agencies/{agency}/addresses', [AgencyAddressesController::class, 'showForUserAgency']);
+        Route::post('/users/{user}/roles-users/{role_user}/agencies', [AgenciesController::class, 'storeForRoleUser']);
+        Route::get('/users/{user}/roles-users/{role_user}/agencies', [AgenciesController::class, 'indexForRoleUser']);
+        Route::post('/users/{user}/roles-users/{role_user}/agencies/{agency}/addresses', [AgencyAddressesController::class, 'storeForRoleUserAgency']);
+        Route::get('/users/{user}/roles-users/{role_user}/agencies/{agency}/addresses', [AgencyAddressesController::class, 'showForRoleUserAgency']);
 
         Route::get('/roles', [RolesController::class, 'index']);
 

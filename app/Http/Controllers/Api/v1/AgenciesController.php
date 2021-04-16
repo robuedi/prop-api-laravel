@@ -4,35 +4,32 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v1\AgencyAddressResource;
+use App\Http\Requests\v1\RoleUserAgencyShowRequest;
+use App\Http\Requests\v1\RoleUserAgencyStoreRequest;
 use App\Http\Resources\v1\AgencyResource;
-use App\Repositories\AgencyRepositoryInterface;
+use App\Models\Agency;
+use App\Models\RoleUser;
+use App\Models\User;
 use Illuminate\Http\Response;
-use Illuminate\Http\Request;
 
 class AgenciesController extends Controller
 {
-    private AgencyRepositoryInterface $agency_repository;
-
-    public function __construct(AgencyRepositoryInterface $agency_repository)
+    public function storeForRoleUser(User $user, RoleUser $role_user, RoleUserAgencyStoreRequest $request)
     {
-        $this->agency_repository = $agency_repository;
+        $agency = Agency::create([
+            'role_user_id'  => $role_user->id,
+            'name'          => $request->get('name'),
+            'is_public'     => $request->has('is_public') ? 1 :0
+        ]);
+
+        //make property for user
+        return AgencyResource::make($agency)->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function storeForUser(Request $request)
+    public function indexForRoleUser(User $user, RoleUser $role_user, RoleUserAgencyShowRequest $request)
     {
         //make property for user
-        return AgencyResource::make(
-            $this->agency_repository->create(auth()->user()->id, $request->get('name'), $request->has('is_public') ? 1 :0)
-        )->response()->setStatusCode(Response::HTTP_CREATED);
-    }
-
-    public function showForUser()
-    {
-        //make property for user
-        return AgencyResource::make(
-            $this->agency_repository->getFirstByUserId(auth()->user()->id)
-        )->response()->setStatusCode(Response::HTTP_CREATED);
+        return AgencyResource::make($role_user->agency)->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
 

@@ -4,7 +4,7 @@
 namespace App\Http\Services\RoleUserStatus;
 
 
-use App\Models\UserEmployment;
+use App\Models\Employment;
 use App\Repositories\AgencyAddressRepositoryInterface;
 use App\Repositories\AgencyRepositoryInterface;
 use App\Repositories\UserAddressRepositoryInterface;
@@ -41,7 +41,7 @@ class RoleUserChecks implements RoleUserChecksInterface
         $this->agency_repository = $agency_repository;
         $this->agency_address_repository = $agency_address_repository;
     }
-    public function checkEmployment(int $user_id) : ?UserEmployment
+    public function checkEmployment(int $user_id) : ?Employment
     {
         return $this->user_employment_repository->getFirstByUserId($user_id);
     }

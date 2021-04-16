@@ -3,9 +3,8 @@
 namespace App\Http\Resources\v1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Log;
 
-class UserSavingResource extends JsonResource
+class EmploymentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +15,9 @@ class UserSavingResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'amount' => $this->amount
+            'job_title' => $this->job_title,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
         ];
     }
 }

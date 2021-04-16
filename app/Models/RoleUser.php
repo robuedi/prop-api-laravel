@@ -26,4 +26,29 @@ class RoleUser extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function agency()
+    {
+        return $this->hasOne(Agency::class, 'role_user_id', 'id');
+    }
+
+    public function savings()
+    {
+        return $this->hasMany(Saving::class);
+    }
+
+    public function rent()
+    {
+        return $this->hasMany(Rent::class);
+    }
+
+    public function employment()
+    {
+        return $this->hasMany(Employment::class);
+    }
+
+    public function address()
+    {
+        return $this->hasMany(RoleUserAddress::class);
+    }
 }

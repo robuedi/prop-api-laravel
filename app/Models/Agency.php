@@ -14,4 +14,9 @@ class Agency extends Model
         'name',
         'is_public'
     ];
+
+    public function address()
+    {
+        return $this->hasOne(AgencyAddress::class);
+    }
 }

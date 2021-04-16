@@ -4,7 +4,7 @@ namespace App\Http\Resources\v1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserRentResource extends JsonResource
+class RoleUserAddressResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,7 +15,9 @@ class UserRentResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'amount' => $this->amount,
+            'postcode' => $this->postcode,
+            'address_line' => $this->address_line,
+            'city' => CityResource::make($this->whenLoaded('city')),
         ];
     }
 }

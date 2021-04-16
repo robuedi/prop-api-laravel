@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserAnnualSalary extends Model
+class Saving extends Model
 {
     use HasFactory;
 
@@ -13,6 +13,4 @@ class UserAnnualSalary extends Model
         'user_id',
         'amount'
     ];
-
-
 }

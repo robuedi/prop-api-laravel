@@ -19,8 +19,7 @@ class PropertyResource extends JsonResource
             'slug' => $this->when(!is_null($this->slug), $this->slug),
             'created_at' => $this->when(!is_null($this->created_at), $this->created_at),
             'updated_at' => $this->when(!is_null($this->updated_at), $this->updated_at),
-            'address' => PropertyAddressResource::make($this->whenLoaded('address')),
-            'type' => PropertyTypeResource::make($this->whenLoaded('type')),
+            'address' => PropertyAddressResource::make($this->whenLoaded('address'))
         ];
     }
 }

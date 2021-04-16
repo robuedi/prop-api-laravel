@@ -2,7 +2,7 @@
 
 namespace App\Http\Services\RoleUserStatus;
 
-use App\Models\UserEmployment;
+use App\Models\Employment;
 
 interface RoleUserChecksInterface
 {

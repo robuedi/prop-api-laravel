@@ -15,8 +15,7 @@ class Property extends Model
 
     protected $fillable = [
         'status_id',
-        'owner_id',
-        'type_id',
+        'role_user_id',
         'name'
     ];
 
@@ -30,11 +29,6 @@ class Property extends Model
     public function address()
     {
         return $this->hasOne(PropertyAddress::class, 'property_id', 'id');
-    }
-
-    public function type()
-    {
-        return $this->belongsTo(PropertyType::class, 'type_id', 'id');
     }
 
     public function applicants()

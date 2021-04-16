@@ -2,11 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Models\UserSaving;
+use App\Models\Saving;
 
 interface UserSavingRepositoryInterface
 {
-    public function create(int $user_id, float $amount): UserSaving;
+    public function create(int $user_id, float $amount): Saving;
 
-    public function getFirstByUserId(int $user_id): ?UserSaving;
+    public function getFirstByUserId(int $user_id): ?Saving;
 }
