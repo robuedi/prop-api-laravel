@@ -1,6 +1,8 @@
 import apiStates from "./apiStates/apiStateValues";
 
 export default {
+    namespaced: true,
+
     state: {
         authApiState: apiStates.INIT,
         authenticated: false,

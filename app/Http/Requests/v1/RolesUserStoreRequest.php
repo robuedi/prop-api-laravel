@@ -3,6 +3,7 @@
 namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class RolesUserStoreRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class RolesUserStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('user')->id === auth()->user()->id;
+        return $this->route('user')->id === auth()->user()->id && !$this->route('user')->roles->find($this->get('role_id'));
     }
 
     /**

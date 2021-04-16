@@ -42,6 +42,11 @@ class RoleUser extends Model
         return $this->hasMany(Rent::class);
     }
 
+    public function annualSalary()
+    {
+        return $this->hasMany(AnnualSalary::class);
+    }
+
     public function employment()
     {
         return $this->hasMany(Employment::class);

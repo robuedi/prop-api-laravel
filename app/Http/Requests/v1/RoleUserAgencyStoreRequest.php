@@ -13,7 +13,7 @@ class RoleUserAgencyStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('user')->id === auth()->user()->id && $this->route('role_user')->user_id === auth()->user()->id;
+        return $this->route('role_user')->user_id === auth()->user()->id;
     }
 
     /**

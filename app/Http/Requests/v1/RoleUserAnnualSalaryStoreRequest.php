@@ -4,7 +4,7 @@ namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RoleUserAgencyShowRequest extends FormRequest
+class RoleUserAnnualSalaryStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class RoleUserAgencyShowRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('user')->id === auth()->user()->id && $this->route('role_user')->user_id === auth()->user()->id;
+        return $this->route('role_user')->user_id === auth()->user()->id;
     }
 
     /**
@@ -23,6 +23,8 @@ class RoleUserAgencyShowRequest extends FormRequest
      */
     public function rules()
     {
-        return [];
+        return [
+            'amount' => 'numeric|required'
+        ];
     }
 }

@@ -26,6 +26,7 @@ export default {
             errors: [],
             form: {
                 amount: null,
+                roleUserId: this.$route.params.userRoleId
             },
         }
     },
@@ -42,7 +43,7 @@ export default {
         }
     },
     mounted() {
-        AnnualSalary.all().then((res) => {
+        AnnualSalary.all(this.$route.params.userRoleId).then((res) => {
             if(res.data.data.length !== 0) {
                 this.$emit('hasAnnualSalary');
             }

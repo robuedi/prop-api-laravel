@@ -4,7 +4,7 @@ namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserEmploymentStoreRequest extends FormRequest
+class RoleUserAgencyIndexRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UserEmploymentStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('user')->id === auth()->user()->id;
+        return $this->route('role_user')->user_id === auth()->user()->id;
     }
 
     /**
@@ -23,10 +23,6 @@ class UserEmploymentStoreRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'job_title' => 'string|required',
-            'start_date' => 'required|date_format:Y-m-d',
-            'end_date' => 'nullable|date_format:Y-m-d|after_or_equal:start_date'
-        ];
+        return [];
     }
 }

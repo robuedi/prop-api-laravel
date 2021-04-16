@@ -4,7 +4,7 @@ namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserAgencyAddressStoreRequest extends FormRequest
+class AgencyAddressStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UserAgencyAddressStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('role_user')->user_id === auth()->user()->id && $this->route('agency')->role_user_id === $this->route('role_user')->id ;
+        return $this->route('agency')->roleUser->user_id === auth()->user()->id ;
     }
 
     /**

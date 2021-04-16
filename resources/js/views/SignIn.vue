@@ -44,6 +44,7 @@ export default {
                 if(this.user.user_role.length === 0)
                 {
                     this.$router.push({name: 'chooseRoles'})
+                    return;
                 }
 
                 //check if only one active if it has many

@@ -5,30 +5,19 @@ namespace App\Http\Controllers\Api\v1;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\UserEmploymentShowRequest;
-use App\Http\Requests\v1\UserEmploymentStoreRequest;
-use App\Http\Resources\v1\UserEmploymentResource;
-use App\Models\User;
-use App\Repositories\UserEmploymentRepositoryInterface;
-use DateTime;
+use App\Http\Requests\v1\RoleUserEmploymentIndexRequest;
+use App\Http\Requests\v1\RoleUserEmploymentStoreRequest;
+use App\Http\Resources\v1\EmploymentResource;
+use App\Models\RoleUser;
 use Illuminate\Http\Response;
-use Illuminate\Http\Request;
 
 class EmploymentController extends Controller
 {
-    private UserEmploymentRepositoryInterface $user_employment_repository;
-
-    public function __construct(UserEmploymentRepositoryInterface $user_employment_repository)
-    {
-        $this->user_employment_repository = $user_employment_repository;
-    }
-
-    public function storeForUser(User $user,UserEmploymentStoreRequest $request)
+    public function storeForUser(RoleUser $role_user, RoleUserEmploymentStoreRequest $request)
     {
         //make property for user
-        return UserEmploymentResource::make(
-            $this->user_employment_repository->create(
-                $user->id,
+        return EmploymentResource::make(
+            $role_user->employment->create(
                 $request->get('job_title'),
                 date('Y-m-d', strtotime($request->get('start_date'))),
                 $request->has('end_date') ? date('Y-m-d', strtotime($request->get('end_date'))): null,
@@ -36,11 +25,11 @@ class EmploymentController extends Controller
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function showForUser(User $user, UserEmploymentShowRequest $request)
+    public function indexForUser(RoleUser $role_user, RoleUserEmploymentIndexRequest $request)
     {
         //make property for user
-        return UserEmploymentResource::collection(
-            $user->employment
+        return EmploymentResource::collection(
+            $role_user->employment
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 

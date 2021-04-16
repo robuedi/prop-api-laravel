@@ -1,15 +1,14 @@
 import Api from '../Api'
-import store from '../../store/index'
 
-const END_POINT = `users/${store.getters.user.id}/annual-salaries`
+const END_POINT = (roleUserId) => `roles-users/${roleUserId}/annual-salaries`
 const END_POINT_VERSION = 'v1'
 
 export default {
-    store(amount){
-        return Api.post(`${END_POINT_VERSION}/${END_POINT}`, amount);
+    store(data){
+        return Api.post(`${END_POINT_VERSION}/${END_POINT(data.roleUserId)}`, {amount: data.amount});
     },
 
-    all(){
-        return Api.get(`${END_POINT_VERSION}/${END_POINT}`);
+    all(roleUserId){
+        return Api.get(`${END_POINT_VERSION}/${END_POINT(roleUserId)}`);
     },
 }

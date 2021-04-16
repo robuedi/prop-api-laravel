@@ -3,37 +3,27 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\UserRentShowRequest;
-use App\Http\Requests\v1\UserRentStoreRequest;
-use App\Http\Resources\v1\UserRentResource;
-use App\Models\User;
-use App\Repositories\UserRentRepositoryInterface;
+use App\Http\Requests\v1\RoleUserRentIndexRequest;
+use App\Http\Requests\v1\RoleUserRentStoreRequest;
+use App\Http\Resources\v1\RentResource;
+use App\Models\RoleUser;
 use Illuminate\Http\Response;
-use Illuminate\Http\Request;
 
 class RentsController extends Controller
 {
-    private UserRentRepositoryInterface $user_rent_repository;
-
-    public function __construct(UserRentRepositoryInterface $user_rent_repository)
-    {
-        $this->user_rent_repository = $user_rent_repository;
-    }
-
-    public function storeForUser(User $user, UserRentStoreRequest $request)
+    public function storeForRoleUser(RoleUser $role_user, RoleUserRentStoreRequest $request)
     {
         //make property for user
-        return UserRentResource::make(
-            $this->user_rent_repository->create($user->id, $request->get('amount'))
+        return RentResource::make(
+            $role_user->rent->create(['amount' => $request->get('amount')])
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function showForUser(User $user, UserRentShowRequest $request)
+    public function indexForRoleUser(RoleUser $role_user, RoleUserRentIndexRequest $request)
     {
         //make property for user
-        return UserRentResource::collection($user->rent)->response()->setStatusCode(Response::HTTP_CREATED);
+        return RentResource::collection($role_user->rent)->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
 }

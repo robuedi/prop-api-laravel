@@ -3,38 +3,28 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\UserAnnualSalaryShowRequest;
-use App\Http\Requests\v1\UserAnnualSalaryStoreRequest;
-use App\Http\Resources\v1\UserAnnualSalaryResource;
-use App\Models\User;
-use App\Repositories\UserAnnualSalaryRepositoryInterface;
+use App\Http\Requests\v1\RoleUserAnnualSalaryIndexRequest;
+use App\Http\Requests\v1\RoleUserAnnualSalaryStoreRequest;
+use App\Http\Resources\v1\AnnualSalaryResource;
+use App\Models\RoleUser;
 use Illuminate\Http\Response;
-use Illuminate\Http\Request;
 
 class AnnualSalariesController extends Controller
 {
-    private UserAnnualSalaryRepositoryInterface $user_annual_salary_repository;
-
-    public function __construct(UserAnnualSalaryRepositoryInterface $user_annual_salary_repository)
-    {
-        $this->user_annual_salary_repository = $user_annual_salary_repository;
-    }
-
-    public function storeForUser(User $user,UserAnnualSalaryStoreRequest $request)
+    public function storeForUser(RoleUser $role_user, RoleUserAnnualSalaryStoreRequest $request)
     {
         //make property for user
-        return UserAnnualSalaryResource::make(
-            $this->user_annual_salary_repository->create($user->id, $request->get('amount'))
+        return AnnualSalaryResource::make(
+            $role_user->annualSalary()->create(['amount' => $request->get('amount')])
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function showForUser(User $user, UserAnnualSalaryShowRequest $request)
+    public function indexForUser(RoleUser $role_user, RoleUserAnnualSalaryIndexRequest $request)
     {
         //make property for user
-        return UserAnnualSalaryResource::make(
-            $this->user_annual_salary_repository->getFirstByUserId($user->id)
+        return AnnualSalaryResource::collection(
+            $role_user->annualSalary
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 

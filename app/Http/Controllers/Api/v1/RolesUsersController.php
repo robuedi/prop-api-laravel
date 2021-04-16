@@ -33,7 +33,6 @@ class RolesUsersController extends Controller
 
     public function storeForUser(User $user, RolesUserStoreRequest $request)
     {
-        //TODO make unique role per user
         return RoleResource::make(
             $user->userRole()->create(['role_id' => $request->get('role_id')])
         )->response()->setStatusCode(Response::HTTP_OK);

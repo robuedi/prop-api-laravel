@@ -3,9 +3,8 @@
 namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
 
-class UserAnnualSalaryShowRequest extends FormRequest
+class AgencyAddressIndexRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class UserAnnualSalaryShowRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('user')->id === auth()->user()->id;
+        return $this->route('agency')->roleUser->user_id === auth()->user()->id ;
     }
 
     /**
@@ -25,7 +24,7 @@ class UserAnnualSalaryShowRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+
         ];
     }
 }
