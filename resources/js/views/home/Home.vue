@@ -14,6 +14,7 @@
 <script>
 import PropertyItemCard from "./partials/PropertyItemCard";
 import {mapActions, mapGetters} from "vuex";
+import QueryBuilder from "../../api/QueryBuilder";
 
 export default {
     components: {
@@ -21,37 +22,30 @@ export default {
     },
     data() {
         return {
-            loadingProperties: true
+            loadingProperties: true,
+            properties: []
         }
     },
-    computed: {
-        ...mapGetters('properties',{
-            properties: 'properties',
-        }),
-    },
     mounted() {
-        this.setPropertyIndexParams()
-        this.getProperties().finally(()=>{
+        //make the query string
+        const query = new QueryBuilder();
+        query.setInclude(['address', 'address.city', 'address.city.country'])
+        query.setFields('properties', ['id', 'name', 'slug', 'created_at'])
+        query.setFields('address', ['id', 'property_id', 'city_id', 'postcode', 'address_line'])
+        query.setFields('address.city', ['id', 'country_id', 'name'])
+        query.setFields('address.city.country', ['id', 'name'])
+
+        //fetch data
+        this.getProperties(query.get()).then((res) => {
+            this.properties = res.data.data
+        }).finally(()=>{
             this.loadingProperties = false
         })
     },
     methods: {
-        ...mapActions('paramsPropertyIndex', [
-            'setAddress',
-            'setCity',
-            'setFields',
-            'setCountry',
-            'setUserType'
-        ]),
-        ...mapActions('properties', ['getProperties']),
-        setPropertyIndexParams()
-        {
-            this.setFields(['id', 'name', 'slug', 'created_at'])
-            this.setAddress(['postcode', 'address_line'])
-            this.setCity(['name'])
-            this.setCountry(['name'])
-            this.setUserType(true)
-        }
+        ...mapActions('properties', {
+            getProperties: 'getAll'
+        }),
     }
 }
 </script>

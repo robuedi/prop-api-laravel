@@ -11,10 +11,9 @@ use App\Http\Resources\GeneralResource;
 use App\Models\Property;
 use App\Models\User;
 use App\Repositories\PropertyRepositoryInterface;
-use App\Repositories\Repositories\Params\PropertyRepositoryIndexParamInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Log;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class PropertiesController extends Controller
 {
@@ -25,21 +24,19 @@ class PropertiesController extends Controller
         $this->property_repository = $property_repository;
     }
 
-    public function index(PropertyRepositoryIndexParamInterface $index_param, Request $request)
+    public function index()
     {
-        //set params
-        $index_param
-            ->setAddress($request->get('has_address'))
-            ->setCity($request->get('has_city'))
-            ->setCountry($request->get('has_country'))
-            ->setFields($request->get('fields'))
-            ->setUserType($request->get('has_user_type') ? true : false)
-            ->setUserId($request->has('has_current_user') ? auth()->id() : null)
-            ->setActive(true);
+        $properties = QueryBuilder::for(Property::class)
+                ->allowedFields([
+                    'id', 'name', 'slug', 'created_at',
+                    'address.id', 'address.city_id', 'address.property_id', 'address.postcode', 'address.address_line',
+                    'address.city.id', 'address.city.country_id', 'address.city.name',
+                    'address.city.country.id', 'address.city.country.name',
+                ])
+                ->allowedIncludes(['address', 'address.city', 'address.city.country', 'userType'])
+                ->get();
 
-        return PropertyResource::collection(
-            $this->property_repository->index($index_param)
-        )->response()->setStatusCode(Response::HTTP_OK);
+        return PropertyResource::collection($properties)->response()->setStatusCode(Response::HTTP_OK);
     }
 
     public function indexForUser(User $user, Request $request)
@@ -63,18 +60,19 @@ class PropertiesController extends Controller
         return PropertyResource::make($property)->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(Property $property, Request $request)
+    public function show(Property $property)
     {
-        if($request->has('has_address'))
-        {
-            $property->load(['address:id,property_id,address_line,postcode,city_id', 'address.city:id,name,country_id', 'address.city.country:id,name']);
-        }
+        $_property = QueryBuilder::for($property)
+            ->allowedFields([
+                'id', 'name', 'slug', 'type_id', 'created_at',
+                'address.id', 'address.city_id', 'address.property_id', 'address.postcode', 'address.address_line',
+                'address.city.id', 'address.city.country_id', 'address.city.name',
+                'address.city.country.id', 'address.city.country.name',
+                'type.id', 'type.name',
+            ])
+            ->allowedIncludes(['address', 'address.city', 'address.city.country', 'type'])
+            ->first();
 
-        if($request->has('has_type'))
-        {
-            $property->load(['type:id,name']);
-        }
-
-        return PropertyResource::make($property)->response()->setStatusCode(Response::HTTP_OK);
+        return PropertyResource::make($_property)->response()->setStatusCode(Response::HTTP_OK);
     }
 }

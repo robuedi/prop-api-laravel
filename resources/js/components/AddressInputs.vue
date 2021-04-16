@@ -27,7 +27,8 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
+import {mapActions} from "vuex";
+import QueryBuilder from "../api/QueryBuilder";
 
 export default {
     props: {
@@ -47,29 +48,15 @@ export default {
             }
         }
     },
-    computed: {
-        ...mapGetters('countries',{
-            loadedCountries: 'countries',
-        })
-    },
     mounted() {
-        this.loadCountries()
+        this.getCountries(this.makeQueryString()).then((res) => {
+            console.log('test')
+            console.log(res)
+             this.countries = res
+        })
     },
     methods: {
         ...mapActions('countries', ['getCountries']),
-        loadCountries()
-        {
-            if(this.loadedCountries.length > 0) {
-                this.countries = this.loadedCountries;
-            }
-            else{
-                this.getCountries().then((res) => {
-                    this.countries = res.data.data;
-                }).catch((error) => {
-                    throw error
-                })
-            }
-        },
         addressUpdated(){
             if(this.form.city_id !== '' && this.form.address_line !== '' && this.form.postcode !== '' && this.changeEvent !== '') {
                 this.$emit(this.changeEvent, this.form)
@@ -84,6 +71,14 @@ export default {
             this.form.address_line = '';
             this.form.postcode = '';
             this.selectedCountry = '';
+        },
+        makeQueryString() {
+            const query = new QueryBuilder();
+            query.setInclude(['cities'])
+            query.setFields('countries', ['id', 'name'])
+            query.setFields('cities', ['id', 'country_id', 'name'])
+
+            return query.get()
         }
     },
     created() {

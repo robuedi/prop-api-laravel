@@ -32,11 +32,6 @@ export default {
             },
         }
     },
-    computed: {
-        ...mapGetters('rent',{
-            rent: 'rent',
-        })
-    },
     methods: {
         ...mapActions('rent', ['setRent']),
         ...mapActions('rent', ['getCurrentUserRent']),
@@ -53,7 +48,7 @@ export default {
     },
     mounted() {
         this.getCurrentUserRent().then((res) => {
-            if(this.rent.length !== 0)
+            if(res.data.data.length !== 0)
             {
                 this.$emit('hasRent');
             }

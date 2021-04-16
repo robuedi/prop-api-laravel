@@ -33,9 +33,7 @@ class RentsController extends Controller
     public function showForUser(User $user, UserRentShowRequest $request)
     {
         //make property for user
-        return UserRentResource::make(
-            $this->user_rent_repository->getFirstByUserId($user->id)
-        )->response()->setStatusCode(Response::HTTP_CREATED);
+        return UserRentResource::collection($user->rent)->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
 }

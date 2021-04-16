@@ -38,7 +38,6 @@ Auth::routes();
 
 Route::prefix('v1')->group(function (){
     Route::get('/countries', [CountriesController::class, 'index']);
-    Route::get('/cities', [CitiesController::class, 'index']);
     Route::get('/property-statuses', [PropertyStatusesController::class, 'index']);
 
     //properties

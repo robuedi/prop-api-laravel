@@ -7,16 +7,11 @@ use App\Http\Services\RoleUserStatus\RoleUserChecksInterface;
 use App\Http\Services\RoleUserStatus\RoleUserStatusService;
 use App\Http\Services\RoleUserStatus\RoleUserStatusServiceInterface;
 use App\Repositories\AgencyAddressRepositoryInterface;
-use App\Repositories\CityRepositoryInterface;
 use App\Repositories\CountryRepositoryInterface;
 use App\Repositories\PropertyAddressRepositoryInterface;
 use App\Repositories\PropertyRepositoryInterface;
 use App\Repositories\PropertyStatusRepositoryInterface;
 use App\Repositories\Repositories\AgencyAddressRepository;
-use App\Repositories\Repositories\CityRepository;
-use App\Repositories\Repositories\CountryRepository;
-use App\Repositories\Repositories\Params\PropertyRepositoryIndexParam;
-use App\Repositories\Repositories\Params\PropertyRepositoryIndexParamInterface;
 use App\Repositories\Repositories\PropertyAddressRepository;
 use App\Repositories\Repositories\PropertyRepository;
 use App\Repositories\Repositories\PropertyStatusRepository;
@@ -47,12 +42,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        app()->bind(CountryRepositoryInterface::class, CountryRepository::class);
-        app()->bind(CityRepositoryInterface::class, CityRepository::class);
         app()->bind(PropertyStatusRepositoryInterface::class, PropertyStatusRepository::class);
         app()->bind(PropertyRepositoryInterface::class, PropertyRepository::class);
         app()->bind(PropertyAddressRepositoryInterface::class, PropertyAddressRepository::class);
-        app()->bind(PropertyRepositoryIndexParamInterface::class, PropertyRepositoryIndexParam::class);
         app()->bind(UserAnnualSalaryRepositoryInterface::class, UserAnnualSalaryRepository::class);
         app()->bind(UserRentRepositoryInterface::class, UserRentRepository::class);
         app()->bind(UserEmploymentRepositoryInterface::class, UserEmploymentRepository::class);

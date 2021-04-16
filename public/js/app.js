@@ -1856,7 +1856,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _api_QueryBuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/QueryBuilder */ "./resources/js/api/QueryBuilder.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -1892,6 +1893,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     title: String,
@@ -1910,26 +1912,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('countries', {
-    loadedCountries: 'countries'
-  })),
   mounted: function mounted() {
-    this.loadCountries();
-  },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('countries', ['getCountries'])), {}, {
-    loadCountries: function loadCountries() {
-      var _this = this;
+    var _this = this;
 
-      if (this.loadedCountries.length > 0) {
-        this.countries = this.loadedCountries;
-      } else {
-        this.getCountries().then(function (res) {
-          _this.countries = res.data.data;
-        })["catch"](function (error) {
-          throw error;
-        });
-      }
-    },
+    this.getCountries(this.makeQueryString()).then(function (res) {
+      console.log('test');
+      console.log(res);
+      _this.countries = res;
+    });
+  },
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('countries', ['getCountries'])), {}, {
     addressUpdated: function addressUpdated() {
       if (this.form.city_id !== '' && this.form.address_line !== '' && this.form.postcode !== '' && this.changeEvent !== '') {
         this.$emit(this.changeEvent, this.form);
@@ -1948,6 +1940,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.form.address_line = '';
       this.form.postcode = '';
       this.selectedCountry = '';
+    },
+    makeQueryString: function makeQueryString() {
+      var query = new _api_QueryBuilder__WEBPACK_IMPORTED_MODULE_0__.default();
+      query.setInclude(['cities']);
+      query.setFields('countries', ['id', 'name']);
+      query.setFields('cities', ['id', 'country_id', 'name']);
+      return query.get();
     }
   }),
   created: function created() {
@@ -2140,7 +2139,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _api_QueryBuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/QueryBuilder */ "./resources/js/api/QueryBuilder.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2167,20 +2167,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('properties', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('properties', {
     property: 'property'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('auth', {
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('auth', {
     user: 'user'
   })),
   mounted: function mounted() {
-    console.log(this.$route.params.propertySlug);
-    this.showProperty({
-      propertyIdentifier: this.$route.params.propertySlug,
-      query: 'has_address=true&has_type=true'
+    this.showSlugProperty({
+      slug: this.$route.params.propertySlug,
+      query: this.makeQueryString()
     });
   },
-  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('properties', ['showProperty'])), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('propertyUser', ['bookProperty'])), {}, {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('properties', ['showSlugProperty'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('propertyUser', ['bookProperty'])), {}, {
     bookProperty: function bookProperty(propertySlug) {
       this.bookProperty({
         property_slug: propertySlug,
@@ -2188,6 +2188,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function () {
         console.log('success');
       });
+    },
+    makeQueryString: function makeQueryString() {
+      var query = new _api_QueryBuilder__WEBPACK_IMPORTED_MODULE_0__.default();
+      query.setInclude(['address', 'address.city', 'address.city.country', 'type']);
+      query.setFields('properties', ['id', 'name', 'type_id', 'slug', 'created_at']);
+      query.setFields('address', ['id', 'property_id', 'city_id', 'postcode', 'address_line']);
+      query.setFields('address.city', ['id', 'country_id', 'name']);
+      query.setFields('address.city.country', ['id', 'name']);
+      query.setFields('type', ['id', 'name']);
+      return query.get();
     }
   })
 });
@@ -3583,9 +3593,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('rent', {
-    rent: 'rent'
-  })),
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('rent', ['setRent'])), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('rent', ['getCurrentUserRent'])), {}, {
     submit: function submit() {
       var _this = this;
@@ -3620,7 +3627,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this2 = this;
 
     this.getCurrentUserRent().then(function (res) {
-      if (_this2.rent.length !== 0) {
+      if (res.data.data.length !== 0) {
         _this2.$emit('hasRent');
       } else {
         _this2.show = true;
@@ -4360,7 +4367,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _partials_PropertyItemCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./partials/PropertyItemCard */ "./resources/js/views/home/partials/PropertyItemCard.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _api_QueryBuilder__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api/QueryBuilder */ "./resources/js/api/QueryBuilder.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -4382,35 +4390,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     PropertyItemCard: _partials_PropertyItemCard__WEBPACK_IMPORTED_MODULE_0__.default
   },
   data: function data() {
     return {
-      loadingProperties: true
+      loadingProperties: true,
+      properties: []
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('properties', {
-    properties: 'properties'
-  })),
   mounted: function mounted() {
     var _this = this;
 
-    this.setPropertyIndexParams();
-    this.getProperties()["finally"](function () {
+    //make the query string
+    var query = new _api_QueryBuilder__WEBPACK_IMPORTED_MODULE_1__.default();
+    query.setInclude(['address', 'address.city', 'address.city.country']);
+    query.setFields('properties', ['id', 'name', 'slug', 'created_at']);
+    query.setFields('address', ['id', 'property_id', 'city_id', 'postcode', 'address_line']);
+    query.setFields('address.city', ['id', 'country_id', 'name']);
+    query.setFields('address.city.country', ['id', 'name']); //fetch data
+
+    this.getProperties(query.get()).then(function (res) {
+      _this.properties = res.data.data;
+    })["finally"](function () {
       _this.loadingProperties = false;
     });
   },
-  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('paramsPropertyIndex', ['setAddress', 'setCity', 'setFields', 'setCountry', 'setUserType'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('properties', ['getProperties'])), {}, {
-    setPropertyIndexParams: function setPropertyIndexParams() {
-      this.setFields(['id', 'name', 'slug', 'created_at']);
-      this.setAddress(['postcode', 'address_line']);
-      this.setCity(['name']);
-      this.setCountry(['name']);
-      this.setUserType(true);
-    }
-  })
+  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('properties', {
+    getProperties: 'getAll'
+  }))
 });
 
 /***/ }),
@@ -4460,6 +4470,211 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/api/Api.js":
+/*!*********************************!*\
+  !*** ./resources/js/api/Api.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+var Api = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
+  baseURL: '/api'
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Api);
+
+/***/ }),
+
+/***/ "./resources/js/api/Country.js":
+/*!*************************************!*\
+  !*** ./resources/js/api/Country.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/js/api/Api.js");
+
+var END_POINT = 'countries';
+var END_POINT_VERSION = 'v1';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  all: function all() {
+    var query = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT).concat(query));
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/api/Property.js":
+/*!**************************************!*\
+  !*** ./resources/js/api/Property.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/js/api/Api.js");
+
+var END_POINT = 'properties';
+var END_POINT_VERSION = 'v1';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  all: function all() {
+    var query = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT).concat(query));
+  },
+  showSlug: function showSlug(slug) {
+    var query = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT, "/").concat(slug).concat(query));
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/api/QueryBuilder.js":
+/*!******************************************!*\
+  !*** ./resources/js/api/QueryBuilder.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ QueryBuilder)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/** Example
+ const test = new QueryBuilder()
+ test.setFields('users', ['email', 'first_name', 'id'])
+ .setFields('addresses.city', ['name', 'id'])
+ .setFilter('name', ['Mike', 'kk'])
+ .setInclude(['properties', 'addresses.city'])
+ .setSort(['-first_name', 'addresses']) // use '-' for desc
+ let element = document.querySelector('p')
+ element.innerHTML = test.get()
+ */
+var QueryBuilder = /*#__PURE__*/function () {
+  function QueryBuilder() {
+    _classCallCheck(this, QueryBuilder);
+
+    this.clear();
+  }
+
+  _createClass(QueryBuilder, [{
+    key: "clear",
+    value: function clear() {
+      this.fields = {};
+      this.include = [];
+      this.filters = {};
+      this.sort = [];
+    }
+  }, {
+    key: "setFields",
+    value: function setFields(table, fields) {
+      this.fields[table] = fields;
+      return this;
+    }
+  }, {
+    key: "setInclude",
+    value: function setInclude(include) {
+      this.include = include;
+      return this;
+    }
+  }, {
+    key: "setFilter",
+    value: function setFilter(attribute, values) {
+      this.filters[attribute] = values;
+      return this;
+    }
+  }, {
+    key: "setSort",
+    value: function setSort(sort) {
+      this.sort = sort;
+      return this;
+    }
+  }, {
+    key: "get",
+    value: function get() {
+      var query = []; //add fields
+
+      query.push(this.getFields()); //add includes
+
+      query.push(this.getIncludes()); //add filters
+
+      query.push(this.getFilters()); //add sort field
+
+      query.push(this.getSort()); //filter query elements
+
+      query = query.filter(function (item) {
+        return item !== '';
+      });
+      return query.length > 0 ? '?' + query.join('&') : '';
+    }
+  }, {
+    key: "getSort",
+    value: function getSort() {
+      return this.sort.length > 0 ? "sort=".concat(this.sort.join(',')) : '';
+    }
+  }, {
+    key: "getFields",
+    value: function getFields() {
+      return this.stringifyArraybleObject(this.fields, 'fields', ',', '&');
+    }
+  }, {
+    key: "getFilters",
+    value: function getFilters() {
+      return this.stringifyArraybleObject(this.filters, 'filter', ',', '&');
+    }
+  }, {
+    key: "getIncludes",
+    value: function getIncludes() {
+      if (this.include.length === 0) {
+        return '';
+      }
+
+      return "include=".concat(this.include.join(','));
+    }
+  }, {
+    key: "stringifyArraybleObject",
+    value: function stringifyArraybleObject(arraybleObject, keyPrefix, itemsJoin, keyJoin) {
+      if (Object.keys(arraybleObject).length === 0) {
+        return '';
+      }
+
+      var keyString = [];
+
+      for (var key in arraybleObject) {
+        keyString.push("".concat(keyPrefix, "[").concat(key, "]=").concat(arraybleObject[key].join(itemsJoin)));
+      }
+
+      return keyString.join(keyJoin);
+    }
+  }]);
+
+  return QueryBuilder;
+}();
+
+
 
 /***/ }),
 
@@ -5019,82 +5234,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
-/***/ "./resources/js/store/cities.module.js":
-/*!*********************************************!*\
-  !*** ./resources/js/store/cities.module.js ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  namespaced: true,
-  state: {
-    cities: []
-  },
-  getters: {
-    cities: function cities(state) {
-      return state.cities;
-    }
-  },
-  mutations: {
-    SET_CITIES: function SET_CITIES(state, value) {
-      state.cities = value;
-    }
-  },
-  actions: {
-    getCities: function getCities(_ref) {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var commit;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit;
-
-                if (!(_this.state.cities.length > 0)) {
-                  _context.next = 3;
-                  break;
-                }
-
-                return _context.abrupt("return");
-
-              case 3:
-                _context.next = 5;
-                return axios.get('/api/v1/cities?fields=id,country_id,name').then(function (response) {
-                  commit('SET_CITIES', response.data.data);
-                  return response;
-                })["catch"](function (err) {
-                  commit('SET_CITIES', []);
-                  throw err;
-                });
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./resources/js/store/countries.module.js":
 /*!************************************************!*\
   !*** ./resources/js/store/countries.module.js ***!
@@ -5108,29 +5247,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api_Country__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/Country */ "./resources/js/api/Country.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
   state: {
-    countries: []
+    countries: [],
+    query: ''
   },
   getters: {
     countries: function countries(state) {
       return state.countries;
+    },
+    query: function query(state) {
+      return state.query;
     }
   },
   mutations: {
     SET_COUNTRIES: function SET_COUNTRIES(state, value) {
       state.countries = value;
+    },
+    SET_QUERY: function SET_QUERY(state, value) {
+      state.query = value;
     }
   },
   actions: {
-    getCountries: function getCountries(_ref) {
+    getCountries: function getCountries(_ref, query) {
+      var _this = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -5138,19 +5288,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 commit = _ref.commit;
-                _context.next = 3;
-                return axios.get('/api/v1/countries').then(function (response) {
+
+                if (!(_this.query === query)) {
+                  _context.next = 5;
+                  break;
+                }
+
+                return _context.abrupt("return", _this.countries);
+
+              case 5:
+                commit('SET_QUERY', query); //fetch fresh countries
+
+                return _context.abrupt("return", _api_Country__WEBPACK_IMPORTED_MODULE_1__.default.all(query).then(function (response) {
                   commit('SET_COUNTRIES', response.data.data);
-                  return response;
+                  return response.data.data;
                 })["catch"](function (err) {
                   commit('SET_COUNTRIES', []);
-                  throw err;
-                });
+                  return [];
+                }));
 
-              case 3:
-                return _context.abrupt("return", _context.sent);
-
-              case 4:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -5174,26 +5331,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _auth_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth.module */ "./resources/js/store/auth.module.js");
 /* harmony import */ var _properties_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./properties.module */ "./resources/js/store/properties.module.js");
 /* harmony import */ var _propertiesStatuses_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./propertiesStatuses.module */ "./resources/js/store/propertiesStatuses.module.js");
-/* harmony import */ var _cities_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./cities.module */ "./resources/js/store/cities.module.js");
-/* harmony import */ var _countries_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./countries.module */ "./resources/js/store/countries.module.js");
-/* harmony import */ var _annualSalary_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./annualSalary.module */ "./resources/js/store/annualSalary.module.js");
-/* harmony import */ var _rent_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./rent.module */ "./resources/js/store/rent.module.js");
-/* harmony import */ var _userEmployment_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./userEmployment.module */ "./resources/js/store/userEmployment.module.js");
-/* harmony import */ var _userAddress_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./userAddress.module */ "./resources/js/store/userAddress.module.js");
-/* harmony import */ var _savings_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./savings.module */ "./resources/js/store/savings.module.js");
-/* harmony import */ var _userAgencyAddresses_module__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./userAgencyAddresses.module */ "./resources/js/store/userAgencyAddresses.module.js");
-/* harmony import */ var _userAgencies_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./userAgencies.module */ "./resources/js/store/userAgencies.module.js");
-/* harmony import */ var _propertyTypes_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./propertyTypes.module */ "./resources/js/store/propertyTypes.module.js");
-/* harmony import */ var _propertyAddress_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./propertyAddress.module */ "./resources/js/store/propertyAddress.module.js");
-/* harmony import */ var _params_properties_index_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./params/properties/index.module */ "./resources/js/store/params/properties/index.module.js");
-/* harmony import */ var _roles_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./roles.module */ "./resources/js/store/roles.module.js");
-/* harmony import */ var _roleUser_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./roleUser.module */ "./resources/js/store/roleUser.module.js");
-/* harmony import */ var _propertyUser_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./propertyUser.module */ "./resources/js/store/propertyUser.module.js");
+/* harmony import */ var _countries_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./countries.module */ "./resources/js/store/countries.module.js");
+/* harmony import */ var _annualSalary_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./annualSalary.module */ "./resources/js/store/annualSalary.module.js");
+/* harmony import */ var _rent_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./rent.module */ "./resources/js/store/rent.module.js");
+/* harmony import */ var _userEmployment_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./userEmployment.module */ "./resources/js/store/userEmployment.module.js");
+/* harmony import */ var _userAddress_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./userAddress.module */ "./resources/js/store/userAddress.module.js");
+/* harmony import */ var _savings_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./savings.module */ "./resources/js/store/savings.module.js");
+/* harmony import */ var _userAgencyAddresses_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./userAgencyAddresses.module */ "./resources/js/store/userAgencyAddresses.module.js");
+/* harmony import */ var _userAgencies_module__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./userAgencies.module */ "./resources/js/store/userAgencies.module.js");
+/* harmony import */ var _propertyTypes_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./propertyTypes.module */ "./resources/js/store/propertyTypes.module.js");
+/* harmony import */ var _propertyAddress_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./propertyAddress.module */ "./resources/js/store/propertyAddress.module.js");
+/* harmony import */ var _roles_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./roles.module */ "./resources/js/store/roles.module.js");
+/* harmony import */ var _roleUser_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./roleUser.module */ "./resources/js/store/roleUser.module.js");
+/* harmony import */ var _propertyUser_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./propertyUser.module */ "./resources/js/store/propertyUser.module.js");
 
 
 
@@ -5212,158 +5367,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-vue__WEBPACK_IMPORTED_MODULE_18__.default.use(vuex__WEBPACK_IMPORTED_MODULE_19__.default);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_19__.default.Store({
+vue__WEBPACK_IMPORTED_MODULE_16__.default.use(vuex__WEBPACK_IMPORTED_MODULE_17__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_17__.default.Store({
   modules: {
     auth: _auth_module__WEBPACK_IMPORTED_MODULE_0__.default,
     properties: _properties_module__WEBPACK_IMPORTED_MODULE_1__.default,
     propertiesStatuses: _propertiesStatuses_module__WEBPACK_IMPORTED_MODULE_2__.default,
-    cities: _cities_module__WEBPACK_IMPORTED_MODULE_3__.default,
-    countries: _countries_module__WEBPACK_IMPORTED_MODULE_4__.default,
-    annualSalary: _annualSalary_module__WEBPACK_IMPORTED_MODULE_5__.default,
-    rent: _rent_module__WEBPACK_IMPORTED_MODULE_6__.default,
-    userEmployment: _userEmployment_module__WEBPACK_IMPORTED_MODULE_7__.default,
-    userAddress: _userAddress_module__WEBPACK_IMPORTED_MODULE_8__.default,
-    savings: _savings_module__WEBPACK_IMPORTED_MODULE_9__.default,
-    userAgencyAddress: _userAgencyAddresses_module__WEBPACK_IMPORTED_MODULE_10__.default,
-    userAgencies: _userAgencies_module__WEBPACK_IMPORTED_MODULE_11__.default,
-    propertyTypes: _propertyTypes_module__WEBPACK_IMPORTED_MODULE_12__.default,
-    propertyAddress: _propertyAddress_module__WEBPACK_IMPORTED_MODULE_13__.default,
-    paramsPropertyIndex: _params_properties_index_module__WEBPACK_IMPORTED_MODULE_14__.default,
-    roles: _roles_module__WEBPACK_IMPORTED_MODULE_15__.default,
-    roleUser: _roleUser_module__WEBPACK_IMPORTED_MODULE_16__.default,
-    propertyUser: _propertyUser_module__WEBPACK_IMPORTED_MODULE_17__.default
+    countries: _countries_module__WEBPACK_IMPORTED_MODULE_3__.default,
+    annualSalary: _annualSalary_module__WEBPACK_IMPORTED_MODULE_4__.default,
+    rent: _rent_module__WEBPACK_IMPORTED_MODULE_5__.default,
+    userEmployment: _userEmployment_module__WEBPACK_IMPORTED_MODULE_6__.default,
+    userAddress: _userAddress_module__WEBPACK_IMPORTED_MODULE_7__.default,
+    savings: _savings_module__WEBPACK_IMPORTED_MODULE_8__.default,
+    userAgencyAddress: _userAgencyAddresses_module__WEBPACK_IMPORTED_MODULE_9__.default,
+    userAgencies: _userAgencies_module__WEBPACK_IMPORTED_MODULE_10__.default,
+    propertyTypes: _propertyTypes_module__WEBPACK_IMPORTED_MODULE_11__.default,
+    propertyAddress: _propertyAddress_module__WEBPACK_IMPORTED_MODULE_12__.default,
+    roles: _roles_module__WEBPACK_IMPORTED_MODULE_13__.default,
+    roleUser: _roleUser_module__WEBPACK_IMPORTED_MODULE_14__.default,
+    propertyUser: _propertyUser_module__WEBPACK_IMPORTED_MODULE_15__.default
   }
 }));
-
-/***/ }),
-
-/***/ "./resources/js/store/params/properties/index.module.js":
-/*!**************************************************************!*\
-  !*** ./resources/js/store/params/properties/index.module.js ***!
-  \**************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  namespaced: true,
-  state: {
-    fields: [],
-    address: [],
-    city: [],
-    country: [],
-    userType: false
-  },
-  getters: {
-    fields: function fields(state) {
-      return state.fields;
-    },
-    address: function address(state) {
-      return state.address;
-    },
-    city: function city(state) {
-      return state.city;
-    },
-    country: function country(state) {
-      return state.country;
-    },
-    query: function query(state) {
-      var queryItems = [];
-
-      if (state.fields.length > 0) {
-        queryItems.push('fields=' + state.fields.join(','));
-      }
-
-      if (state.address.length > 0) {
-        queryItems.push('has_address=' + state.address.join(','));
-      }
-
-      if (state.city.length > 0) {
-        queryItems.push('has_city=' + state.city.join(','));
-      }
-
-      if (state.country.length > 0) {
-        queryItems.push('has_country=' + state.country.join(','));
-      }
-
-      if (state.userType) {
-        queryItems.push('has_user_type=true');
-      }
-
-      return queryItems.length > 0 ? '?' + queryItems.join('&') : '';
-    }
-  },
-  mutations: {
-    SET_FIELDS: function SET_FIELDS(state, value) {
-      state.fields = value;
-    },
-    SET_ADDRESS: function SET_ADDRESS(state, value) {
-      state.address = value;
-    },
-    SET_CITY: function SET_CITY(state, value) {
-      state.city = value;
-    },
-    SET_COUNTRY: function SET_COUNTRY(state, value) {
-      state.country = value;
-    },
-    SET_USER_TYPE: function SET_USER_TYPE(state, value) {
-      state.userType = value;
-    }
-  },
-  actions: {
-    setFields: function setFields(_ref, values) {
-      var commit = _ref.commit;
-
-      if (values) {
-        commit('SET_FIELDS', values);
-      } else {
-        commit('SET_FIELDS', []);
-      }
-    },
-    setAddress: function setAddress(_ref2, values) {
-      var commit = _ref2.commit;
-
-      if (values) {
-        commit('SET_ADDRESS', values);
-      } else {
-        commit('SET_ADDRESS', []);
-      }
-    },
-    setCity: function setCity(_ref3, values) {
-      var commit = _ref3.commit;
-
-      if (values) {
-        commit('SET_CITY', values);
-      } else {
-        commit('SET_CITY', []);
-      }
-    },
-    setCountry: function setCountry(_ref4, values) {
-      var commit = _ref4.commit;
-
-      if (values) {
-        commit('SET_COUNTRY', values);
-      } else {
-        commit('SET_COUNTRY', []);
-      }
-    },
-    setUserType: function setUserType(_ref5, values) {
-      var commit = _ref5.commit;
-
-      if (values) {
-        commit('SET_USER_TYPE', values);
-      } else {
-        commit('SET_USER_TYPE', false);
-      }
-    }
-  }
-});
 
 /***/ }),
 
@@ -5380,46 +5404,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api_Property__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/Property */ "./resources/js/api/Property.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
   state: {
-    property: null,
-    properties: []
+    property: null
   },
   getters: {
     property: function property(state) {
       return state.property;
-    },
-    properties: function properties(state) {
-      return state.properties;
     }
   },
   mutations: {
     SET_PROPERTY: function SET_PROPERTY(state, value) {
       state.property = value;
-    },
-    SET_PROPERTIES: function SET_PROPERTIES(state, value) {
-      state.properties = value;
     }
   },
   actions: {
-    showProperty: function showProperty(_ref, data) {
+    showSlugProperty: function showSlugProperty(_ref, data) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit, query;
+        var dispatch, commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 dispatch = _ref.dispatch, commit = _ref.commit;
-                query = data.query ? '?' + data.query : data.query;
-                _context.next = 4;
-                return axios.get("/api/v1/properties/".concat(data.propertyIdentifier).concat(query)).then(function (response) {
+                _context.next = 3;
+                return _api_Property__WEBPACK_IMPORTED_MODULE_1__.default.showSlug(data.slug, data.query).then(function (response) {
                   commit('SET_PROPERTY', response.data.data);
                   return response;
                 })["catch"](function (err) {
@@ -5427,7 +5445,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   throw err;
                 });
 
-              case 4:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -5435,23 +5453,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    getProperties: function getProperties(_ref2) {
+    getAll: function getAll(_ref2) {
+      var _arguments = arguments;
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, rootGetters;
+        var commit, query;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref2.commit, rootGetters = _ref2.rootGetters;
-                return _context2.abrupt("return", axios.get("/api/v1/properties".concat(rootGetters['paramsPropertyIndex/query'])).then(function (response) {
-                  commit('SET_PROPERTIES', response.data.data);
-                  return response;
-                })["catch"](function (error) {
-                  commit('SET_PROPERTIES', []);
-                  throw error;
-                }));
+                commit = _ref2.commit;
+                query = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : '';
+                return _context2.abrupt("return", _api_Property__WEBPACK_IMPORTED_MODULE_1__.default.all(query));
 
-              case 2:
+              case 3:
               case "end":
                 return _context2.stop();
             }

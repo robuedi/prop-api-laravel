@@ -20,6 +20,7 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex'
+import QueryBuilder from "../api/QueryBuilder";
 
 export default {
     computed: {
@@ -31,17 +32,27 @@ export default {
         }),
     },
     mounted() {
-        console.log(this.$route.params.propertySlug)
-        this.showProperty({propertyIdentifier:this.$route.params.propertySlug, query: 'has_address=true&has_type=true'})
+        this.showSlugProperty({slug:this.$route.params.propertySlug, query: this.makeQueryString()})
     },
     methods: {
-        ...mapActions('properties', ['showProperty']),
+        ...mapActions('properties', ['showSlugProperty']),
         ...mapActions('propertyUser', ['bookProperty']),
         bookProperty(propertySlug)
         {
             this.bookProperty({property_slug: propertySlug, user_id: user.id}).then(()=>{
                 console.log('success')
             })
+        },
+        makeQueryString() {
+            const query = new QueryBuilder();
+            query.setInclude(['address', 'address.city', 'address.city.country', 'type'])
+            query.setFields('properties', ['id', 'name', 'type_id', 'slug', 'created_at'])
+            query.setFields('address', ['id', 'property_id', 'city_id', 'postcode', 'address_line'])
+            query.setFields('address.city', ['id', 'country_id', 'name'])
+            query.setFields('address.city.country', ['id', 'name'])
+            query.setFields('type', ['id', 'name'])
+
+            return query.get()
         }
     }
 }
