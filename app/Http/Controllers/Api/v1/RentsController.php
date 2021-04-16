@@ -12,7 +12,7 @@ use Illuminate\Http\Response;
 
 class RentsController extends Controller
 {
-    public function storeForRoleUser(RoleUser $role_user, RoleUserRentStoreRequest $request)
+    public function store(RoleUser $role_user, RoleUserRentStoreRequest $request)
     {
         //make property for user
         return RentResource::make(
@@ -20,7 +20,7 @@ class RentsController extends Controller
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function indexForRoleUser(RoleUser $role_user, RoleUserRentIndexRequest $request)
+    public function index(RoleUser $role_user, RoleUserRentIndexRequest $request)
     {
         //make property for user
         return RentResource::collection($role_user->rent)->response()->setStatusCode(Response::HTTP_CREATED);

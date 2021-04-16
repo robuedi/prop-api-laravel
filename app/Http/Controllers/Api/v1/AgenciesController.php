@@ -14,7 +14,13 @@ use Illuminate\Http\Response;
 
 class AgenciesController extends Controller
 {
-    public function storeForRoleUser(RoleUser $role_user, RoleUserAgencyStoreRequest $request)
+    public function index(RoleUser $role_user, RoleUserAgencyIndexRequest $request)
+    {
+        //make property for user
+        return AgencyResource::make($role_user->agency)->response()->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    public function store(RoleUser $role_user, RoleUserAgencyStoreRequest $request)
     {
         //make property for user
         return AgencyResource::make($role_user->agency->create([
@@ -22,12 +28,4 @@ class AgenciesController extends Controller
             'is_public'     => $request->has('is_public') ? 1 :0
         ]))->response()->setStatusCode(Response::HTTP_CREATED);
     }
-
-    public function indexForRoleUser(RoleUser $role_user, RoleUserAgencyIndexRequest $request)
-    {
-        //make property for user
-        return AgencyResource::make($role_user->agency)->response()->setStatusCode(Response::HTTP_CREATED);
-    }
-
-
 }

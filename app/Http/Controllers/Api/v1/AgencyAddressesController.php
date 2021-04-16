@@ -12,7 +12,13 @@ use Illuminate\Http\Response;
 
 class AgencyAddressesController extends Controller
 {
-    public function storeForAgency(Agency $agency, AgencyAddressStoreRequest $request)
+    public function index(Agency $agency, AgencyAddressIndexRequest $request)
+    {
+        //make property for user
+        return AgencyAddressResource::make($agency->address)->response()->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    public function store(Agency $agency, AgencyAddressStoreRequest $request)
     {
         //make property for user
         return AgencyAddressResource::make($agency->address->create([
@@ -20,11 +26,5 @@ class AgencyAddressesController extends Controller
             'address_line' => $request->get('address_line'),
             'postcode' => $request->get('postcode')
         ]))->response()->setStatusCode(Response::HTTP_CREATED);
-    }
-
-    public function indexForAgency(Agency $agency, AgencyAddressIndexRequest $request)
-    {
-        //make property for user
-        return AgencyAddressResource::make($agency->address)->response()->setStatusCode(Response::HTTP_CREATED);
     }
 }

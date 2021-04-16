@@ -12,13 +12,13 @@ use Illuminate\Http\Response;
 
 class PropertyAddressesController extends Controller
 {
-    public function storeForProperty(Property $property, PropertyAddressStoreRequest $request)
+    public function store(Property $property, PropertyAddressStoreRequest $request)
     {
         //make property for user
         return PropertyAddressResource::make($property->address->create($request->all()))->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function indexForProperty(Property $property, PropertyAddressIndexRequest $request)
+    public function index(Property $property, PropertyAddressIndexRequest $request)
     {
         return PropertyAddressResource::collection($property->address())->response()->setStatusCode(Response::HTTP_OK);
     }

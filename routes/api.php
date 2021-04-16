@@ -50,45 +50,45 @@ Route::prefix('v1')->group(function (){
     Route::get('/agencies/{agency}/address', [AgencyAddressesController::class, 'showForAgency']);
 
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::get('/users/{user}/properties', [PropertiesController::class, 'indexForUser']);
-        Route::post('/users/{user}/properties', [PropertiesController::class, 'storeForUser']);
-        Route::get('/users/{user}/property-applications', [PropertiesController::class, 'indexForUserApplications']);
+        Route::get('/users/{user}/properties', [PropertiesController::class, 'indexOwned']);
+        Route::post('/users/{user}/properties', [PropertiesController::class, 'store']);
+        Route::get('/users/{user}/property-applications', [PropertiesController::class, 'indexApplications']);
 
-        Route::post('users/{user}/roles', [RolesController::class, 'getForUser']);
-        Route::post('users/{user}/roles-users', [RolesUsersController::class, 'storeForUser']);
+        Route::post('users/{user}/roles', [RolesController::class, 'indexUser']);
+        Route::post('users/{user}/roles-users', [RolesUsersController::class, 'store']);
 
         Route::put('roles-users/{role_user}', [RolesUsersController::class, 'update']);
 
         Route::get('roles', [RolesController::class, 'index']);
 
-        Route::post('agencies/{agency}/addresses', [AgencyAddressesController::class, 'storeForAgency']);
-        Route::get('agencies/{agency}/addresses', [AgencyAddressesController::class, 'showForAgency']);
+        Route::post('agencies/{agency}/addresses', [AgencyAddressesController::class, 'store']);
+        Route::get('agencies/{agency}/addresses', [AgencyAddressesController::class, 'show']);
 
         //role user address
-        Route::post('roles-users/{role_user}/addresses', [UserAddressController::class, 'storeForRoleUser']);
-        Route::get('roles-users/{role_user}/addresses', [UserAddressController::class, 'indexForRoleUser']);
+        Route::post('roles-users/{role_user}/addresses', [UserAddressController::class, 'store']);
+        Route::get('roles-users/{role_user}/addresses', [UserAddressController::class, 'index']);
 
-        Route::post('properties/{property}/addresses', [PropertyAddressesController::class, 'storeForUserProperty']);
-        Route::get('properties/{property}/addresses', [PropertyAddressesController::class, 'showForUserProperty']);
+        Route::post('properties/{property}/addresses', [PropertyAddressesController::class, 'store']);
+        Route::get('properties/{property}/addresses', [PropertyAddressesController::class, 'index']);
 
-        Route::post('roles-users/{role_user}/annual-salaries', [AnnualSalariesController::class, 'storeForRoleUser']);
-        Route::get('roles-users/{role_user}/annual-salaries', [AnnualSalariesController::class, 'indexForRoleUser']);
+        Route::post('roles-users/{role_user}/annual-salaries', [AnnualSalariesController::class, 'store']);
+        Route::get('roles-users/{role_user}/annual-salaries', [AnnualSalariesController::class, 'index']);
 
         //rent
-        Route::post('roles-users/{role_user}/rents', [RentsController::class, 'storeForRoleUser']);
-        Route::get('roles-users/{role_user}/rents', [RentsController::class, 'indexForRoleUser']);
+        Route::post('roles-users/{role_user}/rents', [RentsController::class, 'store']);
+        Route::get('roles-users/{role_user}/rents', [RentsController::class, 'index']);
 
         //employment
-        Route::post('roles-users/{role_user}/employments', [EmploymentController::class, 'storeForRoleUser']);
-        Route::get('roles-users/{role_user}/employments', [EmploymentController::class, 'indexForRoleUser']);
+        Route::post('roles-users/{role_user}/employments', [EmploymentController::class, 'store']);
+        Route::get('roles-users/{role_user}/employments', [EmploymentController::class, 'index']);
 
         //savings
-        Route::post('roles-users/{role_user}/savings', [SavingsController::class, 'storeForRoleUser']);
-        Route::get('roles-users/{role_user}/savings', [SavingsController::class, 'indexForRoleUser']);
+        Route::post('roles-users/{role_user}/savings', [SavingsController::class, 'store']);
+        Route::get('roles-users/{role_user}/savings', [SavingsController::class, 'index']);
 
         //agencies
-        Route::post('roles-users/{role_user}/agencies', [AgenciesController::class, 'storeForRoleUser']);
-        Route::get('roles-users/{role_user}/agencies', [AgenciesController::class, 'indexForRoleUser']);
+        Route::post('roles-users/{role_user}/agencies', [AgenciesController::class, 'store']);
+        Route::get('roles-users/{role_user}/agencies', [AgenciesController::class, 'index']);
     });
 });
 

@@ -16,7 +16,7 @@ use Illuminate\Http\Response;
 
 class UserAddressController extends Controller
 {
-    public function storeForUser(RoleUser $role_user, RoleUserAddressStoreRequest $request)
+    public function store(RoleUser $role_user, RoleUserAddressStoreRequest $request)
     {
         //make property for user
         return RoleUserAddressResource::make(
@@ -28,7 +28,7 @@ class UserAddressController extends Controller
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function showForUser(RoleUser $role_user, RoleUserAddressIndexRequest $request)
+    public function show(RoleUser $role_user, RoleUserAddressIndexRequest $request)
     {
         //make property for user
         return RoleUserAddressResource::collection(

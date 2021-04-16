@@ -12,7 +12,7 @@ use Illuminate\Http\Response;
 
 class SavingsController extends Controller
 {
-    public function storeForUser(RoleUser $role_user, RoleUserSavingsStoreRequest $request)
+    public function store(RoleUser $role_user, RoleUserSavingsStoreRequest $request)
     {
         //make property for user
         return SavingResource::make(
@@ -20,7 +20,7 @@ class SavingsController extends Controller
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function indexForUser(RoleUser $role_user, RoleUserSavingsIndexRequest $request)
+    public function index(RoleUser $role_user, RoleUserSavingsIndexRequest $request)
     {
         //make property for user
         return SavingResource::collection(

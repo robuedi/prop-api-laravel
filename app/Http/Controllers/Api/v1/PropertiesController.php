@@ -39,17 +39,17 @@ class PropertiesController extends Controller
         return PropertyResource::collection($properties)->response()->setStatusCode(Response::HTTP_OK);
     }
 
-    public function indexForRoleUser(RoleUser $role_user, Request $request)
+    public function indexOwned(RoleUser $role_user, Request $request)
     {
         return GeneralResource::collection($role_user->ownedProperties)->response()->setStatusCode(Response::HTTP_OK);
     }
 
-    public function indexForRoleUserApplications(RoleUser $role_user, Request $request)
+    public function indexApplications(RoleUser $role_user, Request $request)
     {
         return GeneralResource::collection($role_user->propertyApplications)->response()->setStatusCode(Response::HTTP_OK);
     }
 
-    public function storeForRoleUser(RoleUser $role_user, UserPropertyStoreRequest $request)
+    public function store(RoleUser $role_user, UserPropertyStoreRequest $request)
     {
         $property = $this->property_repository->createWithOptionalAddress(
             array_merge(['role_user_id'=>$role_user->id],$request->all()),

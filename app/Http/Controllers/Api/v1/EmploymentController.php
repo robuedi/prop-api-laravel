@@ -13,7 +13,15 @@ use Illuminate\Http\Response;
 
 class EmploymentController extends Controller
 {
-    public function storeForUser(RoleUser $role_user, RoleUserEmploymentStoreRequest $request)
+    public function index(RoleUser $role_user, RoleUserEmploymentIndexRequest $request)
+    {
+        //make property for user
+        return EmploymentResource::collection(
+            $role_user->employment
+        )->response()->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    public function store(RoleUser $role_user, RoleUserEmploymentStoreRequest $request)
     {
         //make property for user
         return EmploymentResource::make(
@@ -24,13 +32,4 @@ class EmploymentController extends Controller
             )
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
-
-    public function indexForUser(RoleUser $role_user, RoleUserEmploymentIndexRequest $request)
-    {
-        //make property for user
-        return EmploymentResource::collection(
-            $role_user->employment
-        )->response()->setStatusCode(Response::HTTP_CREATED);
-    }
-
 }

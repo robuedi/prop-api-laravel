@@ -27,7 +27,7 @@ class RolesUsersController extends Controller
         )->response()->setStatusCode(Response::HTTP_OK);
     }
 
-    public function storeForUser(User $user, RolesUserStoreRequest $request)
+    public function store(User $user, RolesUserStoreRequest $request)
     {
         return RoleResource::make(
             $user->userRole()->create(['role_id' => $request->get('role_id')])

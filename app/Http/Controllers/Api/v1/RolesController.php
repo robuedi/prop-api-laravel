@@ -24,7 +24,7 @@ class RolesController extends Controller
         return RoleResource::collection($this->role_repository->index())->response()->setStatusCode(Response::HTTP_OK);
     }
 
-    public function getForUser(User $user, UserRolesIndexRequest $request)
+    public function indexUser(User $user, UserRolesIndexRequest $request)
     {
         return RoleResource::collection($user->roles)->response()->setStatusCode(Response::HTTP_OK);
     }
