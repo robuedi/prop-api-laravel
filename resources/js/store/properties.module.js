@@ -1,4 +1,4 @@
-import Property from "../api/Property";
+import Property from "../api/models/Property";
 
 export default {
     state: {

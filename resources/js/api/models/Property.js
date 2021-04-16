@@ -1,4 +1,4 @@
-import Api from './Api'
+import Api from '../Api'
 
 const END_POINT = 'properties'
 const END_POINT_VERSION = 'v1'

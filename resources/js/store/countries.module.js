@@ -1,4 +1,4 @@
-import Country from "../api/Country";
+import Country from "../api/models/Country";
 
 export default {
     state: {

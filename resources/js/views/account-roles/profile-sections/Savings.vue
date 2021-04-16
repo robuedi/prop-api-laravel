@@ -17,7 +17,7 @@
 <script>
 
 import NotificationLabels from "../../../components/NotificationLabels";
-import {mapActions, mapGetters} from "vuex";
+import Saving from "../../../api/models/Saving";
 
 export default {
     components: {
@@ -33,11 +33,9 @@ export default {
         }
     },
     methods: {
-        ...mapActions('savings', ['setSavings']),
-        ...mapActions('savings', ['getCurrentUserSavings']),
         async submit()
         {
-            this.setSavings(this.form).then((res) => {
+            Saving.store(this.form).then((res) => {
                 this.$emit('hasSavings')
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
@@ -47,7 +45,7 @@ export default {
         }
     },
     mounted() {
-        this.getCurrentUserSavings().then((res) => {
+        Saving.all().then((res) => {
             if(res.data.data.length !== 0){
                 this.$emit('hasSavings');
             }

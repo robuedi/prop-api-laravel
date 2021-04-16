@@ -39,9 +39,9 @@
 
 import DateRangePicker from 'vue2-daterange-picker'
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
-import {mapActions, mapGetters} from "vuex";
 import NotificationLabels from "../../../components/NotificationLabels";
 import Moment from "moment";
+import Employment from "../../../api/models/Employment";
 
 export default {
     components: {
@@ -74,11 +74,9 @@ export default {
         }
     },
     methods: {
-        ...mapActions('userEmployment', ['setEmployment']),
-        ...mapActions('userEmployment', ['getCurrentUserEmployment']),
         async submit()
         {
-            this.setEmployment(this.form).then((res) => {
+            Employment.store(this.form).then((res) => {
                 this.$emit('hasEmployment')
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
@@ -88,7 +86,7 @@ export default {
         }
     },
     mounted() {
-        this.getCurrentUserEmployment().then((res) => {
+        Employment.all().then((res) => {
             if(res.data.data.length !== 0){
                 this.$emit('hasEmployment');
             }

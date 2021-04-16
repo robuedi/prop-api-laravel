@@ -17,7 +17,7 @@
 <script>
 
 import NotificationLabels from "../../../components/NotificationLabels";
-import {mapActions, mapGetters} from "vuex";
+import Rent from "../../../api/models/Rent";
 
 export default {
     components: {
@@ -33,11 +33,9 @@ export default {
         }
     },
     methods: {
-        ...mapActions('rent', ['setRent']),
-        ...mapActions('rent', ['getCurrentUserRent']),
         async submit()
         {
-            this.setRent(this.form).then((res) => {
+            Rent.store(this.form).then((res) => {
                 this.$emit('hasRent')
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
@@ -47,7 +45,7 @@ export default {
         }
     },
     mounted() {
-        this.getCurrentUserRent().then((res) => {
+        Rent.all().then((res) => {
             if(res.data.data.length !== 0)
             {
                 this.$emit('hasRent');

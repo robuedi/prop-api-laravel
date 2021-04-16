@@ -14,7 +14,7 @@
 
 <script>
 import NotificationLabels from '../../../components/NotificationLabels'
-import {mapActions, mapGetters} from "vuex";
+import AnnualSalary from "../../../api/models/AnnualSalary";
 
 export default {
     components: {
@@ -30,11 +30,9 @@ export default {
         }
     },
     methods: {
-        ...mapActions('annualSalary', ['setAnnualSalary']),
-        ...mapActions('annualSalary', ['getCurrentUserAnnualSalary']),
         async submit()
         {
-            this.setAnnualSalary(this.form).then((res) => {
+            AnnualSalary.store(this.form).then((res) => {
                 this.$emit('hasAnnualSalary')
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
@@ -44,7 +42,7 @@ export default {
         }
     },
     mounted() {
-        this.getCurrentUserAnnualSalary().then((res) => {
+        AnnualSalary.all().then((res) => {
             if(res.data.data.length !== 0) {
                 this.$emit('hasAnnualSalary');
             }

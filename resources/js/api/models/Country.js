@@ -1,4 +1,4 @@
-import Api from './Api'
+import Api from '../Api'
 
 const END_POINT = 'countries'
 const END_POINT_VERSION = 'v1'
