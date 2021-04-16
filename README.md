@@ -1,16 +1,9 @@
-# Docker-Laravel template
-
-
 ## Setting up
 
-##### 1. Migrate the template files
-Run the ```migrate-template``` script in the terminal using this format:
-
-```./migrate-template.sh ../../path/to/laravel-project```
-##### 2. Setup the .env file
+##### Setup the .env file
 Set the ```DB_HOST``` from ```.env``` to the ```docker-compose.yml``` database service name (currently ```db```, so you'll have ```DB_HOST=db``` in the ```.env``` file).
 
-##### 3. Start the services
+##### Start the services
 Run the following commands inside the root folder of your Laravel project
 
 ```
@@ -18,7 +11,7 @@ docker-compose build
 docker-compose up -d
 ```
 
-##### 3. Wait...
+##### Wait...
 A temporary ```initial-script-progress.txt``` file will be created showing the booting progress, wait until the process it's finished, the file will automatically be deleted. 
 
 First time when booting up the services it will take longer as the database will need to be created, migration files will need to be run, composer update the dependencies....
