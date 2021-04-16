@@ -37,6 +37,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Auth::routes();
 
 Route::prefix('v1')->group(function (){
+
     Route::get('/countries', [CountriesController::class, 'index']);
     Route::get('/property-statuses', [PropertyStatusesController::class, 'index']);
 
@@ -50,12 +51,6 @@ Route::prefix('v1')->group(function (){
     Route::get('/agencies/{agency}/address', [AgencyAddressesController::class, 'showForAgency']);
 
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::get('/users/{user}/properties', [PropertiesController::class, 'indexOwned']);
-        Route::post('/users/{user}/properties', [PropertiesController::class, 'store']);
-        Route::get('/users/{user}/property-applications', [PropertiesController::class, 'indexApplications']);
-
-        Route::post('users/{user}/roles', [RolesController::class, 'indexUser']);
-        Route::post('users/{user}/roles-users', [RolesUsersController::class, 'store']);
 
         Route::get('roles', [RolesController::class, 'index']);
 
@@ -65,9 +60,21 @@ Route::prefix('v1')->group(function (){
         Route::post('properties/{property}/addresses', [PropertyAddressesController::class, 'store']);
         Route::get('properties/{property}/addresses', [PropertyAddressesController::class, 'index']);
 
+        Route::prefix('users/{user}')->group(function (){
+
+            Route::post('properties', [PropertiesController::class, 'store']);
+            Route::get('properties-owned', [PropertiesController::class, 'indexOwned']);
+            Route::get('property-applications', [PropertiesController::class, 'indexApplications']);
+
+            Route::post('roles', [RolesController::class, 'indexUser']);
+            Route::post('roles-users', [RolesUsersController::class, 'store']);
+
+        });
+
         Route::put('roles-users/{role_user}', [RolesUsersController::class, 'update']);
 
         Route::prefix('roles-users/{role_user}')->group(function (){
+
             //role user address
             Route::post('addresses', [UserAddressController::class, 'store']);
             Route::get('addresses', [UserAddressController::class, 'index']);
@@ -91,6 +98,7 @@ Route::prefix('v1')->group(function (){
             //agencies
             Route::post('agencies', [AgenciesController::class, 'store']);
             Route::get('agencies', [AgenciesController::class, 'index']);
+            
         });
     });
 });
