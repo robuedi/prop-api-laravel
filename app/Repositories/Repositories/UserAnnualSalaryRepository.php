@@ -15,12 +15,6 @@ class UserAnnualSalaryRepository implements UserAnnualSalaryRepositoryInterface
         $this->user_annual_salary = $user_annual_salary;
     }
 
-    public function create(int $user_id, float $amount) : AnnualSalary
-    {
-        return $this->user_annual_salary
-            ->create(['user_id' => $user_id, 'amount' => $amount]);
-    }
-
     public function getFirstByUserId(int $user_id) : ?AnnualSalary
     {
         return $this->user_annual_salary

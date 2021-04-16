@@ -16,12 +16,6 @@ class UserRentRepository implements UserRentRepositoryInterface
         $this->user_rent = $user_rent;
     }
 
-    public function create(int $user_id, float $amount) : Rent
-    {
-        return $this->user_rent
-            ->create(['user_id' => $user_id, 'amount' => $amount]);
-    }
-
     public function getFirstByUserId(int $user_id) : ?Rent
     {
         return $this->user_rent

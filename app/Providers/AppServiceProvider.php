@@ -7,12 +7,9 @@ use App\Http\Services\RoleUserStatus\RoleUserChecksInterface;
 use App\Http\Services\RoleUserStatus\RoleUserStatusService;
 use App\Http\Services\RoleUserStatus\RoleUserStatusServiceInterface;
 use App\Repositories\AgencyAddressRepositoryInterface;
-use App\Repositories\CountryRepositoryInterface;
-use App\Repositories\PropertyAddressRepositoryInterface;
 use App\Repositories\PropertyRepositoryInterface;
 use App\Repositories\PropertyStatusRepositoryInterface;
 use App\Repositories\Repositories\AgencyAddressRepository;
-use App\Repositories\Repositories\PropertyAddressRepository;
 use App\Repositories\Repositories\PropertyRepository;
 use App\Repositories\Repositories\PropertyStatusRepository;
 use App\Repositories\Repositories\RoleRepository;
@@ -44,7 +41,6 @@ class AppServiceProvider extends ServiceProvider
     {
         app()->bind(PropertyStatusRepositoryInterface::class, PropertyStatusRepository::class);
         app()->bind(PropertyRepositoryInterface::class, PropertyRepository::class);
-        app()->bind(PropertyAddressRepositoryInterface::class, PropertyAddressRepository::class);
         app()->bind(UserAnnualSalaryRepositoryInterface::class, UserAnnualSalaryRepository::class);
         app()->bind(UserRentRepositoryInterface::class, UserRentRepository::class);
         app()->bind(UserEmploymentRepositoryInterface::class, UserEmploymentRepository::class);

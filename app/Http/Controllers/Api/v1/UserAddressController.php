@@ -4,9 +4,11 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\UserAddressShowRequest;
-use App\Http\Requests\v1\UserAddressStoreRequest;
+use App\Http\Requests\v1\RoleUserAddressIndexRequest;
+use App\Http\Requests\v1\RoleUserAddressStoreRequest;
+use App\Http\Resources\v1\RoleUserAddressResource;
 use App\Http\Resources\v1\UserAddressResource;
+use App\Models\RoleUser;
 use App\Models\User;
 use App\Repositories\UserAddressRepositoryInterface;
 use Illuminate\Http\Request;
@@ -14,19 +16,11 @@ use Illuminate\Http\Response;
 
 class UserAddressController extends Controller
 {
-    private UserAddressRepositoryInterface $user_address_repository;
-
-    public function __construct(UserAddressRepositoryInterface $user_address_repository)
-    {
-        $this->user_address_repository = $user_address_repository;
-    }
-
-    public function storeForUser(User $user, UserAddressStoreRequest $request)
+    public function storeForUser(RoleUser $role_user, RoleUserAddressStoreRequest $request)
     {
         //make property for user
-        return UserAddressResource::make(
-            $this->user_address_repository->create(
-                $user->id,
+        return RoleUserAddressResource::make(
+            $role_user->address->create(
                 $request->get('city_id'),
                 $request->get('address_line'),
                 $request->get('postcode')
@@ -34,11 +28,11 @@ class UserAddressController extends Controller
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function showForUser(User $user, UserAddressShowRequest $request)
+    public function showForUser(RoleUser $role_user, RoleUserAddressIndexRequest $request)
     {
         //make property for user
-        return UserAddressResource::collection(
-            $user->address
+        return RoleUserAddressResource::collection(
+            $role_user->address
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 }

@@ -9,7 +9,6 @@ use App\Http\Requests\v1\RolesUserStoreRequest;
 use App\Http\Requests\v1\UserCheckProfileCompletedRequest;
 use App\Http\Resources\v1\RoleResource;
 use App\Http\Services\RoleUserStatus\RoleUserStatusServiceInterface;
-use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\User;
 use Illuminate\Http\Response;

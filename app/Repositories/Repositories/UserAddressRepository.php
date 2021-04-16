@@ -16,17 +16,6 @@ class UserAddressRepository implements UserAddressRepositoryInterface
         $this->user_address = $user_address;
     }
 
-    public function create(int $user_id, int $city_id, string $address_line, string $postcode) : RoleUserAddress
-    {
-        return $this->user_address
-            ->create([
-                'user_id' => $user_id,
-                'city_id' => $city_id,
-                'address_line' => $address_line,
-                'postcode' => $postcode
-            ]);
-    }
-
     public function getFirstByUserId(int $user_id) : ?RoleUserAddress
     {
         return $this->user_address

@@ -8,6 +8,7 @@ use App\Http\Requests\v1\UserPropertyStoreRequest;
 use App\Http\Resources\v1\PropertyResource;
 use App\Http\Resources\GeneralResource;
 use App\Models\Property;
+use App\Models\RoleUser;
 use App\Models\User;
 use App\Repositories\PropertyRepositoryInterface;
 use Illuminate\Http\Request;
@@ -38,20 +39,20 @@ class PropertiesController extends Controller
         return PropertyResource::collection($properties)->response()->setStatusCode(Response::HTTP_OK);
     }
 
-    public function indexForUser(User $user, Request $request)
+    public function indexForRoleUser(RoleUser $role_user, Request $request)
     {
-        return GeneralResource::collection($user->ownedProperties)->response()->setStatusCode(Response::HTTP_OK);
+        return GeneralResource::collection($role_user->ownedProperties)->response()->setStatusCode(Response::HTTP_OK);
     }
 
-    public function indexForUserApplications(User $user, Request $request)
+    public function indexForRoleUserApplications(RoleUser $role_user, Request $request)
     {
-        return GeneralResource::collection($user->propertyApplications)->response()->setStatusCode(Response::HTTP_OK);
+        return GeneralResource::collection($role_user->propertyApplications)->response()->setStatusCode(Response::HTTP_OK);
     }
 
-    public function storeForUser(User $user, UserPropertyStoreRequest $request)
+    public function storeForRoleUser(RoleUser $role_user, UserPropertyStoreRequest $request)
     {
         $property = $this->property_repository->createWithOptionalAddress(
-            array_merge(['owner_id'=>$user->id],$request->all()),
+            array_merge(['role_user_id'=>$user->id],$request->all()),
             $request->get('address')
         );
 

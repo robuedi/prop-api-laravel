@@ -16,12 +16,6 @@ class PropertyRepository implements PropertyRepositoryInterface
         $this->property = $property;
     }
 
-    public function create(array $data)
-    {
-        //make the property
-        return $this->property::create($data);
-    }
-
     public function createWithOptionalAddress(array $property_data, ?array $address_data)
     {
         //make the property
