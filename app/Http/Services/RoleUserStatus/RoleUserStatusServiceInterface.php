@@ -6,5 +6,5 @@ use App\Models\RoleUser;
 
 interface RoleUserStatusServiceInterface
 {
-    public function checkRoleUserCompleted(int $user_id, RoleUser $role_user): bool;
+    public function getCompletedStatus(RoleUser $role_user) : int;
 }

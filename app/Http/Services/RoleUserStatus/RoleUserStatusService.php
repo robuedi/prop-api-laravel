@@ -4,61 +4,44 @@
 namespace App\Http\Services\RoleUserStatus;
 
 use App\Models\RoleUser;
-use App\Repositories\RoleUserRepositoryInterface;
 
 class RoleUserStatusService implements RoleUserStatusServiceInterface
 {
-    public RoleUserRepositoryInterface $role_user_repository;
-    public RoleUserChecksInterface $user_profile_checks;
-
-    public function __construct(RoleUserRepositoryInterface $role_user_repository, RoleUserChecksInterface $user_profile_checks)
-    {
-        $this->role_user_repository = $role_user_repository;
-        $this->user_profile_checks = $user_profile_checks;
-    }
-
-    public function checkRoleUserCompleted(int $user_id, RoleUser $role_user) :bool
+    public function getCompletedStatus(RoleUser $role_user) : int
     {
         switch ($role_user->role_id)
         {
+            //tenant
             case 1:
-                if(!$this->user_profile_checks->checkEmployment($user_id)
-                    || !$this->user_profile_checks->checkAnnualSalary($user_id)
-                    || !$this->user_profile_checks->checkRent($user_id)
-                    || !$this->user_profile_checks->checkAddress($user_id))
+                if($role_user->employment()->count() && $role_user->annualSalary()->count() && $role_user->rent()->count() && $role_user->address()->count())
                 {
-                    return false;
+                    return 1;
                 }
 
-                $this->role_user_repository->makeCompleted($role_user->id);
-                return true;
+                return 0;
 
+            //buyer
             case 2:
-                if(!$this->user_profile_checks->checkEmployment($user_id)
-                    || !$this->user_profile_checks->checkAnnualSalary($user_id)
-                    || !$this->user_profile_checks->checkSavings($user_id)
-                    || !$this->user_profile_checks->checkAddress($user_id))
+                if($role_user->employment()->count() && $role_user->annualSalary()->count() && $role_user->savings()->count() && $role_user->address()->count())
                 {
-                    return false;
+                    return 1;
                 }
 
-                $this->role_user_repository->makeCompleted($role_user->id);
-                return true;
+                return 0;
 
+            //seller & landlord
             case 3:
             case 4:
-                $agency = $this->user_profile_checks->checkAgency($user_id);
-                if(!$agency
-                    || !$this->user_profile_checks->checkAgencyAddress($agency->id))
+                $agency = $role_user->agency()->first();
+                if($agency && $agency->address()->count())
                 {
-                    return false;
+                    return 1;
                 }
 
-                $this->role_user_repository->makeCompleted($role_user->id);
-                return true;
+                return 0;
 
             default:
-                return false;
+                return 0;
         }
     }
 

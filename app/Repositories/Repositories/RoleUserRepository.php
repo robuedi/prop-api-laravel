@@ -3,22 +3,30 @@
 
 namespace App\Repositories\Repositories;
 
-
+use App\Http\Services\RoleUserStatus\RoleUserStatusServiceInterface;
 use App\Models\RoleUser;
 use App\Repositories\RoleUserRepositoryInterface;
 
 class RoleUserRepository implements RoleUserRepositoryInterface
 {
-    private RoleUser $role_user;
+    private RoleUserStatusServiceInterface $role_user_status_service;
 
-    public function __construct(RoleUser $role_user)
+    public function __construct(RoleUserStatusServiceInterface $role_user_status_service)
     {
-        $this->role_user = $role_user;
+        $this->role_user_status_service = $role_user_status_service;
     }
 
-    public function makeCompleted(int $user_role_id)
+    public function updateInstance(RoleUser $roleUser, array $fields) : RoleUser
     {
-        $this->role_user->where('id', $user_role_id)->update(['is_completed' => 1]);
+        //only is_completed status is allowed to be updated
+        if(isset($fields['is_completed']) && $roleUser->is_completed !== $fields['is_completed'])
+        {
+            $roleUser->update([
+                'is_completed' => $this->role_user_status_service->getCompletedStatus($roleUser)
+            ]);
+        }
+
+        return $roleUser;
     }
 
 }

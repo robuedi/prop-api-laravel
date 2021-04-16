@@ -6,7 +6,7 @@ namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserCheckProfileCompletedRequest extends FormRequest
+class RolesUserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +15,7 @@ class UserCheckProfileCompletedRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('user')->id === auth()->user()->id;
+        return $this->route('role_user')->user_id === auth()->user()->id;
     }
 
     /**
@@ -26,7 +26,7 @@ class UserCheckProfileCompletedRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'is_completed' => 'integer|min:0|max:1'
         ];
     }
 }

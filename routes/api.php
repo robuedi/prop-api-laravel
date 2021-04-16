@@ -57,6 +57,8 @@ Route::prefix('v1')->group(function (){
         Route::post('users/{user}/roles', [RolesController::class, 'getForUser']);
         Route::post('users/{user}/roles-users', [RolesUsersController::class, 'storeForUser']);
 
+        Route::put('roles-users/{role_user}', [RolesUsersController::class, 'update']);
+
         Route::get('roles', [RolesController::class, 'index']);
 
         Route::post('agencies/{agency}/addresses', [AgencyAddressesController::class, 'storeForAgency']);
@@ -87,8 +89,6 @@ Route::prefix('v1')->group(function (){
         //agencies
         Route::post('roles-users/{role_user}/agencies', [AgenciesController::class, 'storeForRoleUser']);
         Route::get('roles-users/{role_user}/agencies', [AgenciesController::class, 'indexForRoleUser']);
-
-        Route::get('roles-users/{role_user}/check-complete', [RolesUsersController::class, 'checkRoleUserComplete']);
     });
 });
 

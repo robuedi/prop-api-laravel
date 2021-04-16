@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\RoleUser;
+
 interface RoleUserRepositoryInterface
 {
-    public function makeCompleted(int $user_role_id);
+    public function updateInstance(RoleUser $roleUser, array $fields) : RoleUser;
 }

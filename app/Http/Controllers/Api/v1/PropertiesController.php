@@ -52,7 +52,7 @@ class PropertiesController extends Controller
     public function storeForRoleUser(RoleUser $role_user, UserPropertyStoreRequest $request)
     {
         $property = $this->property_repository->createWithOptionalAddress(
-            array_merge(['role_user_id'=>$user->id],$request->all()),
+            array_merge(['role_user_id'=>$role_user->id],$request->all()),
             $request->get('address')
         );
 
