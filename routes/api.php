@@ -71,8 +71,6 @@ Route::prefix('v1')->group(function (){
         Route::post('/users/{user}/savings', [SavingsController::class, 'storeForUser']);
         Route::get('/users/{user}/savings', [SavingsController::class, 'showForUser']);
 
-//        Route::get('/roles-users/', [RolesUsersController::class, 'showForUser']);
-
         Route::post('/users/{user}/addresses', [UserAddressController::class, 'storeForUser']);
         Route::get('/users/{user}/addresses', [UserAddressController::class, 'showForUser']);
 

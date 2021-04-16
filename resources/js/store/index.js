@@ -8,8 +8,6 @@ import roleUserAddress from './roleUserAddress.module'
 import agencyAddress from './agencyAddresses.module'
 import agencies from './agencies.module'
 import propertyAddress from './propertyAddress.module'
-import roles from './roles.module'
-import roleUser from './roleUser.module'
 import propertyUser from './propertyUser.module'
 
 Vue.use(Vuex)
@@ -24,8 +22,6 @@ export default new Vuex.Store({
         agencyAddress,
         agencies,
         propertyAddress,
-        roles,
-        roleUser,
         propertyUser
     }
 })

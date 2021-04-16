@@ -20,6 +20,8 @@
 
 import {mapActions, mapGetters} from "vuex";
 import apiStates from "../../store/apiStates/apiStateValues";
+import Role from "../../api/models/Role";
+import RoleUser from "../../api/models/RoleUser";
 
 export default {
     watch: {
@@ -46,8 +48,6 @@ export default {
         }
     },
     methods:{
-        ...mapActions('roles', ['getRoles', 'setUserRole']),
-        ...mapActions('roleUser', ['setUserRole']),
         ...mapActions('auth', ['me', 'setActiveRole']),
         setActiveUserRole(userRole)
         {
@@ -60,7 +60,7 @@ export default {
         },
         makeUserRole(roleId)
         {
-            this.setUserRole(roleId).then((res) => {
+            RoleUser.store(roleId).then((res) => {
                 this.me().then(()=>{
                     this.$router.push({name: 'completeRole', params: { userRoleId: res.id }});
                 })
@@ -71,7 +71,7 @@ export default {
                 this.userRolesList = this.user.user_role
 
                 //get any other roles
-                this.getRoles().then((res) => {
+                Role.all().then((res) => {
                     let userRolesIds = this.userRolesList.map(userRole => userRole.role.id);
                     this.newRoles = res.data.data.filter(role => !userRolesIds.includes(role.id))
                 });
