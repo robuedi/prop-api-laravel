@@ -31,18 +31,18 @@ class Property extends Model
         return $this->hasOne(PropertyAddress::class, 'property_id', 'id');
     }
 
-    public function applicants()
+    public function propertyApplicants()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(RoleUser::class);
     }
 
     public function owner()
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(RoleUser::class, 'id');
     }
 
     public function userType()
     {
-        return $this->owner();
+        return $this->role();
     }
 }

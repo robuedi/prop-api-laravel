@@ -5,18 +5,25 @@ namespace App\Http\Controllers\Api\v1\Properties;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\UserPropertyStoreRequest;
+use App\Http\Resources\GeneralResource;
 use App\Http\Resources\v1\PropertyResource;
 use App\Models\RoleUser;
 use App\Repositories\PropertyRepositoryInterface;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class UserPropertiesController extends Controller
+class RoleUserPropertiesController extends Controller
 {
     private PropertyRepositoryInterface $property_repository;
 
     public function __construct(PropertyRepositoryInterface $property_repository)
     {
         $this->property_repository = $property_repository;
+    }
+
+    public function index(RoleUser $role_user, Request $request)
+    {
+        return GeneralResource::collection($role_user->ownedProperties)->response()->setStatusCode(Response::HTTP_OK);
     }
 
     public function store(RoleUser $role_user, UserPropertyStoreRequest $request)

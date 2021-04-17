@@ -2,10 +2,9 @@
 
 use App\Http\Controllers\Api\v1\AgencyAddressesController;
 use App\Http\Controllers\Api\v1\CountriesController;
-use App\Http\Controllers\Api\v1\Properties\PropertiesApplicationsController;
+use App\Http\Controllers\Api\v1\Properties\PropertyApplicationsController;
 use App\Http\Controllers\Api\v1\Properties\PropertiesController;
-use App\Http\Controllers\Api\v1\Properties\PropertiesOwnedController;
-use App\Http\Controllers\Api\v1\Properties\UserPropertiesController;
+use App\Http\Controllers\Api\v1\Properties\RoleUserPropertiesController;
 use App\Http\Controllers\Api\v1\PropertyAddressesController;
 use App\Http\Controllers\Api\v1\PropertyStatusesController;
 use App\Http\Controllers\Api\v1\RentsController;
@@ -59,16 +58,17 @@ Route::prefix('v1')->group(function (){
         Route::resource('roles-users', RolesUsersController::class, ['only' => ['update']]);
 
         Route::prefix('users/{user}')->group(function (){
-
-            Route::resource('properties', UserPropertiesController::class, ['only' => ['store']]);
-            Route::resource('properties-owned', PropertiesOwnedController::class, ['only' => ['index']]);
-            Route::resource('property-applications', PropertiesApplicationsController::class, ['only' => ['index']]);
-
             Route::resource('roles', UserRolesController::class, ['only' => ['index']]);
             Route::resource('roles-users', RolesUsersController::class, ['only' => ['store']]);
         });
 
         Route::prefix('roles-users/{role_user}')->group(function (){
+
+            //property applications
+            Route::resource('property-applications', PropertyApplicationsController::class, ['only' => ['index']]);
+
+            //properties
+            Route::resource('properties', RoleUserPropertiesController::class, ['only' => ['index', 'store']]);
 
             //role user address
             Route::resource('addresses', UserAddressController::class, ['only' => ['index', 'store']]);

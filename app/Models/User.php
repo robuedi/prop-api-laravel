@@ -44,16 +44,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function ownedProperties()
-    {
-        return $this->hasMany(Property::class, 'owner_id', 'id');
-    }
-
-    public function propertyApplications()
-    {
-        return $this->belongsToMany(Property::class);
-    }
-
     public function userRole()
     {
         return $this->hasMany(RoleUser::class, 'user_id', 'id');

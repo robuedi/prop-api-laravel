@@ -9,10 +9,10 @@ use App\Models\RoleUser;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class PropertiesOwnedController extends Controller
+class PropertyApplicationsController extends Controller
 {
     public function index(RoleUser $role_user, Request $request)
     {
-        return GeneralResource::collection($role_user->ownedProperties)->response()->setStatusCode(Response::HTTP_OK);
+        return GeneralResource::collection($role_user->propertyApplications)->response()->setStatusCode(Response::HTTP_OK);
     }
 }
