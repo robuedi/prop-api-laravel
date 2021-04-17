@@ -1,29 +1,15 @@
 <?php
 
-
-namespace App\Http\Controllers\Api\v1;
+namespace App\Http\Controllers\Api\v1\Properties;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\UserPropertyStoreRequest;
 use App\Http\Resources\v1\PropertyResource;
-use App\Http\Resources\GeneralResource;
 use App\Models\Property;
-use App\Models\RoleUser;
-use App\Models\User;
-use App\Repositories\PropertyRepositoryInterface;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PropertiesController extends Controller
 {
-    private PropertyRepositoryInterface $property_repository;
-
-    public function __construct(PropertyRepositoryInterface $property_repository)
-    {
-        $this->property_repository = $property_repository;
-    }
-
     public function index()
     {
         $properties = QueryBuilder::for(Property::class)
@@ -37,27 +23,6 @@ class PropertiesController extends Controller
                 ->get();
 
         return PropertyResource::collection($properties)->response()->setStatusCode(Response::HTTP_OK);
-    }
-
-    public function indexOwned(RoleUser $role_user, Request $request)
-    {
-        return GeneralResource::collection($role_user->ownedProperties)->response()->setStatusCode(Response::HTTP_OK);
-    }
-
-    public function indexApplications(RoleUser $role_user, Request $request)
-    {
-        return GeneralResource::collection($role_user->propertyApplications)->response()->setStatusCode(Response::HTTP_OK);
-    }
-
-    public function store(RoleUser $role_user, UserPropertyStoreRequest $request)
-    {
-        $property = $this->property_repository->createWithOptionalAddress(
-            array_merge(['role_user_id'=>$role_user->id],$request->all()),
-            $request->get('address')
-        );
-
-        //make property for user
-        return PropertyResource::make($property)->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
     public function show(Property $property)

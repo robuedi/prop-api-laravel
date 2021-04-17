@@ -1,13 +1,16 @@
 <?php
 
 use App\Http\Controllers\Api\v1\AgencyAddressesController;
-use App\Http\Controllers\Api\v1\CitiesController;
 use App\Http\Controllers\Api\v1\CountriesController;
-use App\Http\Controllers\Api\v1\PropertiesController;
+use App\Http\Controllers\Api\v1\Properties\PropertiesApplicationsController;
+use App\Http\Controllers\Api\v1\Properties\PropertiesController;
+use App\Http\Controllers\Api\v1\Properties\PropertiesOwnedController;
+use App\Http\Controllers\Api\v1\Properties\UserPropertiesController;
 use App\Http\Controllers\Api\v1\PropertyAddressesController;
 use App\Http\Controllers\Api\v1\PropertyStatusesController;
 use App\Http\Controllers\Api\v1\RentsController;
-use App\Http\Controllers\Api\v1\RolesController;
+use App\Http\Controllers\Api\v1\Roles\RolesController;
+use App\Http\Controllers\Api\v1\Roles\UserRolesController;
 use App\Http\Controllers\Api\v1\UserAddressController;
 use App\Http\Controllers\Api\v1\AgenciesController;
 use App\Http\Controllers\Api\v1\AnnualSalariesController;
@@ -38,67 +41,53 @@ Auth::routes();
 
 Route::prefix('v1')->group(function (){
 
-    Route::get('/countries', [CountriesController::class, 'index']);
-    Route::get('/property-statuses', [PropertyStatusesController::class, 'index']);
+    Route::resource('/countries', CountriesController::class, ['only' => ['index']]);
+    Route::resource('/property-statuses', PropertyStatusesController::class, ['only' => ['index']]);
 
     //properties
-    Route::get('/properties', [PropertiesController::class, 'index']);
-    Route::get('/properties/{property:slug}', [PropertiesController::class, 'show']);
-
-    //properties address
-    Route::get('/properties/{property}/address', [PropertyAddressesController::class, 'showForProperty']);
-
-    Route::get('/agencies/{agency}/address', [AgencyAddressesController::class, 'showForAgency']);
+    Route::resource('/properties', PropertiesController::class, ['only' => ['index', 'show']])->parameters([
+        'properties' => 'properties:slug',
+    ]);
 
     Route::middleware(['auth:sanctum'])->group(function () {
 
-        Route::get('roles', [RolesController::class, 'index']);
+        Route::resource('roles', RolesController::class, ['only' => ['index']]);
 
-        Route::post('agencies/{agency}/addresses', [AgencyAddressesController::class, 'store']);
-        Route::get('agencies/{agency}/addresses', [AgencyAddressesController::class, 'show']);
+        Route::resource('agencies/{agency}/addresses', AgencyAddressesController::class, ['only' => ['index', 'store']]);
 
-        Route::post('properties/{property}/addresses', [PropertyAddressesController::class, 'store']);
-        Route::get('properties/{property}/addresses', [PropertyAddressesController::class, 'index']);
+        Route::resource('properties/{property}/addresses', PropertyAddressesController::class, ['only' => ['index', 'store']]);
+        Route::resource('roles-users', RolesUsersController::class, ['only' => ['update']]);
 
         Route::prefix('users/{user}')->group(function (){
 
-            Route::post('properties', [PropertiesController::class, 'store']);
-            Route::get('properties-owned', [PropertiesController::class, 'indexOwned']);
-            Route::get('property-applications', [PropertiesController::class, 'indexApplications']);
+            Route::resource('properties', UserPropertiesController::class, ['only' => ['store']]);
+            Route::resource('properties-owned', PropertiesOwnedController::class, ['only' => ['index']]);
+            Route::resource('property-applications', PropertiesApplicationsController::class, ['only' => ['index']]);
 
-            Route::post('roles', [RolesController::class, 'indexUser']);
-            Route::post('roles-users', [RolesUsersController::class, 'store']);
-
+            Route::resource('roles', UserRolesController::class, ['only' => ['index']]);
+            Route::resource('roles-users', RolesUsersController::class, ['only' => ['store']]);
         });
-
-        Route::put('roles-users/{role_user}', [RolesUsersController::class, 'update']);
 
         Route::prefix('roles-users/{role_user}')->group(function (){
 
             //role user address
-            Route::post('addresses', [UserAddressController::class, 'store']);
-            Route::get('addresses', [UserAddressController::class, 'index']);
+            Route::resource('addresses', UserAddressController::class, ['only' => ['index', 'store']]);
 
             //annual salaries
-            Route::post('annual-salaries', [AnnualSalariesController::class, 'store']);
-            Route::get('annual-salaries', [AnnualSalariesController::class, 'index']);
+            Route::resource('annual-salaries', AnnualSalariesController::class, ['only' => ['index', 'store']]);
 
             //rent
-            Route::post('rents', [RentsController::class, 'store']);
-            Route::get('rents', [RentsController::class, 'index']);
+            Route::resource('rents', RentsController::class, ['only' => ['index', 'store']]);
 
             //employment
-            Route::post('employments', [EmploymentController::class, 'store']);
-            Route::get('employments', [EmploymentController::class, 'index']);
+            Route::resource('employments', EmploymentController::class, ['only' => ['index', 'store']]);
 
             //savings
-            Route::post('savings', [SavingsController::class, 'store']);
-            Route::get('savings', [SavingsController::class, 'index']);
+            Route::resource('savings', SavingsController::class, ['only' => ['index', 'store']]);
 
             //agencies
-            Route::post('agencies', [AgenciesController::class, 'store']);
-            Route::get('agencies', [AgenciesController::class, 'index']);
-            
+            Route::resource('agencies', AgenciesController::class, ['only' => ['index', 'store']]);
+
         });
     });
 });

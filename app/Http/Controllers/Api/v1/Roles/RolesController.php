@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Controllers\Api\v1;
+namespace App\Http\Controllers\Api\v1\Roles;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\UserRolesIndexRequest;
@@ -22,10 +22,5 @@ class RolesController extends Controller
     public function index()
     {
         return RoleResource::collection($this->role_repository->index())->response()->setStatusCode(Response::HTTP_OK);
-    }
-
-    public function indexUser(User $user, UserRolesIndexRequest $request)
-    {
-        return RoleResource::collection($user->roles)->response()->setStatusCode(Response::HTTP_OK);
     }
 }
