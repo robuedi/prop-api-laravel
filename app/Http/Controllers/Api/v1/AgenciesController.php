@@ -23,7 +23,7 @@ class AgenciesController extends Controller
     public function store(RoleUser $role_user, RoleUserAgencyStoreRequest $request)
     {
         //make property for user
-        return AgencyResource::make($role_user->agency->create([
+        return AgencyResource::make($role_user->agency()->create([
             'name'          => $request->get('name'),
             'is_public'     => $request->has('is_public') ? 1 :0
         ]))->response()->setStatusCode(Response::HTTP_CREATED);

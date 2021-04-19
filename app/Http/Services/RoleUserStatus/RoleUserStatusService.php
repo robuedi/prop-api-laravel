@@ -33,7 +33,7 @@ class RoleUserStatusService implements RoleUserStatusServiceInterface
             case 3:
             case 4:
                 $agency = $role_user->agency()->first();
-                if($agency && $agency->address()->count())
+                if($agency && $agency->addresses()->count())
                 {
                     return 1;
                 }

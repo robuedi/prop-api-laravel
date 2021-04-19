@@ -15,13 +15,13 @@ class AgencyAddressesController extends Controller
     public function index(Agency $agency, AgencyAddressIndexRequest $request)
     {
         //make property for user
-        return AgencyAddressResource::make($agency->address)->response()->setStatusCode(Response::HTTP_CREATED);
+        return AgencyAddressResource::collection($agency->addresses)->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
     public function store(Agency $agency, AgencyAddressStoreRequest $request)
     {
         //make property for user
-        return AgencyAddressResource::make($agency->address->create([
+        return AgencyAddressResource::make($agency->addresses()->create([
             'city_id' => $request->get('city_id'),
             'address_line' => $request->get('address_line'),
             'postcode' => $request->get('postcode')

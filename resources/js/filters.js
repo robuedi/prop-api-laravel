@@ -21,3 +21,10 @@ Vue.filter("datetime", function (value) {
     }
     return Moment(value).format("Do MMMM YYYY HH:mm");
 });
+
+Vue.filter("parseInt", function (value) {
+    if(!value) {
+        return ''
+    }
+    return parseInt(value);
+});

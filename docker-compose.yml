@@ -4,7 +4,6 @@ services:
   db:
     image: mysql:5.7
     container_name: ${APP_NAME}-db
-    restart: unless-stopped
     environment:
       MYSQL_DATABASE: "${DB_DATABASE}"
       MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
@@ -54,7 +53,6 @@ services:
   nginx:
     image: nginx:stable-alpine
     container_name: ${APP_NAME}-nginx
-    restart: unless-stopped
     ports:
       - "8001:80"
     volumes:

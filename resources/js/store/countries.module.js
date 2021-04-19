@@ -1,6 +1,8 @@
 import Country from "../api/models/Country";
 
 export default {
+    namespaced: true,
+
     state: {
         countries: [],
         query: '',

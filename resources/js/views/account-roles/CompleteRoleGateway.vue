@@ -12,10 +12,10 @@
 
             <h2 v-if="selectedUserRole">{{selectedUserRole.role.name}}</h2>
 
-            <Tenant v-on:checkIfProfileCompleted="checkIfProfileCompleted" v-if="selectedUserRole.role.id === 1" />
-            <Buyer v-on:checkIfProfileCompleted="checkIfProfileCompleted" v-else-if="selectedUserRole.role.id === 2" />
-            <Landlord v-on:checkIfProfileCompleted="checkIfProfileCompleted"  v-else-if="selectedUserRole.role.id === 3" />
-            <Seller v-on:checkIfProfileCompleted="checkIfProfileCompleted"  v-else-if="selectedUserRole.role.id === 4" />
+            <Tenant :roleUserId="this.$route.params.userRoleId | parseInt" v-on:checkIfProfileCompleted="checkIfProfileCompleted" v-if="selectedUserRole.role.id === 1" />
+            <Buyer :roleUserId="this.$route.params.userRoleId | parseInt" v-on:checkIfProfileCompleted="checkIfProfileCompleted" v-else-if="selectedUserRole.role.id === 2" />
+            <Landlord :roleUserId="this.$route.params.userRoleId | parseInt" v-on:checkIfProfileCompleted="checkIfProfileCompleted"  v-else-if="selectedUserRole.role.id === 3" />
+            <Seller :roleUserId="this.$route.params.userRoleId | parseInt" v-on:checkIfProfileCompleted="checkIfProfileCompleted"  v-else-if="selectedUserRole.role.id === 4" />
         </template>
     </div>
 </template>
@@ -72,9 +72,9 @@ export default {
         {
             //check if the user role is now completed
             this.checkingProfileComplete = 'Checking if the profile is complete..'
-            this.checkUserProfileComplete(this.selectedUserRole.id).then((res) => {
+            this.checkUserProfileComplete({roleUserId: this.selectedUserRole.id, data: {is_completed: 1}}).then((res) => {
                 this.checkingProfileComplete = 'The profile is complete, please wait..'
-                if(res.status === true)
+                if(parseInt(res.data.data.is_completed) === 1)
                 {
                     //refresh user data
                     this.me().then(() => {

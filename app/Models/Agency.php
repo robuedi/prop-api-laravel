@@ -15,8 +15,13 @@ class Agency extends Model
         'is_public'
     ];
 
-    public function address()
+    public function addresses()
     {
-        return $this->hasOne(AgencyAddress::class);
+        return $this->hasMany(AgencyAddress::class);
+    }
+
+    public function roleUser()
+    {
+        return $this->belongsTo(RoleUser::class);
     }
 }

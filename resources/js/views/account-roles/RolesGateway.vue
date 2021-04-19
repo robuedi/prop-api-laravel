@@ -2,7 +2,7 @@
     <div>
         <div class="mb-5" v-if="userRolesList.length">
             <h1>Select profile</h1>
-            <button type="button" v-for="userRole in userRolesList" @click="userRole.is_completed === 1 ? setActiveUserRole(userRole) : completeUserRole(userRole.id)" class="btn btn-outline-dark btn-lg btn-block">
+            <button type="button" v-for="userRole in userRolesList" @click="userRole.is_completed === 1 ? setActiveUserRole(userRole) : completeUserRole(userRole)" class="btn btn-outline-dark btn-lg btn-block">
                 {{ userRole.role.name }}
                 <small v-if="userRole.is_completed === 0">(Needs completion)</small>
             </button>
@@ -54,13 +54,18 @@ export default {
             this.setActiveRole(userRole)
             this.$router.push({name: 'accountProfile'})
         },
-        completeUserRole(userRoleId)
+        completeUserRole(userRole)
         {
-            this.$router.push({name: 'completeRole', params: { userRoleId: userRoleId }});
+            this.setActiveRole(userRole)
+            this.$router.push({name: 'completeRole', params: { userRoleId: userRole.id }});
         },
         makeUserRole(roleId)
         {
             RoleUser.store(roleId).then((res) => {
+                //set the new role as the active one
+                this.setActiveRole(res)
+
+                //refetch the user
                 this.me().then(()=>{
                     this.$router.push({name: 'completeRole', params: { userRoleId: res.id }});
                 })

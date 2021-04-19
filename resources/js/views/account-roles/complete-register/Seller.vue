@@ -1,8 +1,8 @@
 <template>
     <div>
         <template >
-            <AgencyInfo v-if="activeStep === 0" v-on:hasAgencyInfo="hasAgencyInfo()"/>
-            <AgencyAddress v-if="activeStep === 1" v-on:hasAgencyAddress="addressCompleted()"/>
+            <AgencyInfo :roleUserId="this.roleUserId | parseInt" v-if="activeStep === 0" v-on:hasAgencyInfo="hasAgencyInfo"/>
+            <AgencyAddress :agencyId="this.data.agencyId | parseInt" v-if="activeStep === 1" v-on:hasAgencyAddress="addressCompleted()"/>
         </template>
     </div>
 </template>
@@ -16,15 +16,22 @@ export default {
         AgencyInfo,
         AgencyAddress
     },
+    props: {
+        roleUserId: Number
+    },
     data () {
         return {
             activeStep: 0,
-            errors: []
+            errors: [],
+            data:{
+                agencyId: null
+            }
         }
     },
     methods: {
-        hasAgencyInfo()
+        hasAgencyInfo(agencyInfo)
         {
+            this.data.agencyId = agencyInfo.id
             this.activeStep = 1;
         },
         addressCompleted()

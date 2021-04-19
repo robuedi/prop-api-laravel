@@ -5,6 +5,7 @@ namespace App\Http\Requests\v1;
 
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class RolesUserUpdateRequest extends FormRequest
 {
@@ -15,7 +16,7 @@ class RolesUserUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('role_user')->user_id === auth()->user()->id;
+        return $this->route('roles_user')->user_id === auth()->user()->id;
     }
 
     /**

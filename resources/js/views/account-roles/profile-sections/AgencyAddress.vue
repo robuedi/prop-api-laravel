@@ -16,12 +16,15 @@
 
 import NotificationLabels from '../../../components/NotificationLabels'
 import AddressInputs from '../../../components/AddressInputs'
-import {mapActions, mapGetters} from "vuex";
+import AgencyAddress from "../../../api/models/AgencyAddress";
 
 export default {
     components: {
         AddressInputs,
         NotificationLabels
+    },
+    props: {
+        agencyId: Number
     },
     data(){
         return {
@@ -30,22 +33,13 @@ export default {
             currentAddress: ''
         }
     },
-    computed: {
-        ...mapGetters('userAgencyAddress',{
-            address: 'agencyAddress',
-        }),
-        ...mapGetters('userAgencies',{
-            agency: 'agency',
-        })
-    },
     methods:{
         addressCompleted(address){
             this.currentAddress = address;
         },
-        ...mapActions('userAgencyAddress', ['setAgencyAddress', 'getAgencyAddress']),
         async submit()
         {
-            this.setAgencyAddress({'agencyId':this.agency.id, 'address':this.currentAddress}).then((res) => {
+            AgencyAddress.store({agencyId:this.agencyId, data:this.currentAddress}).then((res) => {
                 this.$emit('hasAgencyAddress')
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
@@ -55,10 +49,10 @@ export default {
         }
     },
     mounted() {
-        this.getAgencyAddress(this.agency.id).then((res) => {
-            if(this.address.length !== 0)
+        AgencyAddress.all(this.agencyId).then((res) => {
+            if(res.data.data.length !== 0)
             {
-                this.$emit('hasAgencyAddress');
+                this.$emit('hasAgencyAddress', res.data.data);
             }
             else
             {

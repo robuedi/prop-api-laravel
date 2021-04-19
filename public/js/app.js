@@ -2630,10 +2630,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       //check if the user role is now completed
       this.checkingProfileComplete = 'Checking if the profile is complete..';
-      this.checkUserProfileComplete(this.selectedUserRole.id).then(function (res) {
+      this.checkUserProfileComplete({
+        roleUserId: this.selectedUserRole.id,
+        data: {
+          is_completed: 1
+        }
+      }).then(function (res) {
         _this2.checkingProfileComplete = 'The profile is complete, please wait..';
 
-        if (res.status === true) {
+        if (parseInt(res.data.data.is_completed) === 1) {
           //refresh user data
           _this2.me().then(function () {
             var activeRole = _this2.user.user_role.filter(function (userRole) {
@@ -2737,11 +2742,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         name: 'accountProfile'
       });
     },
-    completeUserRole: function completeUserRole(userRoleId) {
+    completeUserRole: function completeUserRole(userRole) {
+      this.setActiveRole(userRole);
       this.$router.push({
         name: 'completeRole',
         params: {
-          userRoleId: userRoleId
+          userRoleId: userRole.id
         }
       });
     },
@@ -2749,6 +2755,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       _api_models_RoleUser__WEBPACK_IMPORTED_MODULE_2__.default.store(roleId).then(function (res) {
+        //set the new role as the active one
+        _this.setActiveRole(res); //refetch the user
+
+
         _this.me().then(function () {
           _this.$router.push({
             name: 'completeRole',
@@ -2877,14 +2887,21 @@ __webpack_require__.r(__webpack_exports__);
     AgencyInfo: _profile_sections_AgencyInfo__WEBPACK_IMPORTED_MODULE_1__.default,
     AgencyAddress: _profile_sections_AgencyAddress__WEBPACK_IMPORTED_MODULE_0__.default
   },
+  props: {
+    roleUserId: Number
+  },
   data: function data() {
     return {
       activeStep: 0,
-      errors: []
+      errors: [],
+      data: {
+        agencyId: null
+      }
     };
   },
   methods: {
-    hasAgencyInfo: function hasAgencyInfo() {
+    hasAgencyInfo: function hasAgencyInfo(agencyInfo) {
+      this.data.agencyId = agencyInfo.id;
       this.activeStep = 1;
     },
     addressCompleted: function addressCompleted() {
@@ -2924,14 +2941,21 @@ __webpack_require__.r(__webpack_exports__);
     AgencyInfo: _profile_sections_AgencyInfo__WEBPACK_IMPORTED_MODULE_1__.default,
     AgencyAddress: _profile_sections_AgencyAddress__WEBPACK_IMPORTED_MODULE_0__.default
   },
+  props: {
+    roleUserId: Number
+  },
   data: function data() {
     return {
       activeStep: 0,
-      errors: []
+      errors: [],
+      data: {
+        agencyId: null
+      }
     };
   },
   methods: {
-    hasAgencyInfo: function hasAgencyInfo() {
+    hasAgencyInfo: function hasAgencyInfo(agencyInfo) {
+      this.data.agencyId = agencyInfo.id;
       this.activeStep = 1;
     },
     addressCompleted: function addressCompleted() {
@@ -3021,6 +3045,123 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/NotificationLabels */ "./resources/js/components/NotificationLabels.vue");
 /* harmony import */ var _components_AddressInputs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../components/AddressInputs */ "./resources/js/components/AddressInputs.vue");
+/* harmony import */ var _api_models_AgencyAddress__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../api/models/AgencyAddress */ "./resources/js/api/models/AgencyAddress.js");
+
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    AddressInputs: _components_AddressInputs__WEBPACK_IMPORTED_MODULE_2__.default,
+    NotificationLabels: _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__.default
+  },
+  props: {
+    agencyId: Number
+  },
+  data: function data() {
+    return {
+      show: false,
+      errors: [],
+      currentAddress: ''
+    };
+  },
+  methods: {
+    addressCompleted: function addressCompleted(address) {
+      this.currentAddress = address;
+    },
+    submit: function submit() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _api_models_AgencyAddress__WEBPACK_IMPORTED_MODULE_3__.default.store({
+                  agencyId: _this.agencyId,
+                  data: _this.currentAddress
+                }).then(function (res) {
+                  _this.$emit('hasAgencyAddress');
+                })["catch"](function (error) {
+                  for (var _i = 0, _Object$entries = Object.entries(error.response.data.errors); _i < _Object$entries.length; _i++) {
+                    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+                        key = _Object$entries$_i[0],
+                        msg = _Object$entries$_i[1];
+
+                    _this.errors.push(msg[0]);
+                  }
+                });
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    _api_models_AgencyAddress__WEBPACK_IMPORTED_MODULE_3__.default.all(this.agencyId).then(function (res) {
+      if (res.data.data.length !== 0) {
+        _this2.$emit('hasAgencyAddress', res.data.data);
+      } else {
+        _this2.show = true;
+      }
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/AgencyInfo.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/AgencyInfo.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/NotificationLabels */ "./resources/js/components/NotificationLabels.vue");
+/* harmony import */ var _api_models_Agency__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../api/models/Agency */ "./resources/js/api/models/Agency.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
@@ -3060,137 +3201,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  components: {
-    AddressInputs: _components_AddressInputs__WEBPACK_IMPORTED_MODULE_2__.default,
-    NotificationLabels: _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__.default
-  },
-  data: function data() {
-    return {
-      show: false,
-      errors: [],
-      currentAddress: ''
-    };
-  },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('userAgencyAddress', {
-    address: 'agencyAddress'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('userAgencies', {
-    agency: 'agency'
-  })),
-  methods: _objectSpread(_objectSpread({
-    addressCompleted: function addressCompleted(address) {
-      this.currentAddress = address;
-    }
-  }, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)('userAgencyAddress', ['setAgencyAddress', 'getAgencyAddress'])), {}, {
-    submit: function submit() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _this.setAgencyAddress({
-                  'agencyId': _this.agency.id,
-                  'address': _this.currentAddress
-                }).then(function (res) {
-                  _this.$emit('hasAgencyAddress');
-                })["catch"](function (error) {
-                  for (var _i = 0, _Object$entries = Object.entries(error.response.data.errors); _i < _Object$entries.length; _i++) {
-                    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
-                        key = _Object$entries$_i[0],
-                        msg = _Object$entries$_i[1];
-
-                    _this.errors.push(msg[0]);
-                  }
-                });
-
-              case 1:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    }
-  }),
-  mounted: function mounted() {
-    var _this2 = this;
-
-    this.getAgencyAddress(this.agency.id).then(function (res) {
-      if (_this2.address.length !== 0) {
-        _this2.$emit('hasAgencyAddress');
-      } else {
-        _this2.show = true;
-      }
-    });
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/AgencyInfo.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/AgencyInfo.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/NotificationLabels */ "./resources/js/components/NotificationLabels.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3207,10 +3224,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('userAgencies', {
-    agency: 'agency'
+  props: {
+    roleUserId: Number
+  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('auth', {
+    activeRole: 'activeRole'
   })),
-  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('userAgencies', ['setAgency'])), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('userAgencies', ['getCurrentUserAgency'])), {}, {
+  methods: {
     submit: function submit() {
       var _this = this;
 
@@ -3219,7 +3239,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.setAgency(_this.form).then(function (res) {
+                _api_models_Agency__WEBPACK_IMPORTED_MODULE_2__.default.store({
+                  roleUserId: _this.roleUserId,
+                  data: _this.form
+                }).then(function (res) {
                   _this.$emit('hasAgencyInfo');
                 })["catch"](function (error) {
                   for (var _i = 0, _Object$entries = Object.entries(error.response.data.errors); _i < _Object$entries.length; _i++) {
@@ -3239,13 +3262,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee);
       }))();
     }
-  }),
+  },
   mounted: function mounted() {
     var _this2 = this;
 
-    this.getCurrentUserAgency().then(function (res) {
-      if (_this2.agency.length !== 0) {
-        _this2.$emit('hasAgencyInfo');
+    _api_models_Agency__WEBPACK_IMPORTED_MODULE_2__.default.all(this.roleUserId).then(function (res) {
+      if (res.data.data.length !== 0) {
+        _this2.$emit('hasAgencyInfo', res.data.data);
       } else {
         _this2.show = true;
       }
@@ -4609,6 +4632,66 @@ var QueryBuilder = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/api/models/Agency.js":
+/*!*******************************************!*\
+  !*** ./resources/js/api/models/Agency.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
+
+
+var END_POINT = function END_POINT(roleUserId) {
+  return "roles-users/".concat(roleUserId, "/agencies");
+};
+
+var END_POINT_VERSION = 'v1';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  store: function store(data) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(data.roleUserId)), data.data);
+  },
+  all: function all(roleUserId) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)));
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/api/models/AgencyAddress.js":
+/*!**************************************************!*\
+  !*** ./resources/js/api/models/AgencyAddress.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
+
+
+var END_POINT = function END_POINT(agencyId) {
+  return "agencies/".concat(agencyId, "/addresses");
+};
+
+var END_POINT_VERSION = 'v1';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  store: function store(data) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(data.agencyId)), data.data);
+  },
+  all: function all(agencyId) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(agencyId)));
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/api/models/AnnualSalary.js":
 /*!*************************************************!*\
   !*** ./resources/js/api/models/AnnualSalary.js ***!
@@ -4984,6 +5067,13 @@ vue__WEBPACK_IMPORTED_MODULE_1__.default.filter("datetime", function (value) {
 
   return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format("Do MMMM YYYY HH:mm");
 });
+vue__WEBPACK_IMPORTED_MODULE_1__.default.filter("parseInt", function (value) {
+  if (!value) {
+    return '';
+  }
+
+  return parseInt(value);
+});
 
 /***/ }),
 
@@ -5101,163 +5191,6 @@ var routes = [{
   }]
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
-
-/***/ }),
-
-/***/ "./resources/js/store/agencies.module.js":
-/*!***********************************************!*\
-  !*** ./resources/js/store/agencies.module.js ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  state: {
-    agency: []
-  },
-  getters: {
-    agency: function agency(state) {
-      return state.agency;
-    }
-  },
-  mutations: {
-    SET_AGENCY: function SET_AGENCY(state, value) {
-      state.agency = value;
-    }
-  },
-  actions: {
-    setAgency: function setAgency(_ref, data) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit, rootGetters;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit, rootGetters = _ref.rootGetters;
-                return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/agencies"), data).then(function (response) {
-                  commit('SET_AGENCY', response.data.data);
-                  return response;
-                })["catch"](function (err) {
-                  commit('SET_AGENCY', []);
-                  throw err;
-                }));
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    getCurrentUserAgency: function getCurrentUserAgency(_ref2) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, rootGetters;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref2.commit, rootGetters = _ref2.rootGetters;
-                return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/agencies")).then(function (response) {
-                  commit('SET_AGENCY', response.data.data);
-                  return response;
-                })["catch"](function (err) {
-                  commit('SET_AGENCY', []);
-                  throw err;
-                }));
-
-              case 2:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/store/agencyAddresses.module.js":
-/*!******************************************************!*\
-  !*** ./resources/js/store/agencyAddresses.module.js ***!
-  \******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  actions: {
-    setAgencyAddress: function setAgencyAddress(_ref, data) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var rootGetters;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                rootGetters = _ref.rootGetters;
-                return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/agencies/").concat(data.agencyId, "/addresses"), data.address).then(function (response) {
-                  return response;
-                })["catch"](function (err) {
-                  throw err;
-                }));
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    getAgencyAddress: function getAgencyAddress(_ref2, agencyId) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var rootGetters;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                rootGetters = _ref2.rootGetters;
-                return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/agencies/").concat(agencyId, "/addresses")).then(function (response) {
-                  return response;
-                })["catch"](function (err) {
-                  throw err;
-                }));
-
-              case 2:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    }
-  }
-});
 
 /***/ }),
 
@@ -5419,18 +5352,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee3);
       }))();
     },
-    checkUserProfileComplete: function checkUserProfileComplete(_ref4, userRoleId) {
+    checkUserProfileComplete: function checkUserProfileComplete(_ref4, data) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var dispatch, rootGetters;
+        var dispatch;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                dispatch = _ref4.dispatch, rootGetters = _ref4.rootGetters;
+                dispatch = _ref4.dispatch;
                 _context4.next = 3;
-                return axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/roles-users/").concat(userRoleId, "/check-complete")).then(function (res) {
+                return axios.put("/api/v1/roles-users/".concat(data.roleUserId), data.data).then(function (res) {
                   return dispatch('me').then(function () {
-                    return res.data.data;
+                    return res;
                   });
                 });
 
@@ -5507,6 +5440,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
   state: {
     countries: [],
     query: ''
@@ -5581,17 +5515,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _auth_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth.module */ "./resources/js/store/auth.module.js");
 /* harmony import */ var _properties_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./properties.module */ "./resources/js/store/properties.module.js");
 /* harmony import */ var _propertiesStatuses_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./propertiesStatuses.module */ "./resources/js/store/propertiesStatuses.module.js");
 /* harmony import */ var _countries_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./countries.module */ "./resources/js/store/countries.module.js");
 /* harmony import */ var _roleUserAddress_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./roleUserAddress.module */ "./resources/js/store/roleUserAddress.module.js");
-/* harmony import */ var _agencyAddresses_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./agencyAddresses.module */ "./resources/js/store/agencyAddresses.module.js");
-/* harmony import */ var _agencies_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./agencies.module */ "./resources/js/store/agencies.module.js");
-/* harmony import */ var _propertyAddress_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./propertyAddress.module */ "./resources/js/store/propertyAddress.module.js");
-/* harmony import */ var _propertyUser_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./propertyUser.module */ "./resources/js/store/propertyUser.module.js");
+/* harmony import */ var _propertyAddress_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./propertyAddress.module */ "./resources/js/store/propertyAddress.module.js");
+/* harmony import */ var _propertyUser_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./propertyUser.module */ "./resources/js/store/propertyUser.module.js");
 
 
 
@@ -5601,20 +5533,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-vue__WEBPACK_IMPORTED_MODULE_9__.default.use(vuex__WEBPACK_IMPORTED_MODULE_10__.default);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_10__.default.Store({
+vue__WEBPACK_IMPORTED_MODULE_7__.default.use(vuex__WEBPACK_IMPORTED_MODULE_8__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_8__.default.Store({
   modules: {
     auth: _auth_module__WEBPACK_IMPORTED_MODULE_0__.default,
     properties: _properties_module__WEBPACK_IMPORTED_MODULE_1__.default,
     propertiesStatuses: _propertiesStatuses_module__WEBPACK_IMPORTED_MODULE_2__.default,
     countries: _countries_module__WEBPACK_IMPORTED_MODULE_3__.default,
     roleUserAddress: _roleUserAddress_module__WEBPACK_IMPORTED_MODULE_4__.default,
-    agencyAddress: _agencyAddresses_module__WEBPACK_IMPORTED_MODULE_5__.default,
-    agencies: _agencies_module__WEBPACK_IMPORTED_MODULE_6__.default,
-    propertyAddress: _propertyAddress_module__WEBPACK_IMPORTED_MODULE_7__.default,
-    propertyUser: _propertyUser_module__WEBPACK_IMPORTED_MODULE_8__.default
+    propertyAddress: _propertyAddress_module__WEBPACK_IMPORTED_MODULE_5__.default,
+    propertyUser: _propertyUser_module__WEBPACK_IMPORTED_MODULE_6__.default
   }
 }));
 
@@ -5642,6 +5570,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
   state: {
     property: null
   },
@@ -5794,6 +5723,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
   state: {
     statuses: []
   },
@@ -5869,6 +5799,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
   state: {
     userPropertyAddress: [],
     propertyAddress: []
@@ -5964,6 +5895,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
   actions: {
     bookProperty: function bookProperty(_ref, data) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -6012,6 +5944,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
   state: {
     userAddress: []
   },
@@ -67279,18 +67212,38 @@ var render = function() {
             _vm._v(" "),
             _vm.selectedUserRole.role.id === 1
               ? _c("Tenant", {
+                  attrs: {
+                    roleUserId: _vm._f("parseInt")(
+                      this.$route.params.userRoleId
+                    )
+                  },
                   on: { checkIfProfileCompleted: _vm.checkIfProfileCompleted }
                 })
               : _vm.selectedUserRole.role.id === 2
               ? _c("Buyer", {
+                  attrs: {
+                    roleUserId: _vm._f("parseInt")(
+                      this.$route.params.userRoleId
+                    )
+                  },
                   on: { checkIfProfileCompleted: _vm.checkIfProfileCompleted }
                 })
               : _vm.selectedUserRole.role.id === 3
               ? _c("Landlord", {
+                  attrs: {
+                    roleUserId: _vm._f("parseInt")(
+                      this.$route.params.userRoleId
+                    )
+                  },
                   on: { checkIfProfileCompleted: _vm.checkIfProfileCompleted }
                 })
               : _vm.selectedUserRole.role.id === 4
               ? _c("Seller", {
+                  attrs: {
+                    roleUserId: _vm._f("parseInt")(
+                      this.$route.params.userRoleId
+                    )
+                  },
                   on: { checkIfProfileCompleted: _vm.checkIfProfileCompleted }
                 })
               : _vm._e()
@@ -67341,7 +67294,7 @@ var render = function() {
                     click: function($event) {
                       userRole.is_completed === 1
                         ? _vm.setActiveUserRole(userRole)
-                        : _vm.completeUserRole(userRole.id)
+                        : _vm.completeUserRole(userRole)
                     }
                   }
                 },
@@ -67489,16 +67442,14 @@ var render = function() {
       [
         _vm.activeStep === 0
           ? _c("AgencyInfo", {
-              on: {
-                hasAgencyInfo: function($event) {
-                  return _vm.hasAgencyInfo()
-                }
-              }
+              attrs: { roleUserId: _vm._f("parseInt")(this.roleUserId) },
+              on: { hasAgencyInfo: _vm.hasAgencyInfo }
             })
           : _vm._e(),
         _vm._v(" "),
         _vm.activeStep === 1
           ? _c("AgencyAddress", {
+              attrs: { agencyId: _vm._f("parseInt")(this.data.agencyId) },
               on: {
                 hasAgencyAddress: function($event) {
                   return _vm.addressCompleted()
@@ -67540,16 +67491,14 @@ var render = function() {
       [
         _vm.activeStep === 0
           ? _c("AgencyInfo", {
-              on: {
-                hasAgencyInfo: function($event) {
-                  return _vm.hasAgencyInfo()
-                }
-              }
+              attrs: { roleUserId: _vm._f("parseInt")(this.roleUserId) },
+              on: { hasAgencyInfo: _vm.hasAgencyInfo }
             })
           : _vm._e(),
         _vm._v(" "),
         _vm.activeStep === 1
           ? _c("AgencyAddress", {
+              attrs: { agencyId: _vm._f("parseInt")(this.data.agencyId) },
               on: {
                 hasAgencyAddress: function($event) {
                   return _vm.addressCompleted()
