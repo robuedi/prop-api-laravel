@@ -55,6 +55,7 @@ Route::prefix('v1')->group(function (){
         Route::resource('agencies/{agency}/addresses', AgencyAddressesController::class, ['only' => ['index', 'store']]);
 
         Route::resource('properties/{property}/addresses', PropertyAddressesController::class, ['only' => ['index', 'store']]);
+
         Route::resource('roles-users', RolesUsersController::class, ['only' => ['update']]);
 
         Route::prefix('users/{user}')->group(function (){
@@ -62,7 +63,7 @@ Route::prefix('v1')->group(function (){
             Route::resource('roles-users', RolesUsersController::class, ['only' => ['store']]);
         });
 
-        Route::prefix('roles-users/{role_user}')->group(function (){
+        Route::group(['prefix' => 'roles-users/{role_user}', 'middleware' => ['role-user-authorization']], function (){
 
             //property applications
             Route::resource('property-applications', PropertyApplicationsController::class, ['only' => ['index']]);

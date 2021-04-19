@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\v1;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\RoleUserEmploymentIndexRequest;
 use App\Http\Requests\v1\RoleUserEmploymentStoreRequest;
 use App\Http\Resources\v1\EmploymentResource;
 use App\Models\RoleUser;
@@ -13,7 +12,7 @@ use Illuminate\Http\Response;
 
 class EmploymentController extends Controller
 {
-    public function index(RoleUser $role_user, RoleUserEmploymentIndexRequest $request)
+    public function index(RoleUser $role_user)
     {
         //make property for user
         return EmploymentResource::collection(

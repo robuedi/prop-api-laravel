@@ -4,7 +4,6 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\RoleUserAnnualSalaryIndexRequest;
 use App\Http\Requests\v1\RoleUserAnnualSalaryStoreRequest;
 use App\Http\Resources\v1\AnnualSalaryResource;
 use App\Models\RoleUser;
@@ -12,7 +11,7 @@ use Illuminate\Http\Response;
 
 class AnnualSalariesController extends Controller
 {
-    public function index(RoleUser $role_user, RoleUserAnnualSalaryIndexRequest $request)
+    public function index(RoleUser $role_user)
     {
         //make property for user
         return AnnualSalaryResource::collection(

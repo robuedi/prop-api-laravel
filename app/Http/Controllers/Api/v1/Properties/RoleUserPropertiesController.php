@@ -9,7 +9,6 @@ use App\Http\Resources\GeneralResource;
 use App\Http\Resources\v1\PropertyResource;
 use App\Models\RoleUser;
 use App\Repositories\PropertyRepositoryInterface;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class RoleUserPropertiesController extends Controller
@@ -21,7 +20,7 @@ class RoleUserPropertiesController extends Controller
         $this->property_repository = $property_repository;
     }
 
-    public function index(RoleUser $role_user, Request $request)
+    public function index(RoleUser $role_user)
     {
         return GeneralResource::collection($role_user->ownedProperties)->response()->setStatusCode(Response::HTTP_OK);
     }

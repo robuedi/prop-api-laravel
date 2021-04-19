@@ -4,17 +4,14 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\RoleUserAgencyIndexRequest;
 use App\Http\Requests\v1\RoleUserAgencyStoreRequest;
 use App\Http\Resources\v1\AgencyResource;
-use App\Models\Agency;
 use App\Models\RoleUser;
-use App\Models\User;
 use Illuminate\Http\Response;
 
 class AgenciesController extends Controller
 {
-    public function index(RoleUser $role_user, RoleUserAgencyIndexRequest $request)
+    public function index(RoleUser $role_user)
     {
         //make property for user
         return AgencyResource::make($role_user->agency)->response()->setStatusCode(Response::HTTP_CREATED);

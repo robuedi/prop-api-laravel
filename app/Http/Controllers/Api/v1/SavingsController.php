@@ -4,7 +4,6 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\RoleUserSavingsIndexRequest;
 use App\Http\Requests\v1\RoleUserSavingsStoreRequest;
 use App\Http\Resources\v1\SavingResource;
 use App\Models\RoleUser;
@@ -20,7 +19,7 @@ class SavingsController extends Controller
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function index(RoleUser $role_user, RoleUserSavingsIndexRequest $request)
+    public function index(RoleUser $role_user)
     {
         //make property for user
         return SavingResource::collection(
