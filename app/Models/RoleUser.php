@@ -62,7 +62,7 @@ class RoleUser extends Model
         return $this->hasMany(Employment::class);
     }
 
-    public function address()
+    public function addresses()
     {
         return $this->hasMany(RoleUserAddress::class);
     }

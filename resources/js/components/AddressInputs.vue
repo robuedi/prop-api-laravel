@@ -50,8 +50,6 @@ export default {
     },
     mounted() {
         this.getCountries(this.makeQueryString()).then((res) => {
-            console.log('test')
-            console.log(res)
              this.countries = res
         })
     },

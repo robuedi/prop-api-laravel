@@ -21,10 +21,8 @@ class AgencyAddressesController extends Controller
     public function store(Agency $agency, AgencyAddressStoreRequest $request)
     {
         //make property for user
-        return AgencyAddressResource::make($agency->addresses()->create([
-            'city_id' => $request->get('city_id'),
-            'address_line' => $request->get('address_line'),
-            'postcode' => $request->get('postcode')
-        ]))->response()->setStatusCode(Response::HTTP_CREATED);
+        return AgencyAddressResource::make(
+            $agency->addresses()->create($request->only(['city_id', 'address_line', 'postcode']))
+        )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 }

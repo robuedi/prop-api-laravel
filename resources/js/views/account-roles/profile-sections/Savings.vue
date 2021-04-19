@@ -20,6 +20,9 @@ import NotificationLabels from "../../../components/NotificationLabels";
 import Saving from "../../../api/models/Saving";
 
 export default {
+    props: {
+        roleUserId: Number
+    },
     components: {
         NotificationLabels
     },
@@ -35,8 +38,8 @@ export default {
     methods: {
         async submit()
         {
-            Saving.store(this.form).then((res) => {
-                this.$emit('hasSavings')
+            Saving.store(this.roleUserId, this.form).then((res) => {
+                this.$emit('hasSavings', res)
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
                     this.errors.push(msg[0]);
@@ -45,9 +48,9 @@ export default {
         }
     },
     mounted() {
-        Saving.all().then((res) => {
+        Saving.all(this.roleUserId).then((res) => {
             if(res.data.data.length !== 0){
-                this.$emit('hasSavings');
+                this.$emit('hasSavings', res);
             }
             else{
                 this.show = true

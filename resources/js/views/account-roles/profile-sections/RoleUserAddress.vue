@@ -15,9 +15,12 @@
 
 import NotificationLabels from "../../../components/NotificationLabels";
 import AddressInputs from '../../../components/AddressInputs'
-import {mapActions, mapGetters} from "vuex";
+import RoleUserAddress from "../../../api/models/RoleUserAddress";
 
 export default {
+    props: {
+        roleUserId: Number
+    },
     components: {
         AddressInputs,
         NotificationLabels
@@ -29,20 +32,14 @@ export default {
             currentAddress: ''
         }
     },
-    computed: {
-        ...mapGetters('userAddress',{
-            userAddress: 'userAddress',
-        })
-    },
     methods:{
         addressCompleted(address){
             this.currentAddress = address;
         },
-        ...mapActions('userAddress', ['setUserAddress', 'getCurrentUserAddress']),
         async submit()
         {
-            this.setUserAddress(this.currentAddress).then((res) => {
-                this.$emit('hasAddress')
+            RoleUserAddress.store(this.roleUserId, this.currentAddress).then((res) => {
+                this.$emit('hasAddress', res)
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
                     this.errors.push(msg[0]);
@@ -51,10 +48,10 @@ export default {
         }
     },
     mounted() {
-        this.getCurrentUserAddress().then((res) => {
-            if(this.userAddress.length !== 0)
+        RoleUserAddress.all(this.roleUserId).then((res) => {
+            if(res.data.data.length !== 0)
             {
-                this.$emit('hasAddress');
+                this.$emit('hasAddress', res);
             }
             else
             {

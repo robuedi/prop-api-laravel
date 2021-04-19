@@ -16,7 +16,7 @@ class SavingsController extends Controller
     {
         //make property for user
         return SavingResource::make(
-            $role_user->savings->create($request->get('amount'))
+            $role_user->savings()->create($request->only('amount'))
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 

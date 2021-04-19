@@ -16,7 +16,7 @@ class RentsController extends Controller
     {
         //make property for user
         return RentResource::make(
-            $role_user->rent->create(['amount' => $request->get('amount')])
+            $role_user->rent()->create($request->only('amount'))
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 

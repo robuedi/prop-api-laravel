@@ -13,7 +13,7 @@ class RoleUserStatusService implements RoleUserStatusServiceInterface
         {
             //tenant
             case 1:
-                if($role_user->employment()->count() && $role_user->annualSalary()->count() && $role_user->rent()->count() && $role_user->address()->count())
+                if($role_user->employment()->count() && $role_user->annualSalary()->count() && $role_user->rent()->count() && $role_user->addresses()->count())
                 {
                     return 1;
                 }
@@ -22,7 +22,7 @@ class RoleUserStatusService implements RoleUserStatusServiceInterface
 
             //buyer
             case 2:
-                if($role_user->employment()->count() && $role_user->annualSalary()->count() && $role_user->savings()->count() && $role_user->address()->count())
+                if($role_user->employment()->count() && $role_user->annualSalary()->count() && $role_user->savings()->count() && $role_user->addresses()->count())
                 {
                     return 1;
                 }

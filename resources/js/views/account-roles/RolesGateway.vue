@@ -67,7 +67,7 @@ export default {
 
                 //refetch the user
                 this.me().then(()=>{
-                    this.$router.push({name: 'completeRole', params: { userRoleId: res.id }});
+                    this.$router.push({name: 'completeRole', params: { userRoleId: res.data.data.id }});
                 })
             })
         },

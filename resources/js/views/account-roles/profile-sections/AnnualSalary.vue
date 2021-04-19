@@ -17,6 +17,9 @@ import NotificationLabels from '../../../components/NotificationLabels'
 import AnnualSalary from "../../../api/models/AnnualSalary";
 
 export default {
+    props: {
+        roleUserId: Number
+    },
     components: {
         NotificationLabels
     },
@@ -26,15 +29,14 @@ export default {
             errors: [],
             form: {
                 amount: null,
-                roleUserId: this.$route.params.userRoleId
             },
         }
     },
     methods: {
         async submit()
         {
-            AnnualSalary.store(this.form).then((res) => {
-                this.$emit('hasAnnualSalary')
+            AnnualSalary.store(this.roleUserId, this.form).then((res) => {
+                this.$emit('hasAnnualSalary', res)
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
                     this.errors.push(msg[0]);
@@ -43,9 +45,9 @@ export default {
         }
     },
     mounted() {
-        AnnualSalary.all(this.$route.params.userRoleId).then((res) => {
+        AnnualSalary.all(this.roleUserId).then((res) => {
             if(res.data.data.length !== 0) {
-                this.$emit('hasAnnualSalary');
+                this.$emit('hasAnnualSalary', res);
             }
             else {
                 this.show = true

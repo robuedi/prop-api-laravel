@@ -24,7 +24,7 @@ class AnnualSalariesController extends Controller
     {
         //make property for user
         return AnnualSalaryResource::make(
-            $role_user->annualSalary()->create(['amount' => $request->get('amount')])
+            $role_user->annualSalary()->create($request->only('amount'))
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 

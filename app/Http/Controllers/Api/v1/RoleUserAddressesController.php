@@ -14,25 +14,21 @@ use App\Repositories\UserAddressRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class UserAddressController extends Controller
+class RoleUserAddressesController extends Controller
 {
+    public function index(RoleUser $role_user, RoleUserAddressIndexRequest $request)
+    {
+        //make property for user
+        return RoleUserAddressResource::collection(
+            $role_user->addresses
+        )->response()->setStatusCode(Response::HTTP_CREATED);
+    }
+
     public function store(RoleUser $role_user, RoleUserAddressStoreRequest $request)
     {
         //make property for user
         return RoleUserAddressResource::make(
-            $role_user->address->create(
-                $request->get('city_id'),
-                $request->get('address_line'),
-                $request->get('postcode')
-            )
-        )->response()->setStatusCode(Response::HTTP_CREATED);
-    }
-
-    public function show(RoleUser $role_user, RoleUserAddressIndexRequest $request)
-    {
-        //make property for user
-        return RoleUserAddressResource::collection(
-            $role_user->address
+            $role_user->addresses()->create($request->only(['city_id','address_line', 'postcode']))
         )->response()->setStatusCode(Response::HTTP_CREATED);
     }
 }

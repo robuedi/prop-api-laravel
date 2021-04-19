@@ -22,7 +22,6 @@
 
 import NotificationLabels from '../../../components/NotificationLabels'
 import Agency from "../../../api/models/Agency";
-import {mapGetters} from "vuex";
 
 export default {
     components: {
@@ -41,16 +40,11 @@ export default {
     props: {
         roleUserId: Number
     },
-    computed: {
-        ...mapGetters('auth', {
-            activeRole: 'activeRole',
-        }),
-    },
     methods: {
         async submit()
         {
-            Agency.store({roleUserId: this.roleUserId, data: this.form}).then((res) => {
-                this.$emit('hasAgencyInfo')
+            Agency.store(this.roleUserId, this.form).then((res) => {
+                this.$emit('hasAgencyInfo', res)
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
                     this.errors.push(msg[0]);
@@ -62,7 +56,7 @@ export default {
         Agency.all(this.roleUserId).then((res) => {
             if(res.data.data.length !== 0)
             {
-                this.$emit('hasAgencyInfo', res.data.data);
+                this.$emit('hasAgencyInfo', res);
             }
             else
             {

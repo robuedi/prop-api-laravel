@@ -44,6 +44,9 @@ import Moment from "moment";
 import Employment from "../../../api/models/Employment";
 
 export default {
+    props: {
+        roleUserId: Number
+    },
     components: {
         DateRangePicker,
         NotificationLabels
@@ -76,8 +79,8 @@ export default {
     methods: {
         async submit()
         {
-            Employment.store(this.form).then((res) => {
-                this.$emit('hasEmployment')
+            Employment.store(this.roleUserId, this.form).then((res) => {
+                this.$emit('hasEmployment', res)
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
                     this.errors.push(msg[0]);
@@ -86,9 +89,9 @@ export default {
         }
     },
     mounted() {
-        Employment.all().then((res) => {
+        Employment.all(this.roleUserId).then((res) => {
             if(res.data.data.length !== 0){
-                this.$emit('hasEmployment');
+                this.$emit('hasEmployment', res);
             }
             else{
                 this.show = true

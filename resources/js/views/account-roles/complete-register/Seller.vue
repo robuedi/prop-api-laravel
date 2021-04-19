@@ -31,7 +31,7 @@ export default {
     methods: {
         hasAgencyInfo(agencyInfo)
         {
-            this.data.agencyId = agencyInfo.id
+            this.data.agencyId = agencyInfo.data.data.id
             this.activeStep = 1;
         },
         addressCompleted()

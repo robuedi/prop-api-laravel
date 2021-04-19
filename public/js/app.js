@@ -1916,8 +1916,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     this.getCountries(this.makeQueryString()).then(function (res) {
-      console.log('test');
-      console.log(res);
       _this.countries = res;
     });
   },
@@ -2763,7 +2761,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.$router.push({
             name: 'completeRole',
             params: {
-              userRoleId: res.id
+              userRoleId: res.data.data.id
             }
           });
         });
@@ -2808,7 +2806,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _profile_sections_AnnualSalary__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../profile-sections/AnnualSalary */ "./resources/js/views/account-roles/profile-sections/AnnualSalary.vue");
 /* harmony import */ var _profile_sections_Savings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../profile-sections/Savings */ "./resources/js/views/account-roles/profile-sections/Savings.vue");
 /* harmony import */ var _profile_sections_Employment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../profile-sections/Employment */ "./resources/js/views/account-roles/profile-sections/Employment.vue");
-/* harmony import */ var _profile_sections_UserAddress__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../profile-sections/UserAddress */ "./resources/js/views/account-roles/profile-sections/UserAddress.vue");
+/* harmony import */ var _profile_sections_RoleUserAddress__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../profile-sections/RoleUserAddress */ "./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue");
 //
 //
 //
@@ -2826,10 +2824,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    UserAddress: _profile_sections_UserAddress__WEBPACK_IMPORTED_MODULE_3__.default,
+    RoleUserAddress: _profile_sections_RoleUserAddress__WEBPACK_IMPORTED_MODULE_3__.default,
     AnnualSalary: _profile_sections_AnnualSalary__WEBPACK_IMPORTED_MODULE_0__.default,
     Savings: _profile_sections_Savings__WEBPACK_IMPORTED_MODULE_1__.default,
     Employment: _profile_sections_Employment__WEBPACK_IMPORTED_MODULE_2__.default
+  },
+  props: {
+    roleUserId: Number
   },
   data: function data() {
     return {
@@ -2901,7 +2902,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     hasAgencyInfo: function hasAgencyInfo(agencyInfo) {
-      this.data.agencyId = agencyInfo.id;
+      this.data.agencyId = agencyInfo.data.data.id;
       this.activeStep = 1;
     },
     addressCompleted: function addressCompleted() {
@@ -2955,7 +2956,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     hasAgencyInfo: function hasAgencyInfo(agencyInfo) {
-      this.data.agencyId = agencyInfo.id;
+      this.data.agencyId = agencyInfo.data.data.id;
       this.activeStep = 1;
     },
     addressCompleted: function addressCompleted() {
@@ -2980,7 +2981,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _profile_sections_AnnualSalary__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../profile-sections/AnnualSalary */ "./resources/js/views/account-roles/profile-sections/AnnualSalary.vue");
 /* harmony import */ var _profile_sections_Rent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../profile-sections/Rent */ "./resources/js/views/account-roles/profile-sections/Rent.vue");
 /* harmony import */ var _profile_sections_Employment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../profile-sections/Employment */ "./resources/js/views/account-roles/profile-sections/Employment.vue");
-/* harmony import */ var _profile_sections_UserAddress__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../profile-sections/UserAddress */ "./resources/js/views/account-roles/profile-sections/UserAddress.vue");
+/* harmony import */ var _profile_sections_RoleUserAddress__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../profile-sections/RoleUserAddress */ "./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue");
 //
 //
 //
@@ -2998,10 +2999,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    UserAddress: _profile_sections_UserAddress__WEBPACK_IMPORTED_MODULE_3__.default,
+    RoleUserAddress: _profile_sections_RoleUserAddress__WEBPACK_IMPORTED_MODULE_3__.default,
     AnnualSalary: _profile_sections_AnnualSalary__WEBPACK_IMPORTED_MODULE_0__.default,
     Rent: _profile_sections_Rent__WEBPACK_IMPORTED_MODULE_1__.default,
     Employment: _profile_sections_Employment__WEBPACK_IMPORTED_MODULE_2__.default
+  },
+  props: {
+    roleUserId: Number
   },
   data: function data() {
     return {
@@ -3108,10 +3112,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _api_models_AgencyAddress__WEBPACK_IMPORTED_MODULE_3__.default.store({
-                  agencyId: _this.agencyId,
-                  data: _this.currentAddress
-                }).then(function (res) {
+                _api_models_AgencyAddress__WEBPACK_IMPORTED_MODULE_3__.default.store(_this.agencyId, _this.currentAddress).then(function (res) {
                   _this.$emit('hasAgencyAddress');
                 })["catch"](function (error) {
                   for (var _i = 0, _Object$entries = Object.entries(error.response.data.errors); _i < _Object$entries.length; _i++) {
@@ -3162,7 +3163,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/NotificationLabels */ "./resources/js/components/NotificationLabels.vue");
 /* harmony import */ var _api_models_Agency__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../api/models/Agency */ "./resources/js/api/models/Agency.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -3181,12 +3181,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -3207,7 +3201,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3227,9 +3220,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: {
     roleUserId: Number
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('auth', {
-    activeRole: 'activeRole'
-  })),
   methods: {
     submit: function submit() {
       var _this = this;
@@ -3239,11 +3229,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _api_models_Agency__WEBPACK_IMPORTED_MODULE_2__.default.store({
-                  roleUserId: _this.roleUserId,
-                  data: _this.form
-                }).then(function (res) {
-                  _this.$emit('hasAgencyInfo');
+                _api_models_Agency__WEBPACK_IMPORTED_MODULE_2__.default.store(_this.roleUserId, _this.form).then(function (res) {
+                  _this.$emit('hasAgencyInfo', res);
                 })["catch"](function (error) {
                   for (var _i = 0, _Object$entries = Object.entries(error.response.data.errors); _i < _Object$entries.length; _i++) {
                     var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
@@ -3268,7 +3255,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     _api_models_Agency__WEBPACK_IMPORTED_MODULE_2__.default.all(this.roleUserId).then(function (res) {
       if (res.data.data.length !== 0) {
-        _this2.$emit('hasAgencyInfo', res.data.data);
+        _this2.$emit('hasAgencyInfo', res);
       } else {
         _this2.show = true;
       }
@@ -3328,6 +3315,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    roleUserId: Number
+  },
   components: {
     NotificationLabels: _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__.default
   },
@@ -3336,8 +3326,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       show: false,
       errors: [],
       form: {
-        amount: null,
-        roleUserId: this.$route.params.userRoleId
+        amount: null
       }
     };
   },
@@ -3350,8 +3339,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _api_models_AnnualSalary__WEBPACK_IMPORTED_MODULE_2__.default.store(_this.form).then(function (res) {
-                  _this.$emit('hasAnnualSalary');
+                _api_models_AnnualSalary__WEBPACK_IMPORTED_MODULE_2__.default.store(_this.roleUserId, _this.form).then(function (res) {
+                  _this.$emit('hasAnnualSalary', res);
                 })["catch"](function (error) {
                   for (var _i = 0, _Object$entries = Object.entries(error.response.data.errors); _i < _Object$entries.length; _i++) {
                     var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
@@ -3374,9 +3363,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mounted: function mounted() {
     var _this2 = this;
 
-    _api_models_AnnualSalary__WEBPACK_IMPORTED_MODULE_2__.default.all(this.$route.params.userRoleId).then(function (res) {
+    _api_models_AnnualSalary__WEBPACK_IMPORTED_MODULE_2__.default.all(this.roleUserId).then(function (res) {
       if (res.data.data.length !== 0) {
-        _this2.$emit('hasAnnualSalary');
+        _this2.$emit('hasAnnualSalary', res);
       } else {
         _this2.show = true;
       }
@@ -3467,6 +3456,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    roleUserId: Number
+  },
   components: {
     DateRangePicker: (vue2_daterange_picker__WEBPACK_IMPORTED_MODULE_1___default()),
     NotificationLabels: _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_3__.default
@@ -3505,8 +3497,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _api_models_Employment__WEBPACK_IMPORTED_MODULE_5__.default.store(_this.form).then(function (res) {
-                  _this.$emit('hasEmployment');
+                _api_models_Employment__WEBPACK_IMPORTED_MODULE_5__.default.store(_this.roleUserId, _this.form).then(function (res) {
+                  _this.$emit('hasEmployment', res);
                 })["catch"](function (error) {
                   for (var _i = 0, _Object$entries = Object.entries(error.response.data.errors); _i < _Object$entries.length; _i++) {
                     var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
@@ -3529,9 +3521,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mounted: function mounted() {
     var _this2 = this;
 
-    _api_models_Employment__WEBPACK_IMPORTED_MODULE_5__.default.all().then(function (res) {
+    _api_models_Employment__WEBPACK_IMPORTED_MODULE_5__.default.all(this.roleUserId).then(function (res) {
       if (res.data.data.length !== 0) {
-        _this2.$emit('hasEmployment');
+        _this2.$emit('hasEmployment', res);
       } else {
         _this2.show = true;
       }
@@ -3593,6 +3585,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    roleUserId: Number
+  },
   components: {
     NotificationLabels: _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__.default
   },
@@ -3614,8 +3609,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _api_models_Rent__WEBPACK_IMPORTED_MODULE_2__.default.store(_this.form).then(function (res) {
-                  _this.$emit('hasRent');
+                _api_models_Rent__WEBPACK_IMPORTED_MODULE_2__.default.store(_this.roleUserId, _this.form).then(function (res) {
+                  _this.$emit('hasRent', res);
                 })["catch"](function (error) {
                   for (var _i = 0, _Object$entries = Object.entries(error.response.data.errors); _i < _Object$entries.length; _i++) {
                     var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
@@ -3638,9 +3633,122 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mounted: function mounted() {
     var _this2 = this;
 
-    _api_models_Rent__WEBPACK_IMPORTED_MODULE_2__.default.all().then(function (res) {
+    _api_models_Rent__WEBPACK_IMPORTED_MODULE_2__.default.all(this.roleUserId).then(function (res) {
       if (res.data.data.length !== 0) {
-        _this2.$emit('hasRent');
+        _this2.$emit('hasRent', res);
+      } else {
+        _this2.show = true;
+      }
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/NotificationLabels */ "./resources/js/components/NotificationLabels.vue");
+/* harmony import */ var _components_AddressInputs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../components/AddressInputs */ "./resources/js/components/AddressInputs.vue");
+/* harmony import */ var _api_models_RoleUserAddress__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../api/models/RoleUserAddress */ "./resources/js/api/models/RoleUserAddress.js");
+
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    roleUserId: Number
+  },
+  components: {
+    AddressInputs: _components_AddressInputs__WEBPACK_IMPORTED_MODULE_2__.default,
+    NotificationLabels: _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__.default
+  },
+  data: function data() {
+    return {
+      show: false,
+      errors: [],
+      currentAddress: ''
+    };
+  },
+  methods: {
+    addressCompleted: function addressCompleted(address) {
+      this.currentAddress = address;
+    },
+    submit: function submit() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _api_models_RoleUserAddress__WEBPACK_IMPORTED_MODULE_3__.default.store(_this.roleUserId, _this.currentAddress).then(function (res) {
+                  _this.$emit('hasAddress', res);
+                })["catch"](function (error) {
+                  for (var _i = 0, _Object$entries = Object.entries(error.response.data.errors); _i < _Object$entries.length; _i++) {
+                    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+                        key = _Object$entries$_i[0],
+                        msg = _Object$entries$_i[1];
+
+                    _this.errors.push(msg[0]);
+                  }
+                });
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    _api_models_RoleUserAddress__WEBPACK_IMPORTED_MODULE_3__.default.all(this.roleUserId).then(function (res) {
+      if (res.data.data.length !== 0) {
+        _this2.$emit('hasAddress', res);
       } else {
         _this2.show = true;
       }
@@ -3702,6 +3810,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    roleUserId: Number
+  },
   components: {
     NotificationLabels: _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__.default
   },
@@ -3723,8 +3834,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _api_models_Saving__WEBPACK_IMPORTED_MODULE_2__.default.store(_this.form).then(function (res) {
-                  _this.$emit('hasSavings');
+                _api_models_Saving__WEBPACK_IMPORTED_MODULE_2__.default.store(_this.roleUserId, _this.form).then(function (res) {
+                  _this.$emit('hasSavings', res);
                 })["catch"](function (error) {
                   for (var _i = 0, _Object$entries = Object.entries(error.response.data.errors); _i < _Object$entries.length; _i++) {
                     var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
@@ -3747,129 +3858,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mounted: function mounted() {
     var _this2 = this;
 
-    _api_models_Saving__WEBPACK_IMPORTED_MODULE_2__.default.all().then(function (res) {
+    _api_models_Saving__WEBPACK_IMPORTED_MODULE_2__.default.all(this.roleUserId).then(function (res) {
       if (res.data.data.length !== 0) {
-        _this2.$emit('hasSavings');
-      } else {
-        _this2.show = true;
-      }
-    });
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/UserAddress.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/UserAddress.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/NotificationLabels */ "./resources/js/components/NotificationLabels.vue");
-/* harmony import */ var _components_AddressInputs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../components/AddressInputs */ "./resources/js/components/AddressInputs.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  components: {
-    AddressInputs: _components_AddressInputs__WEBPACK_IMPORTED_MODULE_2__.default,
-    NotificationLabels: _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_1__.default
-  },
-  data: function data() {
-    return {
-      show: false,
-      errors: [],
-      currentAddress: ''
-    };
-  },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('userAddress', {
-    userAddress: 'userAddress'
-  })),
-  methods: _objectSpread(_objectSpread({
-    addressCompleted: function addressCompleted(address) {
-      this.currentAddress = address;
-    }
-  }, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)('userAddress', ['setUserAddress', 'getCurrentUserAddress'])), {}, {
-    submit: function submit() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _this.setUserAddress(_this.currentAddress).then(function (res) {
-                  _this.$emit('hasAddress');
-                })["catch"](function (error) {
-                  for (var _i = 0, _Object$entries = Object.entries(error.response.data.errors); _i < _Object$entries.length; _i++) {
-                    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
-                        key = _Object$entries$_i[0],
-                        msg = _Object$entries$_i[1];
-
-                    _this.errors.push(msg[0]);
-                  }
-                });
-
-              case 1:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    }
-  }),
-  mounted: function mounted() {
-    var _this2 = this;
-
-    this.getCurrentUserAddress().then(function (res) {
-      if (_this2.userAddress.length !== 0) {
-        _this2.$emit('hasAddress');
+        _this2.$emit('hasSavings', res);
       } else {
         _this2.show = true;
       }
@@ -4652,8 +4643,8 @@ var END_POINT = function END_POINT(roleUserId) {
 
 var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  store: function store(data) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(data.roleUserId)), data.data);
+  store: function store(roleUserId, data) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)), data);
   },
   all: function all(roleUserId) {
     return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)));
@@ -4682,8 +4673,8 @@ var END_POINT = function END_POINT(agencyId) {
 
 var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  store: function store(data) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(data.agencyId)), data.data);
+  store: function store(agencyId, data) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(agencyId)), data);
   },
   all: function all(agencyId) {
     return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(agencyId)));
@@ -4712,10 +4703,8 @@ var END_POINT = function END_POINT(roleUserId) {
 
 var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  store: function store(data) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(data.roleUserId)), {
-      amount: data.amount
-    });
+  store: function store(roleUserId, data) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)), data);
   },
   all: function all(roleUserId) {
     return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)));
@@ -4760,21 +4749,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
-/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/index */ "./resources/js/store/index.js");
-
 
 var END_POINT_VERSION = 'v1';
 
-var END_POINT = function END_POINT() {
-  return "users/".concat(_store_index__WEBPACK_IMPORTED_MODULE_1__.default.getters["auth/userId"], "/employments");
+var END_POINT = function END_POINT(roleUserId) {
+  return "roles-users/".concat(roleUserId, "/employments");
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  store: function store(data) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT()), data);
+  store: function store(roleUserId, data) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)), data);
   },
-  all: function all() {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT()));
+  all: function all(roleUserId) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)));
   }
 });
 
@@ -4820,8 +4807,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
-/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/index */ "./resources/js/store/index.js");
-
 
 
 var END_POINT = function END_POINT(roleUserId) {
@@ -4830,10 +4815,10 @@ var END_POINT = function END_POINT(roleUserId) {
 
 var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  store: function store(amount) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)), amount);
+  store: function store(roleUserId, data) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)), data);
   },
-  all: function all() {
+  all: function all(roleUserId) {
     return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)));
   }
 });
@@ -4894,6 +4879,36 @@ var END_POINT_VERSION = 'v1';
 
 /***/ }),
 
+/***/ "./resources/js/api/models/RoleUserAddress.js":
+/*!****************************************************!*\
+  !*** ./resources/js/api/models/RoleUserAddress.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
+
+
+var END_POINT = function END_POINT(roleUserId) {
+  return "roles-users/".concat(roleUserId, "/addresses");
+};
+
+var END_POINT_VERSION = 'v1';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  store: function store(roleUserId, data) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)), data);
+  },
+  all: function all(roleUserId) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)));
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/api/models/Saving.js":
 /*!*******************************************!*\
   !*** ./resources/js/api/models/Saving.js ***!
@@ -4906,21 +4921,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
-/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/index */ "./resources/js/store/index.js");
 
 
-
-var END_POINT = function END_POINT() {
-  return "users/".concat(_store_index__WEBPACK_IMPORTED_MODULE_1__.default.getters["auth/userId"], "/savings");
+var END_POINT = function END_POINT(roleUserId) {
+  return "roles-users/".concat(roleUserId, "/savings");
 };
 
 var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  store: function store(amount) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT()), amount);
+  store: function store(roleUserId, data) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)), data);
   },
-  all: function all() {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT()));
+  all: function all(roleUserId) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)));
   }
 });
 
@@ -64862,6 +64875,45 @@ component.options.__file = "resources/js/views/account-roles/profile-sections/Re
 
 /***/ }),
 
+/***/ "./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _RoleUserAddress_vue_vue_type_template_id_77111f32_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RoleUserAddress.vue?vue&type=template&id=77111f32&scoped=true& */ "./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue?vue&type=template&id=77111f32&scoped=true&");
+/* harmony import */ var _RoleUserAddress_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RoleUserAddress.vue?vue&type=script&lang=js& */ "./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _RoleUserAddress_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _RoleUserAddress_vue_vue_type_template_id_77111f32_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _RoleUserAddress_vue_vue_type_template_id_77111f32_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "77111f32",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/account-roles/profile-sections/RoleUserAddress.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/views/account-roles/profile-sections/Savings.vue":
 /*!***********************************************************************!*\
   !*** ./resources/js/views/account-roles/profile-sections/Savings.vue ***!
@@ -64897,45 +64949,6 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/views/account-roles/profile-sections/Savings.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/views/account-roles/profile-sections/UserAddress.vue":
-/*!***************************************************************************!*\
-  !*** ./resources/js/views/account-roles/profile-sections/UserAddress.vue ***!
-  \***************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _UserAddress_vue_vue_type_template_id_8df55c86_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserAddress.vue?vue&type=template&id=8df55c86&scoped=true& */ "./resources/js/views/account-roles/profile-sections/UserAddress.vue?vue&type=template&id=8df55c86&scoped=true&");
-/* harmony import */ var _UserAddress_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserAddress.vue?vue&type=script&lang=js& */ "./resources/js/views/account-roles/profile-sections/UserAddress.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
-  _UserAddress_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _UserAddress_vue_vue_type_template_id_8df55c86_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _UserAddress_vue_vue_type_template_id_8df55c86_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  "8df55c86",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/views/account-roles/profile-sections/UserAddress.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -65581,6 +65594,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RoleUserAddress_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RoleUserAddress.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RoleUserAddress_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/views/account-roles/profile-sections/Savings.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************!*\
   !*** ./resources/js/views/account-roles/profile-sections/Savings.vue?vue&type=script&lang=js& ***!
@@ -65594,22 +65623,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Savings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Savings.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/Savings.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Savings_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
-
-/***/ }),
-
-/***/ "./resources/js/views/account-roles/profile-sections/UserAddress.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************!*\
-  !*** ./resources/js/views/account-roles/profile-sections/UserAddress.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserAddress_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UserAddress.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/UserAddress.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserAddress_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -66089,6 +66102,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue?vue&type=template&id=77111f32&scoped=true&":
+/*!**************************************************************************************************************************!*\
+  !*** ./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue?vue&type=template&id=77111f32&scoped=true& ***!
+  \**************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RoleUserAddress_vue_vue_type_template_id_77111f32_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RoleUserAddress_vue_vue_type_template_id_77111f32_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RoleUserAddress_vue_vue_type_template_id_77111f32_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RoleUserAddress.vue?vue&type=template&id=77111f32&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue?vue&type=template&id=77111f32&scoped=true&");
+
+
+/***/ }),
+
 /***/ "./resources/js/views/account-roles/profile-sections/Savings.vue?vue&type=template&id=2e7716cd&scoped=true&":
 /*!******************************************************************************************************************!*\
   !*** ./resources/js/views/account-roles/profile-sections/Savings.vue?vue&type=template&id=2e7716cd&scoped=true& ***!
@@ -66102,23 +66132,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Savings_vue_vue_type_template_id_2e7716cd_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Savings_vue_vue_type_template_id_2e7716cd_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Savings.vue?vue&type=template&id=2e7716cd&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/Savings.vue?vue&type=template&id=2e7716cd&scoped=true&");
-
-
-/***/ }),
-
-/***/ "./resources/js/views/account-roles/profile-sections/UserAddress.vue?vue&type=template&id=8df55c86&scoped=true&":
-/*!**********************************************************************************************************************!*\
-  !*** ./resources/js/views/account-roles/profile-sections/UserAddress.vue?vue&type=template&id=8df55c86&scoped=true& ***!
-  \**********************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserAddress_vue_vue_type_template_id_8df55c86_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserAddress_vue_vue_type_template_id_8df55c86_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserAddress_vue_vue_type_template_id_8df55c86_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UserAddress.vue?vue&type=template&id=8df55c86&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/UserAddress.vue?vue&type=template&id=8df55c86&scoped=true&");
 
 
 /***/ }),
@@ -67371,6 +67384,7 @@ var render = function() {
       [
         _vm.activeStep === 0
           ? _c("AnnualSalary", {
+              attrs: { roleUserId: _vm._f("parseInt")(this.roleUserId) },
               on: {
                 hasAnnualSalary: function($event) {
                   return _vm.annualSalaryCompleted()
@@ -67381,6 +67395,7 @@ var render = function() {
         _vm._v(" "),
         _vm.activeStep === 1
           ? _c("Savings", {
+              attrs: { roleUserId: _vm._f("parseInt")(this.roleUserId) },
               on: {
                 hasSavings: function($event) {
                   return _vm.savingsCompleted()
@@ -67391,6 +67406,7 @@ var render = function() {
         _vm._v(" "),
         _vm.activeStep === 2
           ? _c("Employment", {
+              attrs: { roleUserId: _vm._f("parseInt")(this.roleUserId) },
               on: {
                 hasEmployment: function($event) {
                   return _vm.employmentCompleted()
@@ -67400,7 +67416,8 @@ var render = function() {
           : _vm._e(),
         _vm._v(" "),
         _vm.activeStep === 3
-          ? _c("UserAddress", {
+          ? _c("RoleUserAddress", {
+              attrs: { roleUserId: _vm._f("parseInt")(this.roleUserId) },
               on: {
                 hasAddress: function($event) {
                   return _vm.addressCompleted()
@@ -67540,6 +67557,7 @@ var render = function() {
       [
         _vm.activeStep === 0
           ? _c("AnnualSalary", {
+              attrs: { roleUserId: _vm._f("parseInt")(this.roleUserId) },
               on: {
                 hasAnnualSalary: function($event) {
                   return _vm.annualSalaryCompleted()
@@ -67550,6 +67568,7 @@ var render = function() {
         _vm._v(" "),
         _vm.activeStep === 1
           ? _c("Rent", {
+              attrs: { roleUserId: _vm._f("parseInt")(this.roleUserId) },
               on: {
                 hasRent: function($event) {
                   return _vm.rentCompleted()
@@ -67560,6 +67579,7 @@ var render = function() {
         _vm._v(" "),
         _vm.activeStep === 2
           ? _c("Employment", {
+              attrs: { roleUserId: _vm._f("parseInt")(this.roleUserId) },
               on: {
                 hasEmployment: function($event) {
                   return _vm.employmentCompleted()
@@ -67569,7 +67589,8 @@ var render = function() {
           : _vm._e(),
         _vm._v(" "),
         _vm.activeStep === 3
-          ? _c("UserAddress", {
+          ? _c("RoleUserAddress", {
+              attrs: { roleUserId: _vm._f("parseInt")(this.roleUserId) },
               on: {
                 hasAddress: function($event) {
                   return _vm.addressCompleted()
@@ -68168,6 +68189,63 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue?vue&type=template&id=77111f32&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/RoleUserAddress.vue?vue&type=template&id=77111f32&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.show === true
+    ? _c(
+        "div",
+        [
+          _c("NotificationLabels", { attrs: { errors: _vm.errors } }),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              attrs: { action: "#" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.submit($event)
+                }
+              }
+            },
+            [
+              _c("AddressInputs", {
+                attrs: { title: "Address", "change-event": "addressCompleted" },
+                on: { addressCompleted: _vm.addressCompleted }
+              }),
+              _vm._v(" "),
+              _c("button", { staticClass: "btn btn-success" }, [
+                _vm._v("Submit")
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/Savings.vue?vue&type=template&id=2e7716cd&scoped=true&":
 /*!*********************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/Savings.vue?vue&type=template&id=2e7716cd&scoped=true& ***!
@@ -68236,63 +68314,6 @@ var render = function() {
                 _vm._v("Submit")
               ])
             ]
-          )
-        ],
-        1
-      )
-    : _vm._e()
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/UserAddress.vue?vue&type=template&id=8df55c86&scoped=true&":
-/*!*************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/account-roles/profile-sections/UserAddress.vue?vue&type=template&id=8df55c86&scoped=true& ***!
-  \*************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm.show === true
-    ? _c(
-        "div",
-        [
-          _c("NotificationLabels", { attrs: { errors: _vm.errors } }),
-          _vm._v(" "),
-          _c(
-            "form",
-            {
-              attrs: { action: "#" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.submit($event)
-                }
-              }
-            },
-            [
-              _c("AddressInputs", {
-                attrs: { title: "Address", "change-event": "addressCompleted" },
-                on: { addressCompleted: _vm.addressCompleted }
-              }),
-              _vm._v(" "),
-              _c("button", { staticClass: "btn btn-success" }, [
-                _vm._v("Submit")
-              ])
-            ],
-            1
           )
         ],
         1

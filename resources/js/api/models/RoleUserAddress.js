@@ -1,7 +1,7 @@
 import Api from '../Api'
 
+const END_POINT = (roleUserId) => `roles-users/${roleUserId}/addresses`
 const END_POINT_VERSION = 'v1'
-const END_POINT = (roleUserId) => `roles-users/${roleUserId}/employments`
 
 export default {
     store(roleUserId, data){

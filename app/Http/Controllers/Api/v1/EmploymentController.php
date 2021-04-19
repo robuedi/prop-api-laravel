@@ -25,11 +25,10 @@ class EmploymentController extends Controller
     {
         //make property for user
         return EmploymentResource::make(
-            $role_user->employment->create(
-                $request->get('job_title'),
-                date('Y-m-d', strtotime($request->get('start_date'))),
-                $request->has('end_date') ? date('Y-m-d', strtotime($request->get('end_date'))): null,
-            )
-        )->response()->setStatusCode(Response::HTTP_CREATED);
+            $role_user->employment()->create([
+                'job_title' => $request->get('job_title'),
+                'start_date' => date('Y-m-d', strtotime($request->get('start_date'))),
+                'end_date' => $request->has('end_date') ? date('Y-m-d', strtotime($request->get('end_date'))): null,
+        ]))->response()->setStatusCode(Response::HTTP_CREATED);
     }
 }

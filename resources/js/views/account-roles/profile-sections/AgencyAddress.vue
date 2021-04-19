@@ -39,7 +39,7 @@ export default {
         },
         async submit()
         {
-            AgencyAddress.store({agencyId:this.agencyId, data:this.currentAddress}).then((res) => {
+            AgencyAddress.store(this.agencyId, this.currentAddress).then((res) => {
                 this.$emit('hasAgencyAddress')
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {

@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\v1\PropertyStatusesController;
 use App\Http\Controllers\Api\v1\RentsController;
 use App\Http\Controllers\Api\v1\Roles\RolesController;
 use App\Http\Controllers\Api\v1\Roles\UserRolesController;
-use App\Http\Controllers\Api\v1\UserAddressController;
+use App\Http\Controllers\Api\v1\RoleUserAddressesController;
 use App\Http\Controllers\Api\v1\AgenciesController;
 use App\Http\Controllers\Api\v1\AnnualSalariesController;
 use App\Http\Controllers\Api\v1\EmploymentController;
@@ -71,7 +71,7 @@ Route::prefix('v1')->group(function (){
             Route::resource('properties', RoleUserPropertiesController::class, ['only' => ['index', 'store']]);
 
             //role user address
-            Route::resource('addresses', UserAddressController::class, ['only' => ['index', 'store']]);
+            Route::resource('addresses', RoleUserAddressesController::class, ['only' => ['index', 'store']]);
 
             //annual salaries
             Route::resource('annual-salaries', AnnualSalariesController::class, ['only' => ['index', 'store']]);

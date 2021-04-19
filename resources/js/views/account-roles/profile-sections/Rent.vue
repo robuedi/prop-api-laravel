@@ -20,6 +20,9 @@ import NotificationLabels from "../../../components/NotificationLabels";
 import Rent from "../../../api/models/Rent";
 
 export default {
+    props: {
+        roleUserId: Number
+    },
     components: {
         NotificationLabels
     },
@@ -35,8 +38,8 @@ export default {
     methods: {
         async submit()
         {
-            Rent.store(this.form).then((res) => {
-                this.$emit('hasRent')
+            Rent.store(this.roleUserId, this.form).then((res) => {
+                this.$emit('hasRent', res)
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
                     this.errors.push(msg[0]);
@@ -45,10 +48,10 @@ export default {
         }
     },
     mounted() {
-        Rent.all().then((res) => {
+        Rent.all(this.roleUserId).then((res) => {
             if(res.data.data.length !== 0)
             {
-                this.$emit('hasRent');
+                this.$emit('hasRent', res);
             }
             else
             {
