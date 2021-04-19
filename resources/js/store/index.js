@@ -4,7 +4,6 @@ import auth from './auth.module'
 import properties from './properties.module'
 import propertiesStatuses from './propertiesStatuses.module'
 import countries from './countries.module'
-import roleUserAddress from './roleUserAddress.module'
 import propertyAddress from './propertyAddress.module'
 import propertyUser from './propertyUser.module'
 
@@ -16,7 +15,6 @@ export default new Vuex.Store({
         properties,
         propertiesStatuses,
         countries,
-        roleUserAddress,
         propertyAddress,
         propertyUser
     }
