@@ -1,10 +1,10 @@
 import Api from '../Api'
 
+const VERSION = 'v1'
 const END_POINT = `roles`
-const END_POINT_VERSION = 'v1'
 
 export default {
     all(){
-        return Api.get(`${END_POINT_VERSION}/${END_POINT}`);
+        return Api.get(`${VERSION}/${END_POINT}`);
     },
 }
