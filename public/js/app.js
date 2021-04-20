@@ -2137,8 +2137,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _api_QueryBuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/QueryBuilder */ "./resources/js/api/QueryBuilder.js");
+/* harmony import */ var _api_models_PropertyApplications__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/models/PropertyApplications */ "./resources/js/api/models/PropertyApplications.js");
+/* harmony import */ var _api_models_Property__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../api/models/Property */ "./resources/js/api/models/Property.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2166,38 +2168,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('properties', {
-    property: 'property'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('auth', {
-    user: 'user'
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('auth', {
+    activeRole: 'activeRole'
   })),
+  data: function data() {
+    return {
+      property: null
+    };
+  },
   mounted: function mounted() {
-    this.showSlugProperty({
-      slug: this.$route.params.propertySlug,
-      query: this.makeQueryString()
+    var _this = this;
+
+    _api_models_Property__WEBPACK_IMPORTED_MODULE_2__.default.showSlug(this.$route.params.propertySlug, this.getQueryString()).then(function (res) {
+      _this.property = res.data.data;
     });
   },
-  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('properties', ['showSlugProperty'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('propertyUser', ['bookProperty'])), {}, {
-    bookProperty: function bookProperty(propertySlug) {
-      this.bookProperty({
-        property_slug: propertySlug,
-        user_id: user.id
+  methods: {
+    bookProperty: function bookProperty() {
+      console.log(this.property);
+      _api_models_PropertyApplications__WEBPACK_IMPORTED_MODULE_1__.default.store(this.activeRole.id, {
+        property_id: this.property.id
       }).then(function () {
         console.log('success');
       });
     },
-    makeQueryString: function makeQueryString() {
+    getQueryString: function getQueryString() {
       var query = new _api_QueryBuilder__WEBPACK_IMPORTED_MODULE_0__.default();
-      query.setInclude(['address', 'address.city', 'address.city.country', 'type']);
-      query.setFields('properties', ['id', 'name', 'type_id', 'slug', 'created_at']);
+      query.setInclude(['address', 'address.city', 'address.city.country']);
+      query.setFields('properties', ['id', 'name', 'slug', 'created_at']);
       query.setFields('address', ['id', 'property_id', 'city_id', 'postcode', 'address_line']);
       query.setFields('address.city', ['id', 'country_id', 'name']);
       query.setFields('address.city.country', ['id', 'name']);
-      query.setFields('type', ['id', 'name']);
       return query.get();
     }
-  })
+  }
 });
 
 /***/ }),
@@ -4050,7 +4057,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_AccountNavigation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../layout/AccountNavigation */ "./resources/js/views/account/layout/AccountNavigation.vue");
 /* harmony import */ var _components_AddressInputs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/AddressInputs */ "./resources/js/components/AddressInputs.vue");
 /* harmony import */ var _components_NotificationLabels__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/NotificationLabels */ "./resources/js/components/NotificationLabels.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _api_models_RoleUserProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../api/models/RoleUserProperty */ "./resources/js/api/models/RoleUserProperty.js");
 
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -4106,6 +4114,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     AddressInputs: _components_AddressInputs__WEBPACK_IMPORTED_MODULE_3__.default,
@@ -4126,16 +4135,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapGetters)('propertiesStatuses', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)('propertiesStatuses', {
     statuses: 'statuses'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapGetters)('auth', {
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)('auth', {
     activeRole: 'activeRole'
   })),
   mounted: function mounted() {
     this.rolePropertyType = _rolePropertyType__WEBPACK_IMPORTED_MODULE_1__.default;
     this.getStatuses();
   },
-  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('propertiesStatuses', ['getStatuses'])), (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('properties', ['storeUserProperty'])), (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('propertyAddress', ['storeUserPropertyAddress'])), {}, {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapActions)('propertiesStatuses', ['getStatuses'])), (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapActions)('propertyAddress', ['storeUserPropertyAddress'])), {}, {
     submit: function submit() {
       var _this = this;
 
@@ -4144,8 +4153,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.storeUserProperty(_this.prepareFormData()).then(function (res) {
-                  _this.success.push("".concat(res.name, " property created."));
+                _api_models_RoleUserProperty__WEBPACK_IMPORTED_MODULE_5__.default.store(_this.activeRole.id, _this.form.property).then(function (res) {
+                  _this.success.push("".concat(res.data.data.name, " property created."));
 
                   _this.clearData();
                 })["catch"](function (error) {
@@ -4173,12 +4182,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.form.property.address = {};
       this.$emit('clearAddress');
     },
-    prepareFormData: function prepareFormData() {
-      //add the property type based on the role
-      return _objectSpread(_objectSpread({}, this.form.property), {}, {
-        type_id: this.rolePropertyType[this.activeRole.role_id].propertyType
-      });
-    },
     addressChange: function addressChange(address) {
       this.form.property.address = address;
     }
@@ -4200,7 +4203,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _layout_AccountNavigation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layout/AccountNavigation */ "./resources/js/views/account/layout/AccountNavigation.vue");
 /* harmony import */ var _partials_PropertyItemAccount__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/PropertyItemAccount */ "./resources/js/views/account/partials/PropertyItemAccount.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _api_models_PropertyApplications__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../api/models/PropertyApplications */ "./resources/js/api/models/PropertyApplications.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -4216,6 +4220,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+
 
 
 
@@ -4226,19 +4232,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      userApplications: []
+      userApplications: [],
+      loadingStatus: 'Loading data...'
     };
   },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('auth', {
+    activeRole: 'activeRole'
+  })),
   mounted: function mounted() {
-    this.fetchProperties();
-  },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('properties', ['getUserApplications'])), {}, {
-    fetchProperties: function fetchProperties() {
-      this.getUserApplications().then(function (res) {})["catch"](function (error) {
-        throw error;
-      });
-    }
-  })
+    var _this = this;
+
+    _api_models_PropertyApplications__WEBPACK_IMPORTED_MODULE_2__.default.all(this.activeRole.id).then(function (res) {
+      _this.userApplications = res.data.data;
+      _this.loadingStatus = _this.userApplications.length === 0 ? 'No applications found.' : '';
+    })["catch"](function (error) {
+      _this.loadingStatus = 'We encountered problems loading the data...';
+      throw error;
+    });
+  }
 });
 
 /***/ }),
@@ -4256,7 +4267,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _layout_AccountNavigation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layout/AccountNavigation */ "./resources/js/views/account/layout/AccountNavigation.vue");
 /* harmony import */ var _partials_PropertyItemAccount__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../partials/PropertyItemAccount */ "./resources/js/views/account/partials/PropertyItemAccount.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _api_models_RoleUserProperty__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../api/models/RoleUserProperty */ "./resources/js/api/models/RoleUserProperty.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -4272,6 +4284,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+
 
 
 
@@ -4282,20 +4296,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      properties: [],
-      userProperties: []
+      userProperties: [],
+      loadingStatus: 'Loading data...'
     };
   },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('auth', {
+    activeRole: 'activeRole'
+  })),
   mounted: function mounted() {
-    this.fetchProperties();
-  },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('properties', ['getUserProperties'])), {}, {
-    fetchProperties: function fetchProperties() {
-      this.getUserProperties().then(function (res) {})["catch"](function (error) {
-        throw error;
-      });
-    }
-  })
+    var _this = this;
+
+    _api_models_RoleUserProperty__WEBPACK_IMPORTED_MODULE_2__.default.all(this.activeRole.id).then(function (res) {
+      _this.userProperties = res.data.data;
+      _this.loadingStatus = _this.userProperties.length === 0 ? 'No properties added.' : '';
+    })["catch"](function (error) {
+      _this.loadingStatus = 'We encountered problems loading the data...';
+      throw error;
+    });
+  }
 });
 
 /***/ }),
@@ -4364,14 +4382,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _partials_PropertyItemCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./partials/PropertyItemCard */ "./resources/js/views/home/partials/PropertyItemCard.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _api_QueryBuilder__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api/QueryBuilder */ "./resources/js/api/QueryBuilder.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+/* harmony import */ var _api_models_Property__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../api/models/Property */ "./resources/js/api/models/Property.js");
 //
 //
 //
@@ -4409,15 +4421,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     query.setFields('address.city', ['id', 'country_id', 'name']);
     query.setFields('address.city.country', ['id', 'name']); //fetch data
 
-    this.getProperties(query.get()).then(function (res) {
+    _api_models_Property__WEBPACK_IMPORTED_MODULE_2__.default.all(query.get()).then(function (res) {
       _this.properties = res.data.data;
     })["finally"](function () {
       _this.loadingProperties = false;
     });
-  },
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('properties', {
-    getProperties: 'getAll'
-  }))
+  }
 });
 
 /***/ }),
@@ -4636,18 +4645,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
 
+var VERSION = 'v1';
 
 var END_POINT = function END_POINT(roleUserId) {
   return "roles-users/".concat(roleUserId, "/agencies");
 };
 
-var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   store: function store(roleUserId, data) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)), data);
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(VERSION, "/").concat(END_POINT(roleUserId)), data);
   },
   all: function all(roleUserId) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)));
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(VERSION, "/").concat(END_POINT(roleUserId)));
   }
 });
 
@@ -4666,18 +4675,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
 
+var VERSION = 'v1';
 
 var END_POINT = function END_POINT(agencyId) {
   return "agencies/".concat(agencyId, "/addresses");
 };
 
-var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   store: function store(agencyId, data) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(agencyId)), data);
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(VERSION, "/").concat(END_POINT(agencyId)), data);
   },
   all: function all(agencyId) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(agencyId)));
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(VERSION, "/").concat(END_POINT(agencyId)));
   }
 });
 
@@ -4696,18 +4705,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
 
+var VERSION = 'v1';
 
 var END_POINT = function END_POINT(roleUserId) {
   return "roles-users/".concat(roleUserId, "/annual-salaries");
 };
 
-var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   store: function store(roleUserId, data) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)), data);
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(VERSION, "/").concat(END_POINT(roleUserId)), data);
   },
   all: function all(roleUserId) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)));
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(VERSION, "/").concat(END_POINT(roleUserId)));
   }
 });
 
@@ -4726,12 +4735,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
 
+var VERSION = 'v1';
 var END_POINT = 'countries';
-var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   all: function all() {
     var query = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT).concat(query));
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(VERSION, "/").concat(END_POINT).concat(query));
   }
 });
 
@@ -4750,7 +4759,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
 
-var END_POINT_VERSION = 'v1';
+var VERSION = 'v1';
 
 var END_POINT = function END_POINT(roleUserId) {
   return "roles-users/".concat(roleUserId, "/employments");
@@ -4758,10 +4767,10 @@ var END_POINT = function END_POINT(roleUserId) {
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   store: function store(roleUserId, data) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)), data);
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(VERSION, "/").concat(END_POINT(roleUserId)), data);
   },
   all: function all(roleUserId) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)));
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(VERSION, "/").concat(END_POINT(roleUserId)));
   }
 });
 
@@ -4780,16 +4789,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
 
+var VERSION = 'v1';
 var END_POINT = 'properties';
-var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   all: function all() {
     var query = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT).concat(query));
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(VERSION, "/").concat(END_POINT).concat(query));
   },
   showSlug: function showSlug(slug) {
     var query = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT, "/").concat(slug).concat(query));
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(VERSION, "/").concat(END_POINT, "/").concat(slug).concat(query));
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/api/models/PropertyApplications.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/api/models/PropertyApplications.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
+
+var VERSION = 'v1';
+
+var END_POINT = function END_POINT(roleUserId) {
+  return "roles-users/".concat(roleUserId, "/property-applications");
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  store: function store(roleUserId, data) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(VERSION, "/").concat(END_POINT(roleUserId)), data);
+  },
+  all: function all(roleUserId) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(VERSION, "/").concat(END_POINT(roleUserId)));
   }
 });
 
@@ -4808,18 +4847,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
 
+var VERSION = 'v1';
 
 var END_POINT = function END_POINT(roleUserId) {
   return "roles-users/".concat(roleUserId, "/rents");
 };
 
-var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   store: function store(roleUserId, data) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)), data);
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(VERSION, "/").concat(END_POINT(roleUserId)), data);
   },
   all: function all(roleUserId) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)));
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(VERSION, "/").concat(END_POINT(roleUserId)));
   }
 });
 
@@ -4838,11 +4877,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
 
+var VERSION = 'v1';
 var END_POINT = "roles";
-var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   all: function all() {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT));
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(VERSION, "/").concat(END_POINT));
   }
 });
 
@@ -4863,15 +4902,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/index */ "./resources/js/store/index.js");
 
 
+var VERSION = 'v1';
 
 var END_POINT = function END_POINT() {
   return "users/".concat(_store_index__WEBPACK_IMPORTED_MODULE_1__.default.getters["auth/userId"], "/roles-users");
 };
 
-var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   store: function store(roleId) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT()), {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(VERSION, "/").concat(END_POINT()), {
       role_id: roleId
     });
   }
@@ -4892,18 +4931,48 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
 
+var VERSION = 'v1';
 
 var END_POINT = function END_POINT(roleUserId) {
   return "roles-users/".concat(roleUserId, "/addresses");
 };
 
-var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   store: function store(roleUserId, data) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)), data);
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(VERSION, "/").concat(END_POINT(roleUserId)), data);
   },
   all: function all(roleUserId) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)));
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(VERSION, "/").concat(END_POINT(roleUserId)));
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/api/models/RoleUserProperty.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/api/models/RoleUserProperty.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
+
+var VERSION = 'v1';
+
+var END_POINT = function END_POINT(roleUserId) {
+  return "roles-users/".concat(roleUserId, "/properties");
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  store: function store(roleUserId, data) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(VERSION, "/").concat(END_POINT(roleUserId)), data);
+  },
+  all: function all(roleUserId) {
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(VERSION, "/").concat(END_POINT(roleUserId)));
   }
 });
 
@@ -4922,18 +4991,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./resources/js/api/Api.js");
 
+var VERSION = 'v1';
 
 var END_POINT = function END_POINT(roleUserId) {
   return "roles-users/".concat(roleUserId, "/savings");
 };
 
-var END_POINT_VERSION = 'v1';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   store: function store(roleUserId, data) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)), data);
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.post("".concat(VERSION, "/").concat(END_POINT(roleUserId)), data);
   },
   all: function all(roleUserId) {
-    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(END_POINT_VERSION, "/").concat(END_POINT(roleUserId)));
+    return _Api__WEBPACK_IMPORTED_MODULE_0__.default.get("".concat(VERSION, "/").concat(END_POINT(roleUserId)));
   }
 });
 
@@ -5528,15 +5597,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _auth_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth.module */ "./resources/js/store/auth.module.js");
-/* harmony import */ var _properties_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./properties.module */ "./resources/js/store/properties.module.js");
-/* harmony import */ var _propertiesStatuses_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./propertiesStatuses.module */ "./resources/js/store/propertiesStatuses.module.js");
-/* harmony import */ var _countries_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./countries.module */ "./resources/js/store/countries.module.js");
-/* harmony import */ var _roleUserAddress_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./roleUserAddress.module */ "./resources/js/store/roleUserAddress.module.js");
-/* harmony import */ var _propertyAddress_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./propertyAddress.module */ "./resources/js/store/propertyAddress.module.js");
-/* harmony import */ var _propertyUser_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./propertyUser.module */ "./resources/js/store/propertyUser.module.js");
+/* harmony import */ var _propertiesStatuses_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./propertiesStatuses.module */ "./resources/js/store/propertiesStatuses.module.js");
+/* harmony import */ var _countries_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./countries.module */ "./resources/js/store/countries.module.js");
+/* harmony import */ var _propertyAddress_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./propertyAddress.module */ "./resources/js/store/propertyAddress.module.js");
+/* harmony import */ var _propertyUser_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./propertyUser.module */ "./resources/js/store/propertyUser.module.js");
 
 
 
@@ -5544,175 +5611,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-vue__WEBPACK_IMPORTED_MODULE_7__.default.use(vuex__WEBPACK_IMPORTED_MODULE_8__.default);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_8__.default.Store({
+vue__WEBPACK_IMPORTED_MODULE_5__.default.use(vuex__WEBPACK_IMPORTED_MODULE_6__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_6__.default.Store({
   modules: {
     auth: _auth_module__WEBPACK_IMPORTED_MODULE_0__.default,
-    properties: _properties_module__WEBPACK_IMPORTED_MODULE_1__.default,
-    propertiesStatuses: _propertiesStatuses_module__WEBPACK_IMPORTED_MODULE_2__.default,
-    countries: _countries_module__WEBPACK_IMPORTED_MODULE_3__.default,
-    roleUserAddress: _roleUserAddress_module__WEBPACK_IMPORTED_MODULE_4__.default,
-    propertyAddress: _propertyAddress_module__WEBPACK_IMPORTED_MODULE_5__.default,
-    propertyUser: _propertyUser_module__WEBPACK_IMPORTED_MODULE_6__.default
+    propertiesStatuses: _propertiesStatuses_module__WEBPACK_IMPORTED_MODULE_1__.default,
+    countries: _countries_module__WEBPACK_IMPORTED_MODULE_2__.default,
+    propertyAddress: _propertyAddress_module__WEBPACK_IMPORTED_MODULE_3__.default,
+    propertyUser: _propertyUser_module__WEBPACK_IMPORTED_MODULE_4__.default
   }
 }));
-
-/***/ }),
-
-/***/ "./resources/js/store/properties.module.js":
-/*!*************************************************!*\
-  !*** ./resources/js/store/properties.module.js ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api_models_Property__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/models/Property */ "./resources/js/api/models/Property.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  namespaced: true,
-  state: {
-    property: null
-  },
-  getters: {
-    property: function property(state) {
-      return state.property;
-    }
-  },
-  mutations: {
-    SET_PROPERTY: function SET_PROPERTY(state, value) {
-      state.property = value;
-    }
-  },
-  actions: {
-    showSlugProperty: function showSlugProperty(_ref, data) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit;
-                _context.next = 3;
-                return _api_models_Property__WEBPACK_IMPORTED_MODULE_1__.default.showSlug(data.slug, data.query).then(function (response) {
-                  commit('SET_PROPERTY', response.data.data);
-                  return response;
-                })["catch"](function (err) {
-                  commit('SET_PROPERTY', null);
-                  throw err;
-                });
-
-              case 3:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    getAll: function getAll(_ref2) {
-      var _arguments = arguments;
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, query;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref2.commit;
-                query = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : '';
-                return _context2.abrupt("return", _api_models_Property__WEBPACK_IMPORTED_MODULE_1__.default.all(query));
-
-              case 3:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    },
-    storeUserProperty: function storeUserProperty(_ref3, property) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var rootGetters;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                rootGetters = _ref3.rootGetters;
-                return _context3.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/properties"), property).then(function (response) {
-                  return response.data.data;
-                })["catch"](function (err) {
-                  throw err;
-                }));
-
-              case 2:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    },
-    getUserProperties: function getUserProperties(_ref4) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var rootGetters;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                rootGetters = _ref4.rootGetters;
-                _context4.next = 3;
-                return axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/properties/")).then(function (response) {
-                  return response;
-                })["catch"](function (err) {
-                  throw err;
-                });
-
-              case 3:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
-    },
-    getUserApplications: function getUserApplications(_ref5) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-        var rootGetters;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                rootGetters = _ref5.rootGetters;
-                _context5.next = 3;
-                return axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/property-applications/")).then(function (response) {
-                  return response;
-                })["catch"](function (err) {
-                  throw err;
-                });
-
-              case 3:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }))();
-    }
-  }
-});
 
 /***/ }),
 
@@ -5930,94 +5838,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/store/roleUserAddress.module.js":
-/*!******************************************************!*\
-  !*** ./resources/js/store/roleUserAddress.module.js ***!
-  \******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  namespaced: true,
-  state: {
-    userAddress: []
-  },
-  getters: {
-    userAddress: function userAddress(state) {
-      return state.userAddress;
-    }
-  },
-  mutations: {
-    SET_USER_ADDRESS: function SET_USER_ADDRESS(state, value) {
-      state.userAddress = value;
-    }
-  },
-  actions: {
-    setUserAddress: function setUserAddress(_ref, data) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit, rootGetters;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                dispatch = _ref.dispatch, commit = _ref.commit, rootGetters = _ref.rootGetters;
-                return _context.abrupt("return", axios.post("/api/v1/users/".concat(rootGetters['auth/userId'], "/addresses"), data).then(function (response) {
-                  commit('SET_USER_ADDRESS', response.data.data);
-                  return response;
-                })["catch"](function (err) {
-                  commit('SET_USER_ADDRESS', []);
-                  throw err;
-                }));
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    getCurrentUserAddress: function getCurrentUserAddress(_ref2) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, rootGetters;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref2.commit, rootGetters = _ref2.rootGetters;
-                return _context2.abrupt("return", axios.get("/api/v1/users/".concat(rootGetters['auth/userId'], "/addresses")).then(function (response) {
-                  commit('SET_USER_ADDRESS', response.data.data);
-                  return response;
-                })["catch"](function (err) {
-                  commit('SET_USER_ADDRESS', []);
-                  throw err;
-                }));
-
-              case 2:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
       }))();
     }
   }
@@ -66791,11 +66611,11 @@ var render = function() {
               attrs: { type: "button" },
               on: {
                 click: function($event) {
-                  return _vm.bookProperty(_vm.property.slug)
+                  return _vm.bookProperty()
                 }
               }
             },
-            [_vm._v(_vm._s(_vm._f("capitalize")(_vm.property.type.name)))]
+            [_vm._v(_vm._s(_vm._f("capitalize")("property.type.name")))]
           ),
           _vm._v(" "),
           _c("div", { staticClass: "card-text" }, [
@@ -68616,7 +68436,7 @@ var render = function() {
     [
       _c("AccountNavigation", { attrs: { activeSection: "userApplications" } }),
       _vm._v(" "),
-      _vm.userApplications
+      _vm.userApplications.length > 0
         ? _c(
             "div",
             { staticClass: "card-columns" },
@@ -68628,6 +68448,10 @@ var render = function() {
             }),
             1
           )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.loadingStatus
+        ? _c("p", [_vm._v(_vm._s(_vm.loadingStatus))])
         : _vm._e()
     ],
     1
@@ -68661,7 +68485,7 @@ var render = function() {
     [
       _c("AccountNavigation", { attrs: { activeSection: "userProperties" } }),
       _vm._v(" "),
-      _vm.userProperties
+      _vm.userProperties.length > 0
         ? _c(
             "div",
             { staticClass: "card-columns" },
@@ -68673,6 +68497,10 @@ var render = function() {
             }),
             1
           )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.loadingStatus
+        ? _c("p", [_vm._v(_vm._s(_vm.loadingStatus))])
         : _vm._e()
     ],
     1

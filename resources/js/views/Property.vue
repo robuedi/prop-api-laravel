@@ -3,7 +3,7 @@
         <img class="card-img-top" src="https://i.stack.imgur.com/y9DpT.jpg" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title mb-4">{{property.name}}</h5>
-            <button type="button" @click="bookProperty(property.slug)" class="btn btn-primary mb-4">{{ property.type.name | capitalize }}</button>
+            <button type="button" @click="bookProperty()" class="btn btn-primary mb-4">{{ 'property.type.name' | capitalize }}</button>
             <div class="card-text">
                 <p>
                     <strong>{{ property.address.city.name+', '+property.address.city.country.name }}</strong>
@@ -19,38 +19,42 @@
 
 <script>
 
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import QueryBuilder from "../api/QueryBuilder";
+import PropertyApplications from "../api/models/PropertyApplications";
+import Property from "../api/models/Property";
 
 export default {
     computed: {
-        ...mapGetters('properties',{
-            property: 'property',
+        ...mapGetters('auth', {
+            activeRole: 'activeRole',
         }),
-        ...mapGetters('auth',{
-            user: 'user',
-        }),
+    },
+    data: () => {
+        return {
+            property: null
+        }
     },
     mounted() {
-        this.showSlugProperty({slug:this.$route.params.propertySlug, query: this.makeQueryString()})
+        Property.showSlug(this.$route.params.propertySlug, this.getQueryString()).then((res)=>{
+            this.property = res.data.data
+        })
     },
     methods: {
-        ...mapActions('properties', ['showSlugProperty']),
-        ...mapActions('propertyUser', ['bookProperty']),
-        bookProperty(propertySlug)
+        bookProperty()
         {
-            this.bookProperty({property_slug: propertySlug, user_id: user.id}).then(()=>{
+            console.log(this.property)
+            PropertyApplications.store(this.activeRole.id,{property_id: this.property.id}).then(()=>{
                 console.log('success')
             })
         },
-        makeQueryString() {
+        getQueryString() {
             const query = new QueryBuilder();
-            query.setInclude(['address', 'address.city', 'address.city.country', 'type'])
-            query.setFields('properties', ['id', 'name', 'type_id', 'slug', 'created_at'])
+            query.setInclude(['address', 'address.city', 'address.city.country'])
+            query.setFields('properties', ['id', 'name', 'slug', 'created_at'])
             query.setFields('address', ['id', 'property_id', 'city_id', 'postcode', 'address_line'])
             query.setFields('address.city', ['id', 'country_id', 'name'])
             query.setFields('address.city.country', ['id', 'name'])
-            query.setFields('type', ['id', 'name'])
 
             return query.get()
         }

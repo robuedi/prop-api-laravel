@@ -44,9 +44,7 @@ Route::prefix('v1')->group(function (){
     Route::resource('/property-statuses', PropertyStatusesController::class, ['only' => ['index']]);
 
     //properties
-    Route::resource('/properties', PropertiesController::class, ['only' => ['index', 'show']])->parameters([
-        'properties' => 'properties:slug',
-    ]);
+    Route::resource('/properties', PropertiesController::class, ['only' => ['index', 'show']]);
 
     Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -66,7 +64,7 @@ Route::prefix('v1')->group(function (){
         Route::group(['prefix' => 'roles-users/{role_user}', 'middleware' => ['role-user-authorization']], function (){
 
             //property applications
-            Route::resource('property-applications', PropertyApplicationsController::class, ['only' => ['index']]);
+            Route::resource('property-applications', PropertyApplicationsController::class, ['only' => ['index', 'store']]);
 
             //properties
             Route::resource('properties', RoleUserPropertiesController::class, ['only' => ['index', 'store']]);

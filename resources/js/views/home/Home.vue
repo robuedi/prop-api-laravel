@@ -13,8 +13,8 @@
 
 <script>
 import PropertyItemCard from "./partials/PropertyItemCard";
-import {mapActions, mapGetters} from "vuex";
 import QueryBuilder from "../../api/QueryBuilder";
+import Property from "../../api/models/Property";
 
 export default {
     components: {
@@ -36,16 +36,11 @@ export default {
         query.setFields('address.city.country', ['id', 'name'])
 
         //fetch data
-        this.getProperties(query.get()).then((res) => {
+        Property.all(query.get()).then((res) => {
             this.properties = res.data.data
         }).finally(()=>{
             this.loadingProperties = false
         })
     },
-    methods: {
-        ...mapActions('properties', {
-            getProperties: 'getAll'
-        }),
-    }
 }
 </script>

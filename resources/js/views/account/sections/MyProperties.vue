@@ -1,16 +1,18 @@
 <template>
     <div>
         <AccountNavigation activeSection="userProperties"/>
-        <div class="card-columns" v-if="userProperties">
+        <div class="card-columns" v-if="userProperties.length > 0">
             <PropertyItemAccount v-for="property in userProperties" :key="property.id" :property="property"/>
         </div>
+        <p v-if="loadingStatus">{{ loadingStatus }}</p>
     </div>
 </template>
 
 <script>
 import AccountNavigation from "../layout/AccountNavigation";
 import PropertyItemAccount from "../partials/PropertyItemAccount";
-import {mapActions, mapGetters} from "vuex";
+import {mapGetters} from "vuex";
+import RoleUserProperty from "../../../api/models/RoleUserProperty";
 
 export default {
     components: {
@@ -19,21 +21,23 @@ export default {
     },
     data () {
         return {
-            properties: [],
-            userProperties: []
+            userProperties: [],
+            loadingStatus: 'Loading data...'
         }
+    },
+    computed: {
+        ...mapGetters('auth', {
+            activeRole: 'activeRole',
+        }),
     },
     mounted() {
-        this.fetchProperties();
+        RoleUserProperty.all(this.activeRole.id).then((res) => {
+            this.userProperties = res.data.data
+            this.loadingStatus = this.userProperties.length === 0 ? 'No properties added.' : ''
+        }).catch((error) => {
+            this.loadingStatus = 'We encountered problems loading the data...'
+            throw error
+        })
     },
-    methods: {
-        ...mapActions('properties', ['getUserProperties']),
-        fetchProperties(){
-            this.getUserProperties().then((res) => {
-            }).catch((error) => {
-                throw error
-            })
-        }
-    }
 }
 </script>

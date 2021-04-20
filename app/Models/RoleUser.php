@@ -27,14 +27,19 @@ class RoleUser extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function ownedProperties()
+    public function properties()
     {
-        return $this->hasMany(Property::class, 'owner_id', 'id');
+        return $this->hasMany(Property::class);
     }
 
-    public function propertyApplications()
+    public function appliedProperties()
     {
         return $this->belongsToMany(Property::class);
+    }
+
+    public function propertiesApplications()
+    {
+        return $this->hasMany(PropertyRoleUser::class);
     }
 
     public function agency()

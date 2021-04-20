@@ -31,6 +31,7 @@ import AccountNavigation from "../layout/AccountNavigation";
 import AddressInputs from '../../../components/AddressInputs'
 import NotificationLabels from '../../../components/NotificationLabels'
 import {mapActions, mapGetters} from "vuex";
+import RoleUserProperty from "../../../api/models/RoleUserProperty";
 
 export default {
     components: {
@@ -66,12 +67,11 @@ export default {
     },
     methods: {
         ...mapActions('propertiesStatuses', ['getStatuses']),
-        ...mapActions('properties', ['storeUserProperty']),
         ...mapActions('propertyAddress', ['storeUserPropertyAddress']),
         async submit()
         {
-            this.storeUserProperty(this.prepareFormData()).then((res) => {
-                this.success.push(`${res.name} property created.`);
+            RoleUserProperty.store(this.activeRole.id, this.form.property).then((res) => {
+                this.success.push(`${res.data.data.name} property created.`);
                 this.clearData()
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
@@ -86,11 +86,6 @@ export default {
             this.form.property.name = '';
             this.form.property.address = {};
             this.$emit('clearAddress');
-        },
-        prepareFormData()
-        {
-            //add the property type based on the role
-            return {...this.form.property, type_id:this.rolePropertyType[this.activeRole.role_id].propertyType}
         },
         addressChange(address)
         {

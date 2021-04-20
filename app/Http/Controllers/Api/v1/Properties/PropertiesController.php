@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\PropertyResource;
 use App\Models\Property;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PropertiesController extends Controller
@@ -25,9 +26,9 @@ class PropertiesController extends Controller
         return PropertyResource::collection($properties)->response()->setStatusCode(Response::HTTP_OK);
     }
 
-    public function show(Property $property)
+    public function show(String $property_slug)
     {
-        $_property = QueryBuilder::for($property)
+        $_property = QueryBuilder::for(Property::where('slug', $property_slug))
             ->allowedFields([
                 'id', 'name', 'slug', 'type_id', 'created_at',
                 'address.id', 'address.city_id', 'address.property_id', 'address.postcode', 'address.address_line',

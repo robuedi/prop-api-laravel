@@ -22,7 +22,7 @@ class RoleUserPropertiesController extends Controller
 
     public function index(RoleUser $role_user)
     {
-        return GeneralResource::collection($role_user->ownedProperties)->response()->setStatusCode(Response::HTTP_OK);
+        return GeneralResource::collection($role_user->properties)->response()->setStatusCode(Response::HTTP_OK);
     }
 
     public function store(RoleUser $role_user, UserPropertyStoreRequest $request)

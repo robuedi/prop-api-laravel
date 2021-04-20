@@ -19,7 +19,6 @@ class CreatePropertiesTable extends Migration
             $table->string('slug');
             $table->bigInteger('status_id')->unsigned();
             $table->bigInteger('role_user_id')->unsigned();
-            $table->bigInteger('type_id')->unsigned();
             $table->timestamps();
         });
     }
