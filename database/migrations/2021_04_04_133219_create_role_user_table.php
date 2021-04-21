@@ -18,6 +18,7 @@ class CreateRoleUserTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('role_id')->unsigned();
             $table->tinyInteger('is_completed')->default(0);
+            $table->tinyInteger('is_used')->default(0);
             $table->timestamps();
         });
     }

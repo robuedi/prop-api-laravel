@@ -23,7 +23,10 @@ class RolesUsersController extends Controller
     public function update(RoleUser $roles_user, RolesUserUpdateRequest $request)
     {
         return RoleResource::make(
-            $this->role_user_repository->updateInstance($roles_user, ['is_completed' => $request->get('is_completed')])
+            $this->role_user_repository->updateInstance($roles_user, [
+                'is_completed' => $request->get('is_completed'),
+                'is_used' => $request->get('is_used')
+            ])
         )->response()->setStatusCode(Response::HTTP_OK);
     }
 

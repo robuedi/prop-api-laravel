@@ -32,7 +32,6 @@
 
 <script>
 
-import rolePropertyType from "./rolePropertyType";
 import AccountNavigation from "../layout/AccountNavigation";
 import AddressInputs from '../../../components/AddressInputs'
 import NotificationLabels from '../../../components/NotificationLabels'
@@ -47,7 +46,6 @@ export default {
     },
     data () {
         return {
-            rolePropertyType: null,
             success: [],
             errors: [],
             form: {
@@ -67,7 +65,6 @@ export default {
         }),
     },
     mounted() {
-        this.rolePropertyType = rolePropertyType
         this.getStatuses();
     },
     methods: {

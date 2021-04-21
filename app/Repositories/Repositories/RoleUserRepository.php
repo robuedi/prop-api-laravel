@@ -26,6 +26,17 @@ class RoleUserRepository implements RoleUserRepositoryInterface
             ]);
         }
 
+        //update is used
+        if(isset($fields['is_used']))
+        {
+            $roleUser->update(['is_used' => $fields['is_used']]);
+
+            if($fields['is_used'] === 1)
+            {
+                $roleUser->user->userRole()->where('id', '!=', $roleUser->id)->update(['is_used' => 0]);
+            }
+        }
+
         return $roleUser;
     }
 

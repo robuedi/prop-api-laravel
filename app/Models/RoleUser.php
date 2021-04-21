@@ -15,6 +15,7 @@ class RoleUser extends Model
         'user_id',
         'role_id',
         'is_completed',
+        'is_used'
     ];
 
     public function role()

@@ -43,7 +43,6 @@ export default {
     methods: {
         bookProperty()
         {
-            console.log(this.property)
             PropertyApplications.store(this.activeRole.id,{property_id: this.property.id}).then(()=>{
                 console.log('success')
             })

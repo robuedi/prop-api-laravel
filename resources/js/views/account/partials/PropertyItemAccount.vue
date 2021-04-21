@@ -1,6 +1,6 @@
 <template>
     <div class="card " >
-        <img class="card-img-top" src="https://loremflickr.com/320/240/house" alt="Card image cap">
+        <div class="card-img-top" v-if="property.images !== 'undefined' && property.images.length > 0 " :style='`background-image: url("/${property.images[0].path}"`'></div>
         <div class="card-body">
             <h5 class="card-title">{{property.name}}</h5>
             <p class="card-text">
@@ -26,8 +26,11 @@ export default {
 </script>
 
 <style scoped>
-.card{
-    width: 18rem;
+.card-img-top{
+    height: 290px;
+    background-position: center;
+    background-size: cover;
+
 }
 </style>
 

@@ -8,7 +8,7 @@ export default {
         return Api.post(`${VERSION}/${END_POINT(roleUserId)}`, data);
     },
 
-    all(roleUserId){
-        return Api.get(`${VERSION}/${END_POINT(roleUserId)}`);
+    all(roleUserId, query = ''){
+        return Api.get(`${VERSION}/${END_POINT(roleUserId)}${query}`);
     },
 }

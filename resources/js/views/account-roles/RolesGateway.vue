@@ -63,7 +63,7 @@ export default {
         {
             RoleUser.store(roleId).then((res) => {
                 //set the new role as the active one
-                this.setActiveRole(res)
+                this.setActiveRole(res.data.data)
 
                 //refetch the user
                 this.me().then(()=>{

@@ -94,6 +94,11 @@ export default {
         setActiveRole({dispatch, commit}, activeRole)
         {
             commit('SET_ACTIVE_ROLE', activeRole)
+            axios.put(`/api/v1/roles-users/${activeRole.id}`, {is_used: 1}).then((res) => {
+                return dispatch('me').then(() => {
+                    return res;
+                })
+            });
         },
 
         async me ({ commit }) {
@@ -101,9 +106,15 @@ export default {
                 commit('SET_AUTHENTICATED', true)
                 commit('SET_USER', response.data)
                 commit('SET_AUTH_API_STATE', apiStates.LOADED)
+
+                const usedRole = response.data.user_role.filter((_userRole => _userRole.is_used === 1))
+                if(usedRole.length === 1) {
+                    commit('SET_ACTIVE_ROLE', usedRole[0])
+                }
             }).catch(() => {
                 commit('SET_AUTHENTICATED', false)
                 commit('SET_USER', null)
+                commit('SET_ACTIVE_ROLE', null)
                 commit('SET_AUTH_API_STATE', apiStates.ERROR)
             })
         }
