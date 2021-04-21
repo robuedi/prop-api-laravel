@@ -4,5 +4,5 @@ namespace App\Repositories;
 
 interface PropertyRepositoryInterface
 {
-    public function createWithOptionalAddress(array $property_data, ?array $address_data);
+    public function createRelational(array $property_data);
 }

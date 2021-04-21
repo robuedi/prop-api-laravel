@@ -37,8 +37,11 @@ import App from './layout/App'
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+//mixin
+import './extra/mixin'
+
 //filters
-import './filters'
+import './extra/filters'
 
 //make app
 const app = new Vue({

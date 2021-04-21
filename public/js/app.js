@@ -4109,6 +4109,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4127,11 +4133,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       success: [],
       errors: [],
       form: {
-        property: {
-          name: '',
-          status_id: '',
-          address: {}
-        }
+        media_file: null,
+        name: '',
+        status_id: '',
+        address: {}
       }
     };
   },
@@ -4149,11 +4154,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var formData;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _api_models_RoleUserProperty__WEBPACK_IMPORTED_MODULE_5__.default.store(_this.activeRole.id, _this.form.property).then(function (res) {
+                //make form data
+                formData = new FormData(); //build form data
+
+                _this.buildFormData(formData, _this.form);
+
+                _api_models_RoleUserProperty__WEBPACK_IMPORTED_MODULE_5__.default.store(_this.activeRole.id, formData).then(function (res) {
                   _this.success.push("".concat(res.data.data.name, " property created."));
 
                   _this.clearData();
@@ -4167,7 +4178,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   }
                 });
 
-              case 1:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -4177,13 +4188,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     clearData: function clearData() {
       this.error = [];
-      this.form.property.status_id = '';
-      this.form.property.name = '';
-      this.form.property.address = {};
+      this.form.status_id = '';
+      this.form.name = '';
+      this.form.address = {};
       this.$emit('clearAddress');
     },
+    selectImage: function selectImage(event) {
+      this.form.media_file = event.target.files[0];
+    },
     addressChange: function addressChange(address) {
-      this.form.property.address = address;
+      this.form.address = address;
     }
   })
 });
@@ -5022,7 +5036,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./router */ "./resources/js/router/index.js");
 /* harmony import */ var _layout_App__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./layout/App */ "./resources/js/layout/App.vue");
-/* harmony import */ var _filters__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./filters */ "./resources/js/filters.js");
+/* harmony import */ var _extra_mixin__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./extra/mixin */ "./resources/js/extra/mixin.js");
+/* harmony import */ var _extra_filters__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./extra/filters */ "./resources/js/extra/filters.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -5055,7 +5070,9 @@ _store_index__WEBPACK_IMPORTED_MODULE_2__.default.dispatch('auth/me'); //router
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-//filters
+//mixin
+
+ //filters
 
  //make app
 
@@ -5117,10 +5134,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/filters.js":
-/*!*********************************!*\
-  !*** ./resources/js/filters.js ***!
-  \*********************************/
+/***/ "./resources/js/extra/filters.js":
+/*!***************************************!*\
+  !*** ./resources/js/extra/filters.js ***!
+  \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5155,6 +5172,38 @@ vue__WEBPACK_IMPORTED_MODULE_1__.default.filter("parseInt", function (value) {
   }
 
   return parseInt(value);
+});
+
+/***/ }),
+
+/***/ "./resources/js/extra/mixin.js":
+/*!*************************************!*\
+  !*** ./resources/js/extra/mixin.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+
+vue__WEBPACK_IMPORTED_MODULE_0__.default.mixin({
+  methods: {
+    buildFormData: function buildFormData(formData, data, parentKey) {
+      var _this = this;
+
+      //check if object and not special types
+      if (data && _typeof(data) === 'object' && !(data instanceof Date) && !(data instanceof File)) {
+        Object.keys(data).forEach(function (key) {
+          _this.buildFormData(formData, data[key], parentKey ? "".concat(parentKey, "[").concat(key, "]") : key);
+        });
+      } else {
+        var value = data === null ? '' : data;
+        formData.append(parentKey, value);
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -68326,19 +68375,19 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.form.property.name,
-                  expression: "form.property.name"
+                  value: _vm.form.name,
+                  expression: "form.name"
                 }
               ],
               staticClass: "form-control w-50",
               attrs: { type: "text", id: "property_name" },
-              domProps: { value: _vm.form.property.name },
+              domProps: { value: _vm.form.name },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.form.property, "name", $event.target.value)
+                  _vm.$set(_vm.form, "name", $event.target.value)
                 }
               }
             })
@@ -68354,8 +68403,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.form.property.status_id,
-                    expression: "form.property.status_id"
+                    value: _vm.form.status_id,
+                    expression: "form.status_id"
                   }
                 ],
                 staticClass: "form-control",
@@ -68371,7 +68420,7 @@ var render = function() {
                         return val
                       })
                     _vm.$set(
-                      _vm.form.property,
+                      _vm.form,
                       "status_id",
                       $event.target.multiple ? $$selectedVal : $$selectedVal[0]
                     )
@@ -68389,6 +68438,21 @@ var render = function() {
               ],
               2
             )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3" }, [
+            _c(
+              "label",
+              { staticClass: "form-label", attrs: { for: "media_file" } },
+              [_vm._v("Property Image")]
+            ),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("input", {
+              attrs: { type: "file", id: "media_file" },
+              on: { change: _vm.selectImage }
+            })
           ]),
           _vm._v(" "),
           _c("AddressInputs", {

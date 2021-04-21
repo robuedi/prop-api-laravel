@@ -27,9 +27,8 @@ class RoleUserPropertiesController extends Controller
 
     public function store(RoleUser $role_user, UserPropertyStoreRequest $request)
     {
-        $property = $this->property_repository->createWithOptionalAddress(
-            array_merge(['role_user_id'=>$role_user->id],$request->all()),
-            $request->get('address')
+        $property = $this->property_repository->createRelational(
+            array_merge(['role_user_id'=>$role_user->id], $request->all()),
         );
 
         //make property for user
