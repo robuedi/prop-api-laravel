@@ -3,18 +3,16 @@
 
 namespace App\Repositories\Repositories;
 
-
+use App\Http\Services\MediaFile\MediaFileServiceInterface;
 use App\Models\Property;
 use App\Repositories\PropertyRepositoryInterface;
-use App\Http\Services\MediaFile\MediaFileService;
-use Illuminate\Support\Facades\Log;
 
 class PropertyRepository implements PropertyRepositoryInterface
 {
     private Property $property;
-    private MediaFileService $mediaFileService;
+    private MediaFileServiceInterface $mediaFileService;
 
-    public function __construct(Property $property, MediaFileService $mediaFileService)
+    public function __construct(Property $property, MediaFileServiceInterface $mediaFileService)
     {
         $this->property = $property;
         $this->mediaFileService = $mediaFileService;
@@ -26,7 +24,7 @@ class PropertyRepository implements PropertyRepositoryInterface
         $property = $this->property::create($property_data);
 
         //make address
-        if(!isset($property_data['address']))
+        if(isset($property_data['address']))
         {
             $property->address()->create($property_data['address']);
         }
@@ -34,11 +32,12 @@ class PropertyRepository implements PropertyRepositoryInterface
         //add media
         if(isset($property_data['media_file']))
         {
-            //TODO finish this
             $info = $this->mediaFileService->getFileInfo($property_data['media_file'], 'properties', 'public');
-            Log::info($info->getName());
-            Log::info($info->getPath());
-            Log::info($info->getType());
+            $property->images()->create([
+                'name' => $info->getName(),
+                'path' => $info->getPath(),
+                'type' => $info->getType()
+            ]);
         }
 
         return $property;

@@ -5,7 +5,7 @@ namespace App\Http\Services\MediaFile;
 
 use Illuminate\Http\UploadedFile;
 
-class MediaFileService
+class MediaFileService implements MediaFileServiceInterface
 {
     public MediaFileItemInterface $media_file_item;
 

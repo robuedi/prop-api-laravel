@@ -19,8 +19,9 @@ class PropertiesController extends Controller
                     'address.id', 'address.city_id', 'address.property_id', 'address.postcode', 'address.address_line',
                     'address.city.id', 'address.city.country_id', 'address.city.name',
                     'address.city.country.id', 'address.city.country.name',
+                    'images.id', 'images.path',
                 ])
-                ->allowedIncludes(['address', 'address.city', 'address.city.country', 'userType'])
+                ->allowedIncludes(['address', 'address.city', 'address.city.country', 'images'])
                 ->get();
 
         return PropertyResource::collection($properties)->response()->setStatusCode(Response::HTTP_OK);
@@ -34,9 +35,9 @@ class PropertiesController extends Controller
                 'address.id', 'address.city_id', 'address.property_id', 'address.postcode', 'address.address_line',
                 'address.city.id', 'address.city.country_id', 'address.city.name',
                 'address.city.country.id', 'address.city.country.name',
-                'type.id', 'type.name',
+                'images.path',
             ])
-            ->allowedIncludes(['address', 'address.city', 'address.city.country', 'type'])
+            ->allowedIncludes(['address', 'address.city', 'address.city.country', 'images'])
             ->first();
 
         return PropertyResource::make($_property)->response()->setStatusCode(Response::HTTP_OK);

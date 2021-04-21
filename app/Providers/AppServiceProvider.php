@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Http\Services\MediaFile\MediaFileItem;
 use App\Http\Services\MediaFile\MediaFileItemInterface;
+use App\Http\Services\MediaFile\MediaFileService;
+use App\Http\Services\MediaFile\MediaFileServiceInterface;
 use App\Http\Services\RoleUserStatus\RoleUserStatusService;
 use App\Http\Services\RoleUserStatus\RoleUserStatusServiceInterface;
 use App\Repositories\PropertyRepositoryInterface;
@@ -32,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
 
         app()->bind(RoleUserStatusServiceInterface::class, RoleUserStatusService::class);
         app()->bind(MediaFileItemInterface::class, MediaFileItem::class);
+        app()->bind(MediaFileServiceInterface::class, MediaFileService::class);
     }
 
     /**

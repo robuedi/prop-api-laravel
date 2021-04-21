@@ -2197,11 +2197,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     getQueryString: function getQueryString() {
       var query = new _api_QueryBuilder__WEBPACK_IMPORTED_MODULE_0__.default();
-      query.setInclude(['address', 'address.city', 'address.city.country']);
+      query.setInclude(['address', 'address.city', 'address.city.country', 'images']);
       query.setFields('properties', ['id', 'name', 'slug', 'created_at']);
       query.setFields('address', ['id', 'property_id', 'city_id', 'postcode', 'address_line']);
       query.setFields('address.city', ['id', 'country_id', 'name']);
       query.setFields('address.city.country', ['id', 'name']);
+      query.setFields('images', ['path']);
       return query.get();
     }
   }
@@ -4429,11 +4430,12 @@ __webpack_require__.r(__webpack_exports__);
 
     //make the query string
     var query = new _api_QueryBuilder__WEBPACK_IMPORTED_MODULE_1__.default();
-    query.setInclude(['address', 'address.city', 'address.city.country']);
+    query.setInclude(['address', 'address.city', 'address.city.country', 'images']);
     query.setFields('properties', ['id', 'name', 'slug', 'created_at']);
     query.setFields('address', ['id', 'property_id', 'city_id', 'postcode', 'address_line']);
     query.setFields('address.city', ['id', 'country_id', 'name']);
-    query.setFields('address.city.country', ['id', 'name']); //fetch data
+    query.setFields('address.city.country', ['id', 'name']);
+    query.setFields('images', ['path']); //fetch data
 
     _api_models_Property__WEBPACK_IMPORTED_MODULE_2__.default.all(query.get()).then(function (res) {
       _this.properties = res.data.data;
@@ -10430,7 +10432,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.badge[data-v-1790ef74] {\n    font-size: 16px;\n}\n.card-img-top[data-v-1790ef74]{\n    max-height: 250px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.badge[data-v-1790ef74] {\n    font-size: 16px;\n}\n.card-img-top[data-v-1790ef74]{\n    height: 350px;\n    background-position: center;\n    background-size: cover;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -66640,13 +66642,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _vm.property
     ? _c("div", { staticClass: "card" }, [
-        _c("img", {
-          staticClass: "card-img-top",
-          attrs: {
-            src: "https://i.stack.imgur.com/y9DpT.jpg",
-            alt: "Card image cap"
-          }
-        }),
+        _vm.property.images !== "undefined" && _vm.property.images.length > 0
+          ? _c("div", {
+              staticClass: "card-img-top",
+              style:
+                'background-image: url("/' + _vm.property.images[0].path + '"',
+              attrs: { alt: "Card image cap" }
+            })
+          : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("h5", { staticClass: "card-title mb-4" }, [
@@ -68711,61 +68714,39 @@ var render = function() {
     "div",
     { staticClass: "card ", on: { click: _vm.redirectToProperty } },
     [
-      _c("img", {
-        staticClass: "card-img-top",
-        attrs: {
-          src: "https://i.stack.imgur.com/y9DpT.jpg",
-          alt: "Card image cap"
-        }
-      }),
+      _vm.property.images !== "undefined" && _vm.property.images.length > 0
+        ? _c("img", {
+            staticClass: "card-img-top",
+            attrs: { src: _vm.property.images[0].path, alt: "Card image cap" }
+          })
+        : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "card-body" },
-        [
-          _vm.property.user_type
-            ? [
-                _c("strong", { staticClass: "float-right" }, [
-                  _vm.property.user_type.type_id === 3
-                    ? _c("span", { staticClass: "badge badge-primary" }, [
-                        _vm._v("Rent")
-                      ])
-                    : _vm.property.user_type.type_id === 4
-                    ? _c("span", { staticClass: "badge badge-success" }, [
-                        _vm._v("Buy")
-                      ])
-                    : _vm._e()
-                ])
-              ]
-            : _vm._e(),
+      _c("div", { staticClass: "card-body" }, [
+        _c("h5", { staticClass: "card-title" }, [
+          _vm._v(_vm._s(_vm.property.name))
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "card-text" }, [
+          _vm._v(
+            "\n                " +
+              _vm._s(
+                _vm.property.address.city.country.name +
+                  ", " +
+                  _vm.property.address.city.name
+              ) +
+              "\n                " +
+              _vm._s(_vm.property.address.address_line) +
+              "\n                "
+          ),
+          _c("br"),
           _vm._v(" "),
-          _c("h5", { staticClass: "card-title" }, [
-            _vm._v(_vm._s(_vm.property.name))
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "card-text" }, [
+          _c("span", { staticClass: "float-right" }, [
             _vm._v(
-              "\n            " +
-                _vm._s(
-                  _vm.property.address.city.country.name +
-                    ", " +
-                    _vm.property.address.city.name
-                ) +
-                "\n            " +
-                _vm._s(_vm.property.address.address_line) +
-                "\n            "
-            ),
-            _c("br"),
-            _vm._v(" "),
-            _c("span", { staticClass: "float-right" }, [
-              _vm._v(
-                "Added on " + _vm._s(_vm._f("date")(_vm.property.created_at))
-              )
-            ])
+              "Added on " + _vm._s(_vm._f("date")(_vm.property.created_at))
+            )
           ])
-        ],
-        2
-      )
+        ])
+      ])
     ]
   )
 }

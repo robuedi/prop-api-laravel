@@ -36,6 +36,11 @@ class Property extends Model
         return $this->belongsToMany(RoleUser::class);
     }
 
+    public function images()
+    {
+        return $this->belongsToMany(MediaFile::class);
+    }
+
     public function owner()
     {
         return $this->belongsTo(RoleUser::class, 'id');

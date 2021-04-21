@@ -12,7 +12,11 @@ class MediaFile extends Model
     protected $fillable = [
         'name',
         'path',
-        'url',
         'type'
     ];
+
+    public function property()
+    {
+        return $this->belongsToOne(Property::class);
+    }
 }

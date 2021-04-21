@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Api\v1\Properties;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\RoleUserPropertyApplicationStoreRequest;
 use App\Http\Resources\GeneralResource;
-use App\Http\Resources\v1\RoleUserAddressResource;
 use App\Models\RoleUser;
 use Illuminate\Http\Response;
 

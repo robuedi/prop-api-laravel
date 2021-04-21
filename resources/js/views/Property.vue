@@ -1,6 +1,6 @@
 <template>
     <div class="card" v-if="property">
-        <img class="card-img-top" src="https://i.stack.imgur.com/y9DpT.jpg" alt="Card image cap">
+        <div class="card-img-top" v-if="property.images !== 'undefined' && property.images.length > 0 " :style='`background-image: url("/${property.images[0].path}"`' alt="Card image cap"></div>
         <div class="card-body">
             <h5 class="card-title mb-4">{{property.name}}</h5>
             <button type="button" @click="bookProperty()" class="btn btn-primary mb-4">{{ 'property.type.name' | capitalize }}</button>
@@ -50,11 +50,12 @@ export default {
         },
         getQueryString() {
             const query = new QueryBuilder();
-            query.setInclude(['address', 'address.city', 'address.city.country'])
+            query.setInclude(['address', 'address.city', 'address.city.country', 'images'])
             query.setFields('properties', ['id', 'name', 'slug', 'created_at'])
             query.setFields('address', ['id', 'property_id', 'city_id', 'postcode', 'address_line'])
             query.setFields('address.city', ['id', 'country_id', 'name'])
             query.setFields('address.city.country', ['id', 'name'])
+            query.setFields('images', ['path'])
 
             return query.get()
         }
@@ -67,6 +68,9 @@ export default {
     font-size: 16px;
 }
 .card-img-top{
-    max-height: 250px;
+    height: 350px;
+    background-position: center;
+    background-size: cover;
+
 }
 </style>

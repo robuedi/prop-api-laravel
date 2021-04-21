@@ -29,11 +29,12 @@ export default {
     mounted() {
         //make the query string
         const query = new QueryBuilder();
-        query.setInclude(['address', 'address.city', 'address.city.country'])
+        query.setInclude(['address', 'address.city', 'address.city.country', 'images'])
         query.setFields('properties', ['id', 'name', 'slug', 'created_at'])
         query.setFields('address', ['id', 'property_id', 'city_id', 'postcode', 'address_line'])
         query.setFields('address.city', ['id', 'country_id', 'name'])
         query.setFields('address.city.country', ['id', 'name'])
+        query.setFields('images', [ 'path'])
 
         //fetch data
         Property.all(query.get()).then((res) => {
