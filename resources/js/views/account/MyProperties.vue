@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import AccountNavigation from "../layout/AccountNavigation";
-import PropertyItemAccount from "../partials/PropertyItemAccount";
+import AccountNavigation from "../../layout/account/AccountNavigation";
+import PropertyItemAccount from "../../components/account/PropertyItemAccount";
 import {mapGetters} from "vuex";
-import RoleUserProperty from "../../../api/models/RoleUserProperty";
-import QueryBuilder from "../../../api/QueryBuilder";
+import RoleUserProperty from "../../api/models/RoleUserProperty";
+import QueryBuilder from "../../api/QueryBuilder";
 
 export default {
     components: {

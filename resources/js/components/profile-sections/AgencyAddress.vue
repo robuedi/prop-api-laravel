@@ -14,9 +14,9 @@
 
 <script>
 
-import NotificationLabels from '../../../components/NotificationLabels'
-import AddressInputs from '../../../components/AddressInputs'
-import AgencyAddress from "../../../api/models/AgencyAddress";
+import NotificationLabels from '../NotificationLabels'
+import AddressInputs from '../AddressInputs'
+import AgencyAddress from "../../api/models/AgencyAddress";
 
 export default {
     components: {

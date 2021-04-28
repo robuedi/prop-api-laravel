@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import NotificationLabels from '../../../components/NotificationLabels'
-import AnnualSalary from "../../../api/models/AnnualSalary";
+import NotificationLabels from '../NotificationLabels'
+import AnnualSalary from "../../api/models/AnnualSalary";
 
 export default {
     props: {

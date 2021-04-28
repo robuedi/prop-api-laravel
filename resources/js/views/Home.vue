@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import PropertyItemCard from "./partials/PropertyItemCard";
-import QueryBuilder from "../../api/QueryBuilder";
-import Property from "../../api/models/Property";
+import PropertyItemCard from "../components/home/PropertyItemCard";
+import QueryBuilder from "../api/QueryBuilder";
+import Property from "../api/models/Property";
 
 export default {
     components: {

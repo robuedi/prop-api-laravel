@@ -16,8 +16,8 @@
 
 <script>
 
-import NotificationLabels from "../../../components/NotificationLabels";
-import Rent from "../../../api/models/Rent";
+import NotificationLabels from "../NotificationLabels";
+import Rent from "../../api/models/Rent";
 
 export default {
     props: {

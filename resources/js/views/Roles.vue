@@ -19,9 +19,9 @@
 <script>
 
 import {mapActions, mapGetters} from "vuex";
-import apiStates from "../../store/apiStates/apiStateValues";
-import Role from "../../api/models/Role";
-import RoleUser from "../../api/models/RoleUser";
+import apiStates from "../store/apiStates/apiStateValues";
+import Role from "../api/models/Role";
+import RoleUser from "../api/models/RoleUser";
 
 export default {
     watch: {

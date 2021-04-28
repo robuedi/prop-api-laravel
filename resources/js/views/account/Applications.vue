@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import AccountNavigation from "../layout/AccountNavigation";
-import PropertyItemAccount from "../partials/PropertyItemAccount";
+import AccountNavigation from "../../layout/account/AccountNavigation";
+import PropertyItemAccount from "../../components/account/PropertyItemAccount";
 import {mapGetters} from "vuex";
-import PropertyApplications from "../../../api/models/PropertyApplications";
+import PropertyApplications from "../../api/models/PropertyApplications";
 
 export default {
     components: {

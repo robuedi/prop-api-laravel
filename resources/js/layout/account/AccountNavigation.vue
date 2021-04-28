@@ -11,7 +11,7 @@
 
 <script>
 
-import apiStates from "../sections/rolesSections";
+import apiStates from "../../extra/account/rolesSections";
 import { mapGetters } from 'vuex'
 
 export default {

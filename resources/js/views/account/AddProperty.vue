@@ -32,11 +32,11 @@
 
 <script>
 
-import AccountNavigation from "../layout/AccountNavigation";
-import AddressInputs from '../../../components/AddressInputs'
-import NotificationLabels from '../../../components/NotificationLabels'
+import AccountNavigation from "../../layout/account/AccountNavigation";
+import AddressInputs from '../../components/AddressInputs'
+import NotificationLabels from '../../components/NotificationLabels'
 import {mapActions, mapGetters} from "vuex";
-import RoleUserProperty from "../../../api/models/RoleUserProperty";
+import RoleUserProperty from "../../api/models/RoleUserProperty";
 
 export default {
     components: {

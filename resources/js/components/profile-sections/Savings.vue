@@ -4,7 +4,10 @@
         <NotificationLabels :errors="errors"/>
 
         <form action="#" @submit.prevent="submit">
-            <AddressInputs title="Address" v-on:addressCompleted="addressCompleted" change-event="addressCompleted"/>
+            <div class="mb-3" >
+                <label for="savings" class="form-label">Total savings available for a deposit</label>
+                <input type="text" v-model="form.amount" class="form-control w-50" id="savings" >
+            </div>
 
             <button class="btn btn-success">Submit</button>
         </form>
@@ -13,33 +16,30 @@
 
 <script>
 
-import NotificationLabels from "../../../components/NotificationLabels";
-import AddressInputs from '../../../components/AddressInputs'
-import RoleUserAddress from "../../../api/models/RoleUserAddress";
+import NotificationLabels from "../NotificationLabels";
+import Saving from "../../api/models/Saving";
 
 export default {
     props: {
         roleUserId: Number
     },
     components: {
-        AddressInputs,
         NotificationLabels
     },
-    data(){
+    data () {
         return {
             show: false,
             errors: [],
-            currentAddress: ''
+            form: {
+                amount: null,
+            },
         }
     },
-    methods:{
-        addressCompleted(address){
-            this.currentAddress = address;
-        },
+    methods: {
         async submit()
         {
-            RoleUserAddress.store(this.roleUserId, this.currentAddress).then((res) => {
-                this.$emit('hasAddress', res)
+            Saving.store(this.roleUserId, this.form).then((res) => {
+                this.$emit('hasSavings', res)
             }).catch((error) => {
                 for (const [key, msg] of Object.entries(error.response.data.errors)) {
                     this.errors.push(msg[0]);
@@ -48,13 +48,11 @@ export default {
         }
     },
     mounted() {
-        RoleUserAddress.all(this.roleUserId).then((res) => {
-            if(res.data.data.length !== 0)
-            {
-                this.$emit('hasAddress', res);
+        Saving.all(this.roleUserId).then((res) => {
+            if(res.data.data.length !== 0){
+                this.$emit('hasSavings', res);
             }
-            else
-            {
+            else{
                 this.show = true
             }
         });

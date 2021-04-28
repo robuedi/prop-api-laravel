@@ -39,9 +39,9 @@
 
 import DateRangePicker from 'vue2-daterange-picker'
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
-import NotificationLabels from "../../../components/NotificationLabels";
+import NotificationLabels from "../NotificationLabels";
 import Moment from "moment";
-import Employment from "../../../api/models/Employment";
+import Employment from "../../api/models/Employment";
 
 export default {
     props: {

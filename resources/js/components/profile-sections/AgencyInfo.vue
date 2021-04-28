@@ -20,8 +20,8 @@
 
 <script>
 
-import NotificationLabels from '../../../components/NotificationLabels'
-import Agency from "../../../api/models/Agency";
+import NotificationLabels from '../NotificationLabels'
+import Agency from "../../api/models/Agency";
 
 export default {
     components: {

@@ -1,15 +1,15 @@
-import Home from "../views/home/Home";
+import Home from "../views/Home";
 import Property from "../views/Property";
 import SignIn from "../views/SignIn";
 import store from "../store";
 import Register from "../views/Register";
-import RolesGateway from "../views/account-roles/RolesGateway";
-import CompleteRoleGateway from "../views/account-roles/CompleteRoleGateway";
+import Roles from "../views/Roles";
+import CompleteRole from "../views/CompleteRole";
 import Account from "../views/account/Account";
-import Profile from "../views/account/sections/Profile";
-import MyProperties from "../views/account/sections/MyProperties";
-import Applications from "../views/account/sections/Applications";
-import AddProperty from "../views/account/sections/AddProperty";
+import Profile from "../views/account/Profile";
+import MyProperties from "../views/account/MyProperties";
+import Applications from "../views/account/Applications";
+import AddProperty from "../views/account/AddProperty";
 
 const routes = [
     {
@@ -43,14 +43,14 @@ const routes = [
         component: Register
     },
     {
-        path: '/choose-roles',
+        path: '/roles',
         name: 'chooseRoles',
-        component: RolesGateway
+        component: Roles
     },
     {
         path: '/complete-role/:userRoleId',
         name: 'completeRole',
-        component: CompleteRoleGateway
+        component: CompleteRole
     },
     {
         path: '/account',
