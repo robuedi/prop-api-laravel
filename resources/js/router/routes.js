@@ -18,7 +18,7 @@ const routes = [
         component: Home
     },
     {
-        path: '/property/:propertySlug',
+        path: '/property/:slug',
         name: 'propertyItem',
         component: Property
     },

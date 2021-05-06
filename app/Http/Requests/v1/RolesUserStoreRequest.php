@@ -14,7 +14,7 @@ class RolesUserStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('user')->id === auth()->user()->id && !$this->route('user')->roles->find($this->get('role_id'));
+        return !is_null(auth()->user()) && auth()->user()->id === $this->get('user_id') && !auth()->user()->roles()->find($this->get('role_id'));
     }
 
     /**
@@ -25,7 +25,8 @@ class RolesUserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'role_id' => 'required|exists:roles,id'
+            'role_id' => 'required|exists:roles,id',
+            'user_id' => 'required|exists:roles,id'
         ];
     }
 }

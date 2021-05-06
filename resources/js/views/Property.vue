@@ -36,7 +36,7 @@ export default {
         }
     },
     mounted() {
-        Property.showSlug(this.$route.params.propertySlug, this.getQueryString()).then((res)=>{
+        Property.showSlug(this.$route.params.slug, this.getQueryString()).then((res)=>{
             this.property = res.data.data
         })
     },

@@ -23,10 +23,10 @@
 <script>
 import {mapActions, mapGetters} from 'vuex'
 
-import Buyer from '../components/ complete-role/Buyer'
-import Seller from '../components/ complete-role/Seller'
-import Tenant from '../components/ complete-role/Tenant'
-import Landlord from '../components/ complete-role/Landlord'
+import Buyer from '../components/complete-role/Buyer'
+import Seller from '../components/complete-role/Seller'
+import Tenant from '../components/complete-role/Tenant'
+import Landlord from '../components/complete-role/Landlord'
 import apiStates from "../store/apiStates/apiStateValues";
 
 export default {

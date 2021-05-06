@@ -54,11 +54,10 @@ Route::prefix('v1')->group(function (){
 
         Route::resource('properties/{property}/addresses', PropertyAddressesController::class, ['only' => ['index', 'store']]);
 
-        Route::resource('roles-users', RolesUsersController::class, ['only' => ['update']]);
+        Route::resource('roles-users', RolesUsersController::class, ['only' => ['update', 'store']]);
 
         Route::prefix('users/{user}')->group(function (){
             Route::resource('roles', UserRolesController::class, ['only' => ['index']]);
-            Route::resource('roles-users', RolesUsersController::class, ['only' => ['store']]);
         });
 
         Route::group(['prefix' => 'roles-users/{role_user}', 'middleware' => ['role-user-authorization']], function (){
