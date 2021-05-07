@@ -31,8 +31,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user()->load(['userRole' => function($query){
-        $query->with('role:id,name');
+    return $request->user()->load([
+        'activeUserRole' => function($query){
+            $query->with('role:id,name');},
+        'userRole' => function($query){
+            $query->with('role:id,name');
     }]);
 });
 
